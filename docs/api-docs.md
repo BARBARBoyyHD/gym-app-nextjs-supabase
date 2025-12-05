@@ -86,7 +86,15 @@ Authorization: Bearer <token>
 
 ### Users
 
-#### GET /users
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/users/list` | Retrieve a list of all users. Admin access required. |
+| POST | `/api/users/create` | Create a new user. Admin access required. |
+| GET | `/api/users/get` | Get details for a specific user by ID. |
+| PUT | `/api/users/update` | Update a specific user. |
+| DELETE | `/api/users/delete` | Delete a specific user. |
+
+#### GET /api/users/list
 Retrieve a list of all users. Admin access required.
 
 **Headers:**
@@ -115,7 +123,7 @@ Authorization: Bearer <token>
 }
 ```
 
-#### POST /users
+#### POST /api/users/create
 Create a new user. Admin access required.
 
 **Headers:**
@@ -146,7 +154,7 @@ Authorization: Bearer <token>
 }
 ```
 
-#### GET /users/{id}
+#### GET /api/users/get
 Get details for a specific user by ID.
 
 **Headers:**
@@ -165,8 +173,8 @@ Authorization: Bearer <token>
 }
 ```
 
-#### PATCH /users/{id}
-Update a specific user by ID.
+#### PUT /api/users/update
+Update a specific user.
 
 **Headers:**
 ```
@@ -176,6 +184,7 @@ Authorization: Bearer <token>
 **Request Body:**
 ```json
 {
+  "id": "uuid-string",
   "full_name": "John Updated Doe",
   "role": "staff"
 }
@@ -189,8 +198,8 @@ Authorization: Bearer <token>
 }
 ```
 
-#### DELETE /users/{id}
-Delete a specific user by ID.
+#### DELETE /api/users/delete
+Delete a specific user.
 
 **Headers:**
 ```
@@ -207,7 +216,15 @@ Authorization: Bearer <token>
 
 ### Memberships
 
-#### GET /memberships
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/memberships/list` | Retrieve a list of all memberships. Admin access required, users can retrieve their own memberships. |
+| POST | `/api/memberships/create` | Create a new membership for a user. |
+| GET | `/api/memberships/get` | Get details for a specific membership by ID. |
+| PATCH | `/api/memberships/update` | Update a specific membership by ID. |
+| DELETE | `/api/memberships/delete` | Delete a specific membership by ID. |
+
+#### GET /api/memberships/list
 Retrieve a list of all memberships. Admin access required, users can retrieve their own memberships.
 
 **Headers:**
@@ -240,7 +257,7 @@ Authorization: Bearer <token>
 }
 ```
 
-#### POST /memberships
+#### POST /api/memberships/create
 Create a new membership for a user.
 
 **Headers:**
@@ -277,7 +294,7 @@ Authorization: Bearer <token>
 }
 ```
 
-#### GET /memberships/{id}
+#### GET /api/memberships/get
 Get details for a specific membership by ID.
 
 **Headers:**
@@ -299,7 +316,7 @@ Authorization: Bearer <token>
 }
 ```
 
-#### PATCH /memberships/{id}
+#### PATCH /api/memberships/update
 Update a specific membership by ID.
 
 **Headers:**
@@ -323,7 +340,7 @@ Authorization: Bearer <token>
 }
 ```
 
-#### DELETE /memberships/{id}
+#### DELETE /api/memberships/delete
 Delete a specific membership by ID.
 
 **Headers:**
@@ -341,7 +358,15 @@ Authorization: Bearer <token>
 
 ### Membership Plans
 
-#### GET /membership-plans
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/membership-plans/list` | Retrieve a list of all membership plans. |
+| POST | `/api/membership-plans/create` | Create a new membership plan. Admin access required. |
+| GET | `/api/membership-plans/get` | Get details for a specific membership plan by ID. |
+| PUT | `/api/membership-plans/update` | Update a specific membership plan by ID. Admin access required. |
+| DELETE | `/api/membership-plans/delete` | Delete a specific membership plan by ID. Admin access required. |
+
+#### GET /api/membership-plans/list
 Retrieve a list of all membership plans.
 
 **Query Parameters:**
@@ -365,7 +390,7 @@ Retrieve a list of all membership plans.
 }
 ```
 
-#### POST /membership-plans
+#### POST /api/membership-plans/create
 Create a new membership plan. Admin access required.
 
 **Headers:**
@@ -398,7 +423,7 @@ Authorization: Bearer <token>
 }
 ```
 
-#### GET /membership-plans/{id}
+#### GET /api/membership-plans/get
 Get details for a specific membership plan by ID.
 
 **Response:**
@@ -413,7 +438,7 @@ Get details for a specific membership plan by ID.
 }
 ```
 
-#### PUT /membership-plans/{id}
+#### PUT /api/membership-plans/update
 Update a specific membership plan by ID. Admin access required.
 
 **Headers:**
@@ -437,7 +462,7 @@ Authorization: Bearer <token>
 }
 ```
 
-#### DELETE /membership-plans/{id}
+#### DELETE /api/membership-plans/delete
 Delete a specific membership plan by ID. Admin access required.
 
 **Headers:**
@@ -455,7 +480,12 @@ Authorization: Bearer <token>
 
 ### Check-ins
 
-#### GET /check-ins
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/check-ins/list` | Retrieve a list of check-in logs. |
+| POST | `/api/check-ins/create` | Record a new check-in for a user. |
+
+#### GET /api/check-ins/list
 Retrieve a list of check-in logs.
 
 **Headers:**
@@ -485,7 +515,7 @@ Authorization: Bearer <token>
 }
 ```
 
-#### POST /check-ins
+#### POST /api/check-ins/create
 Record a new check-in for a user.
 
 **Headers:**
@@ -518,7 +548,13 @@ Authorization: Bearer <token>
 
 ### User Metrics
 
-#### GET /user-metrics
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/user-metrics/list` | Retrieve a list of user metrics. |
+| POST | `/api/user-metrics/create` | Record new user metrics. |
+| GET | `/api/user-metrics/get` | Get details for a specific user metric by ID. |
+
+#### GET /api/user-metrics/list
 Retrieve a list of user metrics.
 
 **Headers:**
@@ -550,7 +586,7 @@ Authorization: Bearer <token>
 }
 ```
 
-#### POST /user-metrics
+#### POST /api/user-metrics/create
 Record new user metrics.
 
 **Headers:**
@@ -583,7 +619,7 @@ Authorization: Bearer <token>
 }
 ```
 
-#### GET /user-metrics/{id}
+#### GET /api/user-metrics/get
 Get details for a specific user metric by ID.
 
 **Headers:**
@@ -605,7 +641,13 @@ Authorization: Bearer <token>
 
 ### Workout Programs
 
-#### GET /workout-programs
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/workout-programs/list` | Retrieve a list of all workout programs. |
+| POST | `/api/workout-programs/create` | Create a new workout program. Admin access required. |
+| GET | `/api/workout-programs/get` | Get details for a specific workout program by ID. |
+
+#### GET /api/workout-programs/list
 Retrieve a list of all workout programs.
 
 **Query Parameters:**
@@ -629,7 +671,7 @@ Retrieve a list of all workout programs.
 }
 ```
 
-#### POST /workout-programs
+#### POST /api/workout-programs/create
 Create a new workout program. Admin access required.
 
 **Headers:**
@@ -660,7 +702,7 @@ Authorization: Bearer <token>
 }
 ```
 
-#### GET /workout-programs/{id}
+#### GET /api/workout-programs/get
 Get details for a specific workout program by ID.
 
 **Response:**
@@ -676,7 +718,12 @@ Get details for a specific workout program by ID.
 
 ### Workout Progress
 
-#### GET /workout-progress
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/workout-progress/list` | Retrieve a list of workout progress records. |
+| POST | `/api/workout-progress/create` | Record new workout progress. |
+
+#### GET /api/workout-progress/list
 Retrieve a list of workout progress records.
 
 **Headers:**
@@ -709,7 +756,7 @@ Authorization: Bearer <token>
 }
 ```
 
-#### POST /workout-progress
+#### POST /api/workout-progress/create
 Record new workout progress.
 
 **Headers:**

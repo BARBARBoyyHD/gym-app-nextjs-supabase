@@ -387,7 +387,7 @@ paths:
                 $ref: '#/components/schemas/SuccessResponse'
 
   # User Management
-  /users:
+  /users/get:
     get:
       tags:
         - Users
@@ -438,6 +438,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /users/post:
     post:
       tags:
         - Users
@@ -501,21 +502,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
-    patch:
+  /users/put:
+    put:
       tags:
         - Users
-      summary: Update user by ID
-      description: Updates a specific user by ID
+      summary: Update a user
+      description: Updates a specific user
       security:
         - BearerAuth: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: User ID
-          schema:
-            type: string
-            format: uuid
       requestBody:
         required: true
         content:
@@ -536,21 +530,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
 
+  /users/delete:
     delete:
       tags:
         - Users
-      summary: Delete user by ID
-      description: Deletes a specific user by ID
+      summary: Delete a user
+      description: Deletes a specific user
       security:
         - BearerAuth: []
-      parameters:
-        - name: id
-          in: path
-          required: true
-          description: User ID
-          schema:
-            type: string
-            format: uuid
       responses:
         '200':
           description: User deleted successfully
