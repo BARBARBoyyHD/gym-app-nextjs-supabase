@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins as PoppinsFont } from "next/font/google";
-import "./globals.css";
+import "../globals.css";
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 
 // INISIALISASI FONT
 const poppins = PoppinsFont({
@@ -16,7 +15,7 @@ export const metadata: Metadata = {
   description: "Modern Gym & Fitness Platform",
 };
 
-export default function RootLayout({
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -24,6 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} antialiased bg-black text-white`}>
+        <Navbar />
         <div className="max-w-6xl mx-auto px-4">{children}</div>
       </body>
     </html>

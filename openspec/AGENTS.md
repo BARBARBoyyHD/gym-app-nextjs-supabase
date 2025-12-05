@@ -3,6 +3,13 @@
 Instructions for AI coding assistants using OpenSpec for spec-driven development.
 Automatically use context7 for code generation and library documentation.
 
+## Project Context Understanding
+Before performing any work in this project, AI assistants must:
+- Always check the `/docs` directory first to understand the project's documentation, architecture, and context
+- Review existing documentation to understand the system design, API specifications, and business requirements
+- Familiarize themselves with the project structure by examining files in the `/docs` directory
+- Use the documentation to inform all subsequent actions and decisions
+
 ## TL;DR Quick Checklist
 
 - Search existing work: `openspec spec list --long`, `openspec list` (use `rg` only for full-text search)

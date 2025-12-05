@@ -106,6 +106,7 @@ src/
 ✔ **Component Composition**: Build reusable UI components with clear interfaces
 
 **High-level architecture:**
+```
 
 ┌─ Frontend ──────────────────┐    ┌─ Backend ──────────────────┐
 │                              │    │                             │
@@ -124,3 +125,112 @@ src/
 │  Supabase Hosting (Backend)  │    │  Membership analytics      │
 │                              │    │  Revenue & growth metrics  │
 └──────────────────────────────┘    └─────────────────────────────┘
+```
+## Endpoints
+
+### Authentication
+
+* **POST /auth/sign-up**
+    * Register a new user account.
+* **POST /auth/sign-in**
+    * Authenticate an existing user.
+* **POST /auth/sign-out**
+    * Sign out the authenticated user. **Requires JWT**.
+
+### Users
+
+* **GET /users**
+    * Retrieve a list of all users. **Admin access required**.
+* **POST /users**
+    * Create a new user. **Admin access required**.
+* **GET /users/{id}**
+    * Get details for a specific user by ID. **Requires JWT**.
+* **PATCH /users/{id}**
+    * Update a specific user by ID. **Requires JWT**.
+* **DELETE /users/{id}**
+    * Delete a specific user by ID. **Requires JWT**.
+
+### Memberships
+
+* **GET /memberships**
+    * Retrieve a list of all memberships. **Admin access required**, users can retrieve their own memberships. **Requires JWT**.
+* **POST /memberships**
+    * Create a new membership for a user. **Requires JWT**.
+* **GET /memberships/{id}**
+    * Get details for a specific membership by ID. **Requires JWT**.
+* **PATCH /memberships/{id}**
+    * Update a specific membership by ID. **Requires JWT**.
+* **DELETE /memberships/{id}**
+    * Delete a specific membership by ID. **Requires JWT**.
+
+### Membership Plans
+
+* **GET /membership-plans**
+    * Retrieve a list of all membership plans.
+* **POST /membership-plans**
+    * Create a new membership plan. **Admin access required**. **Requires JWT**.
+* **GET /membership-plans/{id}**
+    * Get details for a specific membership plan by ID.
+* **PUT /membership-plans/{id}**
+    * Update a specific membership plan by ID. **Admin access required**. **Requires JWT**.
+* **DELETE /membership-plans/{id}**
+    * Delete a specific membership plan by ID. **Admin access required**. **Requires JWT**.
+
+### Check-ins
+
+* **GET /check-ins**
+    * Retrieve a list of check-in logs. **Requires JWT**.
+* **POST /check-ins**
+    * Record a new check-in for a user. **Requires JWT**.
+
+### User Metrics
+
+* **GET /user-metrics**
+    * Retrieve a list of user metrics. **Requires JWT**.
+* **POST /user-metrics**
+    * Record new user metrics. **Requires JWT**.
+* **GET /user-metrics/{id}**
+    * Get details for a specific user metric by ID. **Requires JWT**.
+
+### Workout Programs
+
+* **GET /workout-programs**
+    * Retrieve a list of all workout programs.
+* **POST /workout-programs**
+    * Create a new workout program. **Admin access required**. **Requires JWT**.
+* **GET /workout-programs/{id}**
+    * Get details for a specific workout program by ID.
+
+### Workout Progress
+
+* **GET /workout-progress**
+    * Retrieve a list of workout progress records. **Requires JWT**.
+* **POST /workout-progress**
+    * Record new workout progress. **Requires JWT**.
+
+---
+
+## Status Codes
+
+| Status Code | Description | Purpose |
+| :--- | :--- | :--- |
+| **200** | Success | For GET, PUT, PATCH requests. |
+| **201** | Success (Created) | For POST requests (resource created). |
+| **400** | Bad Request | Invalid input provided. |
+| **401** | Unauthorized | Authentication (JWT) is required. |
+| **403** | Forbidden | Insufficient permissions (e.g., non-admin attempting admin action). |
+| **404** | Not Found | Resource doesn't exist. |
+| **500** | Internal Server Error | Server-side error. |
+
+---
+
+## Error Responses
+
+All error responses follow the same structure:
+
+```json
+{
+  "success": false,
+  "error": "Error message explaining what went wrong"
+}
+```
