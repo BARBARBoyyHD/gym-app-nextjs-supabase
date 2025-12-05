@@ -34,12 +34,12 @@ export default function Classes() {
   };
 
   return (
-    <section className="">
+    <section>
       <div className="max-w-6xl mx-auto px-4">
         {/* Title Section */}
-        <div className="text-center mb-6">
-          <h2 className="text-4xl font-semibold mb-3">Our Classes</h2>
-          <p className="text-gray-300">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold mb-3">Our Classes</h2>
+          <p className="text-white/70">
             Whatever your fitness goals are, our dedicated fitness instructors
             will help you achieve them.
           </p>
@@ -57,7 +57,9 @@ export default function Classes() {
                   onClick={() => toggle(index)}
                   className="flex justify-between items-center cursor-pointer"
                 >
-                  <h5 className="text-2xl font-semibold">{item.title}</h5>
+                  <h5 className="text-2xl font-semibold color-brand">
+                    {item.title}
+                  </h5>
                   <span className="text-3xl font-bold text-brand select-none transform transition-transform duration-300">
                     {openStates[index] ? "-" : "+"}
                   </span>
@@ -69,7 +71,7 @@ export default function Classes() {
                     openStates[index] ? "max-h-96  mt-4" : "max-h-0"
                   }`}
                 >
-                  <p className="text-gray-300">{item.desc}</p>
+                  <p className="text-white/70 leading-7">{item.desc}</p>
                 </div>
               </div>
             </div>

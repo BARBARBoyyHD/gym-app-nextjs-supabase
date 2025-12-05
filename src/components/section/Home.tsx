@@ -9,10 +9,10 @@ export default function Home() {
           <h1 className="text-4xl md:text-7xl font-bold leading-tight">
             GET FIT AND FEEL <span className="color-brand">GREAT!</span>
           </h1>
-          <p className="text-lg text-gray-300 max-w-md">
+          <p className="text-lg text-white/70 max-w-md leading-7">
             Our professional instructors will help you stay active and healthy
           </p>
-          <button className="bg-brand bg-brand-hover text-black font-semibold px-6 py-3 rounded-md w-fit mt-2">
+          <button className="bg-brand bg-brand-hover text-black font-semibold px-6 py-3 w-fit  mt-2">
             Join Now
           </button>
         </div>
