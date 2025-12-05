@@ -23,6 +23,30 @@ body {
   color: white;
   font-family: var(--font-poppins), sans-serif;
 }
+.nav-link {
+  position: relative;
+  color: rgba(255, 255, 255, 0.75);
+  transition: color 0.3s ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0%;
+  height: 2px;
+  background-color: #d6fb00;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  color: white;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
 
 .color-brand {
   color: var(--brand);

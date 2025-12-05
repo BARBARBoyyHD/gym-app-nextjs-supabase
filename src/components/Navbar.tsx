@@ -13,27 +13,27 @@ export default function Navbar() {
         {/* Desktop Menu */}
         <ul className="hidden md:flex items-center gap-10">
           <li>
-            <a href="#" className="text-brand transition font-semibold">
+            <a href="#" className="nav-link font-medium">
               About Us
             </a>
           </li>
           <li>
-            <a href="#" className="text-brand transition font-semibold">
+            <a href="#" className="nav-link font-medium">
               Classes
             </a>
           </li>
           <li>
-            <a href="#" className="text-brand transition font-semibold">
+            <a href="#" className="nav-link font-medium">
               Coaches
             </a>
           </li>
           <li>
-            <a href="#" className="text-brand transition font-semibold">
+            <a href="#" className="nav-link font-medium">
               Plan
             </a>
           </li>
           <li>
-            <a href="#" className="text-brand transition font-semibold">
+            <a href="#" className="nav-link font-semibold">
               Contact
             </a>
           </li>
