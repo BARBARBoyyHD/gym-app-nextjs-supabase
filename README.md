@@ -306,6 +306,48 @@ Terbuka untuk kontribusi, PR, dan masukan.
 
 ---
 
+# 🎨 **Color Guidelines**
+
+## Primary Colors
+
+- **Brand Color**: `#d6fb00` - Used for primary buttons, highlights, and brand elements
+- **Brand Hover**: `#c2ea00` - Hover state for brand-colored elements
+- **Brand Dark**: `#a8d400` - Darker shade for active states and depth
+
+## Background Colors
+
+- **Dark Background**: `#0f0f0f` - Primary page background (abu tua/dark gray)
+- **Secondary Background**: To be defined based on UI needs
+
+## Text Colors
+
+- **Primary Text**: `#ffffff` - Main content text on dark backgrounds
+- **Secondary Text**: `rgba(255, 255, 255, 0.75)` - Secondary text like navigation links
+- **Hover Text**: `#ffffff` - Text color on hover states
+
+## Accent Colors
+
+- **Social Hover**: `#22c55e` (green-500) - Used for social media links on hover
+- **Border Color**: `#d6fb00` - Brand-colored borders for important elements
+
+## Usage Guidelines
+
+### Buttons & Interactive Elements
+- Primary buttons: `--brand` background color
+- Button hover: `--brand-hover` background color
+- Button active: `--brand-dark` background color
+
+### Navigation
+- Unselected navigation links: Secondary text color (`rgba(255, 255, 255, 0.75)`)
+- Selected/hovered navigation links: White text with brand-colored underline effect
+- Navigation underline: `#d6fb00` color with transition effect
+
+### General Styling
+- All transitions use 0.2s ease for background-color and color properties
+- Brand color (`#d6fb00`) is used consistently for highlighting important elements
+
+---
+
 # 📄 **License**
 
 MIT License
