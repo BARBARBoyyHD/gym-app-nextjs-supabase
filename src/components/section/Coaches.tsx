@@ -12,7 +12,7 @@ export default function Coaches() {
               <p className="my-6">
                 Maximum results and flexible training schedule.
               </p>
-              <p className="text-white/70 mb-4 leading-7">
+              <p className="text-white/70 mb-4 leading-relaxed">
                 Group training is not for everyone. If you want to train 1-on-1,
                 FitB offers you personal training to work on your individual
                 skills and achieve fitness goals. Our personal trainers are

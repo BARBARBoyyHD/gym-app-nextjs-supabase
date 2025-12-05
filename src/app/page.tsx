@@ -3,6 +3,7 @@ import Navbar from "@/components/Navbar";
 import Home from "@/components/section/Home";
 import Classes from "@/components/section/Classes";
 import Coaches from "@/components/section/Coaches";
+import Facility from "@/components/section/Facility";
 export default function page() {
   return (
     <main>
@@ -10,6 +11,7 @@ export default function page() {
       <Home />
       <Classes />
       <Coaches />
+      <Facility />
       <Footer />
     </main>
   );
