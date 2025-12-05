@@ -139,74 +139,63 @@ src/
 
 ### Users
 
-* **GET /users**
-    * Retrieve a list of all users. **Admin access required**.
-* **POST /users**
-    * Create a new user. **Admin access required**.
-* **GET /users/{id}**
-    * Get details for a specific user by ID. **Requires JWT**.
-* **PATCH /users/{id}**
-    * Update a specific user by ID. **Requires JWT**.
-* **DELETE /users/{id}**
-    * Delete a specific user by ID. **Requires JWT**.
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/users/list` | Retrieve a list of all users. **Admin access required**. |
+| POST | `/api/users/create` | Create a new user. **Admin access required**. |
+| GET | `/api/users/get` | Get details for a specific user by ID. **Requires JWT**. |
+| PUT | `/api/users/update` | Update a specific user. **Requires JWT**. |
+| DELETE | `/api/users/delete` | Delete a specific user. **Requires JWT**. |
 
 ### Memberships
 
-* **GET /memberships**
-    * Retrieve a list of all memberships. **Admin access required**, users can retrieve their own memberships. **Requires JWT**.
-* **POST /memberships**
-    * Create a new membership for a user. **Requires JWT**.
-* **GET /memberships/{id}**
-    * Get details for a specific membership by ID. **Requires JWT**.
-* **PATCH /memberships/{id}**
-    * Update a specific membership by ID. **Requires JWT**.
-* **DELETE /memberships/{id}**
-    * Delete a specific membership by ID. **Requires JWT**.
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/memberships/list` | Retrieve a list of all memberships. **Admin access required**, users can retrieve their own memberships. **Requires JWT**. |
+| POST | `/api/memberships/create` | Create a new membership for a user. **Requires JWT**. |
+| GET | `/api/memberships/get` | Get details for a specific membership by ID. **Requires JWT**. |
+| PATCH | `/api/memberships/update` | Update a specific membership by ID. **Requires JWT**. |
+| DELETE | `/api/memberships/delete` | Delete a specific membership by ID. **Requires JWT**. |
 
 ### Membership Plans
 
-* **GET /membership-plans**
-    * Retrieve a list of all membership plans.
-* **POST /membership-plans**
-    * Create a new membership plan. **Admin access required**. **Requires JWT**.
-* **GET /membership-plans/{id}**
-    * Get details for a specific membership plan by ID.
-* **PUT /membership-plans/{id}**
-    * Update a specific membership plan by ID. **Admin access required**. **Requires JWT**.
-* **DELETE /membership-plans/{id}**
-    * Delete a specific membership plan by ID. **Admin access required**. **Requires JWT**.
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/membership-plans/list` | Retrieve a list of all membership plans. |
+| POST | `/api/membership-plans/create` | Create a new membership plan. **Admin access required**. **Requires JWT**. |
+| GET | `/api/membership-plans/get` | Get details for a specific membership plan by ID. |
+| PUT | `/api/membership-plans/update` | Update a specific membership plan by ID. **Admin access required**. **Requires JWT**. |
+| DELETE | `/api/membership-plans/delete` | Delete a specific membership plan by ID. **Admin access required**. **Requires JWT**. |
 
 ### Check-ins
 
-* **GET /check-ins**
-    * Retrieve a list of check-in logs. **Requires JWT**.
-* **POST /check-ins**
-    * Record a new check-in for a user. **Requires JWT**.
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/check-ins/list` | Retrieve a list of check-in logs. **Requires JWT**. |
+| POST | `/api/check-ins/create` | Record a new check-in for a user. **Requires JWT**. |
 
 ### User Metrics
 
-* **GET /user-metrics**
-    * Retrieve a list of user metrics. **Requires JWT**.
-* **POST /user-metrics**
-    * Record new user metrics. **Requires JWT**.
-* **GET /user-metrics/{id}**
-    * Get details for a specific user metric by ID. **Requires JWT**.
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/user-metrics/list` | Retrieve a list of user metrics. **Requires JWT**. |
+| POST | `/api/user-metrics/create` | Record new user metrics. **Requires JWT**. |
+| GET | `/api/user-metrics/get` | Get details for a specific user metric by ID. **Requires JWT**. |
 
 ### Workout Programs
 
-* **GET /workout-programs**
-    * Retrieve a list of all workout programs.
-* **POST /workout-programs**
-    * Create a new workout program. **Admin access required**. **Requires JWT**.
-* **GET /workout-programs/{id}**
-    * Get details for a specific workout program by ID.
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/workout-programs/list` | Retrieve a list of all workout programs. |
+| POST | `/api/workout-programs/create` | Create a new workout program. **Admin access required**. **Requires JWT**. |
+| GET | `/api/workout-programs/get` | Get details for a specific workout program by ID. |
 
 ### Workout Progress
 
-* **GET /workout-progress**
-    * Retrieve a list of workout progress records. **Requires JWT**.
-* **POST /workout-progress**
-    * Record new workout progress. **Requires JWT**.
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/workout-progress/list` | Retrieve a list of workout progress records. **Requires JWT**. |
+| POST | `/api/workout-progress/create` | Record new workout progress. **Requires JWT**. |
 
 ---
 
