@@ -3,7 +3,6 @@
 import { useState } from "react";
 
 export default function Classes() {
-  // Changed from single state to an array of boolean values to track multiple open dropdowns
   const [openStates, setOpenStates] = useState<boolean[]>(Array(4).fill(false));
 
   const classesData = [
@@ -27,7 +26,7 @@ export default function Classes() {
 
   const toggle = (index: number) => {
     // Toggle only the clicked dropdown, leaving others unchanged
-    setOpenStates(prevStates => {
+    setOpenStates((prevStates) => {
       const newStates = [...prevStates];
       newStates[index] = !newStates[index];
       return newStates;
@@ -67,9 +66,7 @@ export default function Classes() {
                 {/* Dropdown (With Smoother Animation) */}
                 <div
                   className={`transition-all duration-500 ease-in-out overflow-hidden ${
-                    openStates[index]
-                      ? "max-h-96 opacity-100 mt-4"
-                      : "max-h-0 opacity-0"
+                    openStates[index] ? "max-h-96  mt-4" : "max-h-0"
                   }`}
                 >
                   <p className="text-gray-300">{item.desc}</p>
