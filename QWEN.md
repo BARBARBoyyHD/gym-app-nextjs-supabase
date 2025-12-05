@@ -4,6 +4,7 @@
 These instructions are for AI assistants working in this project.
 Automatically use context7 for code generation and library documentation.
 
+
 Always open `@/openspec/AGENTS.md` when the request:
 - Mentions planning or proposals (words like proposal, spec, change, plan)
 - Introduces new capabilities, breaking changes, architecture shifts, or big performance/security work

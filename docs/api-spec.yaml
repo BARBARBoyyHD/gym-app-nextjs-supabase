@@ -1,0 +1,1339 @@
+openapi: 3.0.3
+info:
+  title: FitTrack Gym Management API
+  description: API documentation for the FitTrack Gym Membership & Video Course Platform
+  version: 1.0.0
+  contact:
+    name: Support Team
+    email: support@gym-app.com
+
+servers:
+  - url: https://gym-app.example.com/api
+    description: Production server
+  - url: http://localhost:3000/api
+    description: Development server
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Enter your Supabase/JWT token in the format `Bearer <token>`
+
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the user
+        email:
+          type: string
+          format: email
+          description: User's email address
+        full_name:
+          type: string
+          description: Full name of the user
+        role:
+          type: string
+          enum: [admin, staff, member]
+          description: Role of the user in the system
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when user account was created
+      required:
+        - id
+        - email
+        - role
+        - created_at
+
+    Membership:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the membership record
+        user_id:
+          type: string
+          format: uuid
+          description: Reference to the user who owns the membership
+        plan_id:
+          type: integer
+          description: Reference to the membership plan
+        start_date:
+          type: string
+          format: date
+          description: Date when the membership starts
+        end_date:
+          type: string
+          format: date
+          description: Date when the membership expires
+        status:
+          type: string
+          enum: [active, expired, cancelled]
+          description: Current status of the membership
+        payment_method:
+          type: string
+          description: How the membership was paid for
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the membership was created
+      required:
+        - id
+        - user_id
+        - plan_id
+        - start_date
+        - end_date
+        - status
+        - created_at
+
+    MembershipPlan:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: Unique identifier for the membership plan
+        name:
+          type: string
+          description: Name of the membership plan
+        price:
+          type: number
+          format: decimal
+          description: Price of the membership plan
+        duration_days:
+          type: integer
+          description: Duration of the membership plan in days
+        description:
+          type: string
+          description: Detailed description of the plan
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the plan was created
+      required:
+        - id
+        - name
+        - price
+        - duration_days
+        - created_at
+
+    CheckInLog:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the check-in log
+        user_id:
+          type: string
+          format: uuid
+          description: Reference to the user who checked in
+        check_in_time:
+          type: string
+          format: date-time
+          description: Time when the user checked in
+        device:
+          type: string
+          description: Device used for checking in
+        check_in_method:
+          type: string
+          description: Method used for check-in (mobile app, kiosk, etc.)
+      required:
+        - id
+        - user_id
+        - check_in_time
+
+    UserMetric:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the metric record
+        user_id:
+          type: string
+          format: uuid
+          description: Reference to the user whose metrics are recorded
+        weight:
+          type: number
+          format: float
+          description: Weight of the user in kg
+        height:
+          type: number
+          format: float
+          description: Height of the user in cm
+        bmi:
+          type: number
+          format: float
+          description: Calculated BMI
+        date_recorded:
+          type: string
+          format: date
+          description: Date when metrics were recorded
+      required:
+        - id
+        - user_id
+        - date_recorded
+
+    WorkoutProgram:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the workout program
+        title:
+          type: string
+          description: Title of the workout program
+        description:
+          type: string
+          description: Description of the workout program
+        level:
+          type: string
+          enum: [beginner, intermediate, advanced]
+          description: Difficulty level of the program
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when the program was created
+      required:
+        - id
+        - title
+        - created_at
+
+    WorkoutProgress:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the progress record
+        user_id:
+          type: string
+          format: uuid
+          description: Reference to the user whose progress is tracked
+        program_id:
+          type: string
+          format: uuid
+          description: Reference to the workout program
+        date:
+          type: string
+          format: date
+          description: Date when the workout was performed
+        progress_note:
+          type: string
+          description: Additional notes about the workout
+        completed:
+          type: boolean
+          description: Whether the workout was completed
+      required:
+        - id
+        - user_id
+        - program_id
+        - date
+        - completed
+
+    SuccessResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Operation completed successfully
+
+    ErrorResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: false
+        error:
+          type: string
+          example: Something went wrong
+
+security:
+  - BearerAuth: []
+
+tags:
+  - name: Authentication
+    description: User authentication endpoints
+  - name: Users
+    description: User management endpoints
+  - name: Memberships
+    description: Membership management endpoints
+  - name: Membership Plans
+    description: Membership plan definitions
+  - name: Check-ins
+    description: User check-in logging
+  - name: User Metrics
+    description: Body metrics tracking
+  - name: Workout Programs
+    description: Workout program management
+  - name: Workout Progress
+    description: Workout completion tracking
+
+paths:
+  # Authentication Endpoints
+  /auth/sign-up:
+    post:
+      tags:
+        - Authentication
+      summary: Register a new user
+      description: Creates a new user account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+                  minLength: 8
+                fullName:
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  user:
+                    $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/sign-in:
+    post:
+      tags:
+        - Authentication
+      summary: Authenticate user
+      description: Signs in an existing user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  format: email
+                password:
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: User signed in successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  session:
+                    type: object
+                    properties:
+                      access_token:
+                        type: string
+                        example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /auth/sign-out:
+    post:
+      tags:
+        - Authentication
+      summary: Sign out user
+      description: Signs out authenticated user
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: User signed out successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+
+  # User Management
+  /users:
+    get:
+      tags:
+        - Users
+      summary: Get all users
+      description: Retrieves a list of all users
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: role
+          in: query
+          description: Filter by user role
+          schema:
+            type: string
+            enum: [admin, staff, member]
+        - name: limit
+          in: query
+          description: Limit number of results
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: offset
+          in: query
+          description: Offset for pagination
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          description: List of users retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/User'
+                  total_count:
+                    type: integer
+        '403':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      tags:
+        - Users
+      summary: Create a new user
+      description: Creates a new user (admin only)
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  user:
+                    $ref: '#/components/schemas/User'
+        '403':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /users/{id}:
+    get:
+      tags:
+        - Users
+      summary: Get user by ID
+      description: Retrieves a specific user by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: User retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    patch:
+      tags:
+        - Users
+      summary: Update user by ID
+      description: Updates a specific user by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      tags:
+        - Users
+      summary: Delete user by ID
+      description: Deletes a specific user by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: User deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '404':
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # Membership Management
+  /memberships:
+    get:
+      tags:
+        - Memberships
+      summary: Get all memberships
+      description: Retrieves a list of all memberships
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: user_id
+          in: query
+          description: Filter by user ID
+          schema:
+            type: string
+            format: uuid
+        - name: status
+          in: query
+          description: Filter by membership status
+          schema:
+            type: string
+            enum: [active, expired, cancelled]
+        - name: limit
+          in: query
+          description: Limit number of results
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: offset
+          in: query
+          description: Offset for pagination
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          description: List of memberships retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  memberships:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Membership'
+                  total_count:
+                    type: integer
+        '403':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      tags:
+        - Memberships
+      summary: Create a new membership
+      description: Creates a new membership for a user
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Membership'
+      responses:
+        '201':
+          description: Membership created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  membership:
+                    $ref: '#/components/schemas/Membership'
+        '400':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /memberships/{id}:
+    get:
+      tags:
+        - Memberships
+      summary: Get membership by ID
+      description: Retrieves a specific membership by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Membership ID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Membership retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Membership'
+        '404':
+          description: Membership not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    patch:
+      tags:
+        - Memberships
+      summary: Update membership by ID
+      description: Updates a specific membership by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Membership ID
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Membership'
+      responses:
+        '200':
+          description: Membership updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '404':
+          description: Membership not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      tags:
+        - Memberships
+      summary: Delete membership by ID
+      description: Deletes a specific membership by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Membership ID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Membership deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '404':
+          description: Membership not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # Membership Plans
+  /membership-plans:
+    get:
+      tags:
+        - Membership Plans
+      summary: Get all membership plans
+      description: Retrieves a list of all membership plans
+      parameters:
+        - name: limit
+          in: query
+          description: Limit number of results
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: offset
+          in: query
+          description: Offset for pagination
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          description: List of membership plans retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  plans:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MembershipPlan'
+                  total_count:
+                    type: integer
+
+    post:
+      tags:
+        - Membership Plans
+      summary: Create a new membership plan
+      description: Creates a new membership plan (admin only)
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MembershipPlan'
+      responses:
+        '201':
+          description: Membership plan created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  plan:
+                    $ref: '#/components/schemas/MembershipPlan'
+        '403':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /membership-plans/{id}:
+    get:
+      tags:
+        - Membership Plans
+      summary: Get membership plan by ID
+      description: Retrieves a specific membership plan by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Plan ID
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Membership plan retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MembershipPlan'
+        '404':
+          description: Membership plan not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    put:
+      tags:
+        - Membership Plans
+      summary: Update membership plan by ID
+      description: Updates a specific membership plan by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Plan ID
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MembershipPlan'
+      responses:
+        '200':
+          description: Membership plan updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '404':
+          description: Membership plan not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    delete:
+      tags:
+        - Membership Plans
+      summary: Delete membership plan by ID
+      description: Deletes a specific membership plan by ID (admin only)
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Plan ID
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Membership plan deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SuccessResponse'
+        '404':
+          description: Membership plan not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # Check-in Logs
+  /check-ins:
+    get:
+      tags:
+        - Check-ins
+      summary: Get check-in logs
+      description: Retrieves a list of check-in logs
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: user_id
+          in: query
+          description: Filter by user ID
+          schema:
+            type: string
+            format: uuid
+        - name: date
+          in: query
+          description: Filter by date (YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+        - name: limit
+          in: query
+          description: Limit number of results
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: offset
+          in: query
+          description: Offset for pagination
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          description: List of check-in logs retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  check_ins:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CheckInLog'
+                  total_count:
+                    type: integer
+        '403':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      tags:
+        - Check-ins
+      summary: Create a new check-in
+      description: Records a new check-in for a user
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CheckInLog'
+      responses:
+        '201':
+          description: Check-in recorded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  check_in:
+                    $ref: '#/components/schemas/CheckInLog'
+        '400':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # User Metrics
+  /user-metrics:
+    get:
+      tags:
+        - User Metrics
+      summary: Get user metrics
+      description: Retrieves a list of user metrics
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: user_id
+          in: query
+          description: Filter by user ID
+          schema:
+            type: string
+            format: uuid
+        - name: date_from
+          in: query
+          description: Filter from date (YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+        - name: date_to
+          in: query
+          description: Filter to date (YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+        - name: limit
+          in: query
+          description: Limit number of results
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: offset
+          in: query
+          description: Offset for pagination
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          description: List of user metrics retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  metrics:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UserMetric'
+                  total_count:
+                    type: integer
+        '403':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      tags:
+        - User Metrics
+      summary: Record new user metrics
+      description: Creates a new user metrics record
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserMetric'
+      responses:
+        '201':
+          description: User metrics recorded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  metric:
+                    $ref: '#/components/schemas/UserMetric'
+        '400':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /user-metrics/{id}:
+    get:
+      tags:
+        - User Metrics
+      summary: Get user metric by ID
+      description: Retrieves a specific user metric by ID
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Metric ID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: User metric retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserMetric'
+        '404':
+          description: User metric not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # Workout Programs
+  /workout-programs:
+    get:
+      tags:
+        - Workout Programs
+      summary: Get all workout programs
+      description: Retrieves a list of all workout programs
+      parameters:
+        - name: level
+          in: query
+          description: Filter by difficulty level
+          schema:
+            type: string
+            enum: [beginner, intermediate, advanced]
+        - name: limit
+          in: query
+          description: Limit number of results
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: offset
+          in: query
+          description: Offset for pagination
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          description: List of workout programs retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  programs:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkoutProgram'
+                  total_count:
+                    type: integer
+
+    post:
+      tags:
+        - Workout Programs
+      summary: Create a new workout program
+      description: Creates a new workout program (admin only)
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkoutProgram'
+      responses:
+        '201':
+          description: Workout program created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  program:
+                    $ref: '#/components/schemas/WorkoutProgram'
+        '403':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /workout-programs/{id}:
+    get:
+      tags:
+        - Workout Programs
+      summary: Get workout program by ID
+      description: Retrieves a specific workout program by ID
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Program ID
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Workout program retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkoutProgram'
+        '404':
+          description: Workout program not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  # Workout Progress
+  /workout-progress:
+    get:
+      tags:
+        - Workout Progress
+      summary: Get workout progress records
+      description: Retrieves a list of workout progress records
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: user_id
+          in: query
+          description: Filter by user ID
+          schema:
+            type: string
+            format: uuid
+        - name: program_id
+          in: query
+          description: Filter by program ID
+          schema:
+            type: string
+            format: uuid
+        - name: date_from
+          in: query
+          description: Filter from date (YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+        - name: date_to
+          in: query
+          description: Filter to date (YYYY-MM-DD)
+          schema:
+            type: string
+            format: date
+        - name: limit
+          in: query
+          description: Limit number of results
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 20
+        - name: offset
+          in: query
+          description: Offset for pagination
+          schema:
+            type: integer
+            minimum: 0
+            default: 0
+      responses:
+        '200':
+          description: List of workout progress records retrieved
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  progress_records:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/WorkoutProgress'
+                  total_count:
+                    type: integer
+        '403':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+    post:
+      tags:
+        - Workout Progress
+      summary: Record new workout progress
+      description: Creates a new workout progress record
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkoutProgress'
+      responses:
+        '201':
+          description: Workout progress recorded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  progress:
+                    $ref: '#/components/schemas/WorkoutProgress'
+        '400':
+          description: Invalid input data
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+</content>
