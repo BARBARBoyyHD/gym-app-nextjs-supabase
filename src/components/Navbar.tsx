@@ -5,50 +5,35 @@ export default function Navbar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <header className="bg-black text-white">
+    <header className="bg-dark text-white">
       <nav className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo */}
-        <div className="text-xl font-bold">LiftUp</div>
+        <div className="text-xl font-bold color-brand">LiftUp</div>
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex items-center gap-10">
           <li>
-            <a
-              href="#"
-              className="hover:text-green-400 transition font-semibold"
-            >
+            <a href="#" className="text-brand transition font-semibold">
               About Us
             </a>
           </li>
           <li>
-            <a
-              href="#"
-              className="hover:text-green-400 transition font-semibold"
-            >
+            <a href="#" className="text-brand transition font-semibold">
               Classes
             </a>
           </li>
           <li>
-            <a
-              href="#"
-              className="hover:text-green-400 transition font-semibold"
-            >
+            <a href="#" className="text-brand transition font-semibold">
               Coaches
             </a>
           </li>
           <li>
-            <a
-              href="#"
-              className="hover:text-green-400 transition font-semibold"
-            >
+            <a href="#" className="text-brand transition font-semibold">
               Plan
             </a>
           </li>
           <li>
-            <a
-              href="#"
-              className="hover:text-green-400 transition font-semibold"
-            >
+            <a href="#" className="text-brand transition font-semibold">
               Contact
             </a>
           </li>
