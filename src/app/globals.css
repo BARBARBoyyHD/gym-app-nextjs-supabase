@@ -1,1 +1,80 @@
 @import "tailwindcss";
+
+/* ------------------------------
+   ROOT VARIABLES
+------------------------------ */
+:root {
+  --font-poppins: var(--font-poppins);
+
+  /* Brand Colors */
+  --brand: #d6fb00;
+  --brand-hover: #c2ea00;
+  --brand-dark: #a8d400;
+
+  /* Dark Gray Background */
+  --background-dark: #0f0f0f; /* abu tua */
+}
+
+/* ------------------------------
+   GLOBAL FONT
+------------------------------ */
+body {
+  background-color: var(--background-dark);
+  color: white;
+  font-family: var(--font-poppins), sans-serif;
+}
+.nav-link {
+  position: relative;
+  color: rgba(255, 255, 255, 0.75);
+  transition: color 0.3s ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0%;
+  height: 2px;
+  background-color: #d6fb00;
+  transition: width 0.3s ease;
+}
+
+.nav-link:hover {
+  color: white;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.color-brand {
+  color: var(--brand);
+}
+
+.text-brand:hover {
+  color: var(--brand-hover);
+}
+
+/* Background Brand */
+.bg-brand {
+  background-color: var(--brand);
+}
+
+.bg-brand-hover:hover {
+  background-color: var(--brand-hover);
+}
+
+.bg-brand-dark:active {
+  background-color: var(--brand-dark);
+}
+
+/* Border Brand */
+.border-brand {
+  border-color: var(--brand);
+}
+
+/* Smooth transitions for UI feel */
+* {
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
