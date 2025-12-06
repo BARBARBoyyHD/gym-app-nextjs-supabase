@@ -103,4 +103,16 @@
   .marker-brand::marker {
     color: var(--brand);
   }
+  /* Swiper Navigation (Next & Prev) – Brand Color */
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: var(--brand) !important;
+    font-weight: bold;
+  }
+
+  /* Hover effect optional */
+  .swiper-button-next:hover,
+  .swiper-button-prev:hover {
+    color: var(--brand-hover) !important;
+  }
 }

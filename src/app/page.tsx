@@ -10,7 +10,7 @@ import Coaches from "@/components/section/Coaches";
 import GetStarted from "@/components/section/GetStarted";
 import CallToActionBlock from "@/components/CallToActionBlock";
 import Plans from "@/components/section/Plans";
-
+import Testimony from "@/components/section/Testimony";
 export default function page() {
   return (
     <>
@@ -34,6 +34,7 @@ export default function page() {
 "
         />
         <Plans />
+        <Testimony />
       </main>
       <Footer />
     </>
