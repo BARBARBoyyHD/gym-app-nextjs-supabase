@@ -19,7 +19,7 @@ export default function Facility() {
   ];
 
   return (
-    <section className="py-32 ">
+    <section className="my-32 ">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-10 px-4">
         {facilities.map((item, index) => (
           <div key={index} className="flex flex-col items-start gap-4">

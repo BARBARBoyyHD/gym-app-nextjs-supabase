@@ -6,6 +6,7 @@ import PersonalTraining from "@/components/section/PersonalTraining";
 import Facility from "@/components/section/Facility";
 import GroupTraining from "@/components/section/GroupTraining";
 import CallToAction from "@/components/CallToAction";
+import Coaches from "@/components/section/Coaches";
 export default function page() {
   return (
     <>
@@ -20,6 +21,7 @@ export default function page() {
           title="GET YOUR FIRST CLASS FOR FREE!"
           description=" Schedule your visit to LiftUp and attend any group training for free on this day."
         />
+        <Coaches />
         <Footer />
       </main>
     </>

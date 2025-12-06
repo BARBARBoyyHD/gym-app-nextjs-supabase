@@ -36,7 +36,6 @@ export default function Classes() {
   return (
     <section>
       <div className="max-w-6xl mx-auto px-4">
-        {/* Title Section */}
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold mb-3">Our Classes</h2>
           <p className="text-white/70">
@@ -45,7 +44,6 @@ export default function Classes() {
           </p>
         </div>
 
-        {/* Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 space-x-6 space-y-6">
           {classesData.map((item, index) => (
             <div key={index}>
