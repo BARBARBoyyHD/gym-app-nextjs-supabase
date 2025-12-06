@@ -1,17 +1,56 @@
+import { FaInstagram } from "react-icons/fa";
+import { FaYoutube } from "react-icons/fa";
+import { FaFacebook } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 export default function Footer() {
   return (
     <footer className="    ">
       <div className="max-w-6xl mx-auto px-4  border-white/20 border-t pt-20">
         <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-5 gap-5 space-y-5">
           <div>
-            <h2 className="text-2xl font-bold text-brand">LiftUp</h2>
+            <h2 className="text-2xl font-bold">
+              Lift<span className="text-brand">Up</span>
+            </h2>
             <p className="mt-4 text-xs text-white/70 leading-relaxed">
               LiftUp adalah platform latihan modern yang menyediakan layanan
               profesional, kelas premium, dan kursus berlajar yang
               bersertifikat.
             </p>
+            <ul className="flex flex-row gap-2 mt-4 text-sm">
+              <li>
+                <a
+                  href="#"
+                  className="text-brand inline-block p-1 border bg-brand-hover duration-75 text-dark-hover border-brand"
+                >
+                  <FaFacebook size={20} />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-brand inline-block p-1 border bg-brand-hover duration-75 text-dark-hover border-brand"
+                >
+                  <FaYoutube size={20} />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-brand inline-block p-1 border bg-brand-hover duration-75 text-dark-hover border-brand"
+                >
+                  <FaInstagram size={20} />
+                </a>
+              </li>
+              <li>
+                <a
+                  href="#"
+                  className="text-brand inline-block p-1 border bg-brand-hover duration-75 text-dark-hover border-brand"
+                >
+                  <FaXTwitter size={20} />
+                </a>
+              </li>
+            </ul>
           </div>
-
           <div className="mx-auto">
             <h3 className="text-lg font-semibold text-white mb-4">
               Navigation

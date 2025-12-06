@@ -21,7 +21,7 @@ export default function Plans() {
               <li className="ml-4 marker-brand">Personal training sessions</li>
               <li className="ml-4 marker-brand">Full services</li>
             </ul>
-            <ButtonBrand title="Select plan" />
+            <ButtonBrand icon={false} title="Select plan" />
           </div>
           <div className="bg-dark-secondary border-brand h-[425px] p-8">
             <h3 className="text-white/70 uppercase text-2xl font-bold">
@@ -37,7 +37,7 @@ export default function Plans() {
               <li className="ml-4 marker-brand">$15 per each extra training</li>
               <li className="ml-4 marker-brand">No individual sessions</li>
             </ul>
-            <ButtonBrand title="Select plan" />
+            <ButtonBrand icon={false} title="Select plan" />
           </div>
           <div className="bg-dark-secondary border-brand h-[425px] p-8">
             <h3 className="text-white/70 uppercase text-2xl font-bold">
@@ -53,7 +53,7 @@ export default function Plans() {
               <li className="ml-4 marker-brand">50+ gym machines</li>
               <li className="ml-4 marker-brand">Modern machines</li>
             </ul>
-            <ButtonBrand title="Select plan" />
+            <ButtonBrand icon={false} title="Select plan" />
           </div>
         </div>
       </div>

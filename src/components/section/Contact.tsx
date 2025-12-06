@@ -24,7 +24,7 @@ export default function Contact() {
               health, fitness goals, expectations, and your favorite sports
               activities
             </p>
-            <ButtonBrand title="Get free consultation" />
+            <ButtonBrand icon={false} title="Get free consultation" />
           </div>
           <div className="space-y-6 mx-auto ">
             <div>
