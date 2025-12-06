@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins as PoppinsFont } from "next/font/google";
 import "./globals.css";
+import { TanstackProvider } from "@/utils/ReactQueryProviders";
 
 // INISIALISASI FONT
 const poppins = PoppinsFont({
@@ -21,7 +22,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} antialiased`}>{children}</body>
+      <body className={`${poppins.variable} antialiased`}>
+        <TanstackProvider>{children}</TanstackProvider>
+      </body>
     </html>
   );
 }
