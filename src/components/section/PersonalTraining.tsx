@@ -3,8 +3,8 @@ export default function Coaches() {
     <section className="mt-24">
       <div className="max-w-6xl mx-auto px-4">
         <div className="flex flex-wrap">
-          <div className="flex-1 flex justify-center">
-            <div className="bg-gray-800 w-[400px] h-[500px]"></div>
+          <div className="flex-1 flex justify-start">
+            <div className="bg-gray-800 w-[468px] h-[600px]"></div>
           </div>
           <div className="flex-1 flex items-center flex-wrap">
             <div>
