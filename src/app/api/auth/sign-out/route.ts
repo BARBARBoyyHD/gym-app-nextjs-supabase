@@ -1,8 +1,22 @@
 import { createClient } from "@/lib/supabase/server";
 import { errorResponse, successResponse } from "@/utils/response";
 import { NextRequest } from "next/server";
+import { checkRateLimit, RateLimitConfig } from "@/middleware/rate-limit-middleware";
+
+// Rate limiting configuration for sign-out endpoint (less restrictive but still limiting abusive behavior)
+const signOutRateLimitConfig: RateLimitConfig = {
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20, // Limit each IP to 20 sign-out attempts per window (high since this is less sensitive)
+  message: 'Too many sign-out attempts from this IP, please try again later.'
+};
 
 export async function POST(req: NextRequest) {
+  // Apply rate limiting for sign-out attempts
+  const rateLimitResult = await checkRateLimit(req, signOutRateLimitConfig);
+  if (rateLimitResult) {
+    return rateLimitResult;
+  }
+
   try {
     const supabase = await createClient();
 

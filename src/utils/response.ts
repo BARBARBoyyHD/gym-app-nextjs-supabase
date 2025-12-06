@@ -1,5 +1,6 @@
 import type { SuccessType } from "@/types/responseType";
 import type { ErrorType } from "@/types/responseType";
+import type { ZodIssue } from "zod";
 import { NextResponse } from "next/server";
 
 export function successResponse<T>({
@@ -16,8 +17,8 @@ export function errorResponse({
   status = 500,
   message,
   error,
+  errors,
 }: ErrorType) {
-  // If message isn't given, try to extract it from the error
   let errorMessage = message;
 
   if (!errorMessage) {
@@ -35,6 +36,8 @@ export function errorResponse({
       success,
       status,
       message: errorMessage,
+      error,
+      errors, // <-- includes Zod validation issues
     },
     { status }
   );

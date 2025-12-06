@@ -13,7 +13,6 @@ Proyek ini dirancang untuk menunjukkan kemampuan **full-stack engineering**, **c
 Aplikasi ini bertujuan untuk membantu pemilik gym mengelola:
 
 * Membership pelanggan
-* Check-in gym menggunakan QR Code
 * Workout program
 * Progress tracking (berat badan, BMI, dan progress latihan)
 * Dashboard analitik untuk admin
@@ -29,7 +28,7 @@ Dibangun dengan fokus pada:
 
 # 🎯 **Key Features**
 
-### 👤 **User & Authentication**
+### 👤 **Admin User & Authentication**
 
 * Login & Register via Supabase Auth
 * Role-based access: **admin** & **member**
@@ -41,12 +40,6 @@ Dibangun dengan fokus pada:
 * Riwayat transaksi
 * Membership status (active / expired)
 
-### 📌 **QR Check-in System**
-
-* Generate QR Code (dynamic & temporary)
-* Member scan pada pintu masuk
-* Admin melihat log check-in harian
-
 ### 🏋️ **Workout Program**
 
 * Daftar program latihan (beginner → advanced)
@@ -54,10 +47,10 @@ Dibangun dengan fokus pada:
 
 ### 📊 **Admin Dashboard**
 
-* Daily check-in stats
 * Income analytics
 * Active vs expired members
 * Membership growth chart
+* Member workout progress
 
 ---
 
@@ -81,7 +74,6 @@ Dibangun dengan fokus pada:
 ### **Tools**
 
 * Chart.js / Recharts
-* QR Code Generator (qrcode)
 * TypeScript
 * Vercel (deployment)
 
@@ -108,7 +100,7 @@ src/
 
 # 🧩 **Database Schema (ERD)**
 
-### **users**
+### **members**
 
 ```sql
 id (uuid)
@@ -133,7 +125,7 @@ created_at
 
 ```sql
 id (uuid)
-user_id (fk)
+member_id (fk)
 plan_id (fk)
 start_date
 end_date
@@ -146,7 +138,7 @@ created_at
 
 ```sql
 id (uuid)
-user_id
+member_id
 check_in_time
 device
 check_in_method
@@ -166,18 +158,18 @@ created_at
 
 ```sql
 id
-user_id
+member_id
 program_id
 date
 progress_note
 completed
 ```
 
-### **user_metrics**
+### **member_metrics**
 
 ```sql
 id
-user_id
+member_id
 weight
 height
 bmi
@@ -197,13 +189,8 @@ Proyek ini menggunakan:
 * Policies di Supabase dijaga ketat untuk tabel:
 
   * `memberships`
-  * `check_in_logs`
-  * `user_metrics`
+  * `member_metrics`
 
-### ✔ Edge Function for QR Verification
-
-* QR hanya valid beberapa menit
-* Mengurangi risiko sharing QR antar pengguna
 
 ---
 
@@ -282,10 +269,8 @@ Vercel + Next.js + Supabase otomatis siap production.
 
 ### Phase 2 (Gym Operations)
 
-* QR Check-in
-* Check-in analytics
 
-### Phase 3 (User Features)
+### Phase 3 (Member Features)
 
 * Workout program
 * Progress tracking

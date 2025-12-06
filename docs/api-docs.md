@@ -1,7 +1,7 @@
 # FitTrack Gym Management API Documentation
 
 ## Overview
-This document provides documentation for the FitTrack Gym Management API. The API allows management of gym members, memberships, check-ins, workout programs, and user metrics.
+This document provides documentation for the FitTrack Gym Management API. The API allows management of gym members, memberships, workout programs, and member metrics.
 
 ## Base URL
 ```
@@ -22,7 +22,7 @@ For endpoints that don't require authentication, this header is not needed.
 ### Authentication
 
 #### POST /auth/sign-up
-Register a new user account.
+Register a new admin user account.
 
 **Request Body:**
 ```json
@@ -48,7 +48,7 @@ Register a new user account.
 ```
 
 #### POST /auth/sign-in
-Authenticate an existing user.
+Authenticate an existing admin user.
 
 **Request Body:**
 ```json
@@ -69,7 +69,7 @@ Authenticate an existing user.
 ```
 
 #### POST /auth/sign-out
-Sign out the authenticated user.
+Sign out the authenticated admin user.
 
 **Headers:**
 ```
@@ -84,18 +84,18 @@ Authorization: Bearer <token>
 }
 ```
 
-### Users
+### Members
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/users/list` | Retrieve a list of all users. Admin access required. |
-| POST | `/api/users/create` | Create a new user. Admin access required. |
-| GET | `/api/users/get` | Get details for a specific user by ID. |
-| PUT | `/api/users/update` | Update a specific user. |
-| DELETE | `/api/users/delete` | Delete a specific user. |
+| GET | `/api/members/list` | Retrieve a list of all members. Admin access required. |
+| POST | `/api/members/create` | Create a new member. Admin access required. |
+| GET | `/api/members/get` | Get details for a specific member by ID. |
+| PUT | `/api/members/update` | Update a specific member. |
+| DELETE | `/api/members/delete` | Delete a specific member. |
 
-#### GET /api/users/list
-Retrieve a list of all users. Admin access required.
+#### GET /api/members/list
+Retrieve a list of all members. Admin access required.
 
 **Headers:**
 ```
@@ -103,17 +103,17 @@ Authorization: Bearer <token>
 ```
 
 **Query Parameters:**
-- `role` (optional): Filter by user role (admin, staff, member)
+- `role` (optional): Filter by admin user role (admin, staff, member)
 - `limit` (optional): Number of results to return (max 100, default 20)
 - `offset` (optional): Number of records to skip (default 0)
 
 **Response:**
 ```json
 {
-  "users": [
+  "members": [
     {
       "id": "uuid-string",
-      "email": "user@example.com",
+      "email": "member@example.com",
       "full_name": "John Doe",
       "role": "member",
       "created_at": "2023-01-01T00:00:00Z"
@@ -123,8 +123,8 @@ Authorization: Bearer <token>
 }
 ```
 
-#### POST /api/users/create
-Create a new user. Admin access required.
+#### POST /api/members/create
+Create a new member. Admin access required.
 
 **Headers:**
 ```
@@ -144,9 +144,9 @@ Authorization: Bearer <token>
 ```json
 {
   "success": true,
-  "user": {
+  "member": {
     "id": "uuid-string",
-    "email": "newuser@example.com",
+    "email": "newmember@example.com",
     "full_name": "Jane Doe",
     "role": "member",
     "created_at": "2023-01-01T00:00:00Z"
@@ -154,8 +154,8 @@ Authorization: Bearer <token>
 }
 ```
 
-#### GET /api/users/get
-Get details for a specific user by ID.
+#### GET /api/members/get
+Get details for a specific member by ID.
 
 **Headers:**
 ```
@@ -166,15 +166,15 @@ Authorization: Bearer <token>
 ```json
 {
   "id": "uuid-string",
-  "email": "user@example.com",
+  "email": "member@example.com",
   "full_name": "John Doe",
   "role": "member",
   "created_at": "2023-01-01T00:00:00Z"
 }
 ```
 
-#### PUT /api/users/update
-Update a specific user.
+#### PUT /api/members/update
+Update a specific member.
 
 **Headers:**
 ```
@@ -194,12 +194,12 @@ Authorization: Bearer <token>
 ```json
 {
   "success": true,
-  "message": "User updated successfully"
+  "message": "Admin user updated successfully"
 }
 ```
 
-#### DELETE /api/users/delete
-Delete a specific user.
+#### DELETE /api/members/delete
+Delete a specific member.
 
 **Headers:**
 ```
@@ -210,7 +210,7 @@ Authorization: Bearer <token>
 ```json
 {
   "success": true,
-  "message": "User deleted successfully"
+  "message": "Admin user deleted successfully"
 }
 ```
 
@@ -218,14 +218,14 @@ Authorization: Bearer <token>
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/memberships/list` | Retrieve a list of all memberships. Admin access required, users can retrieve their own memberships. |
-| POST | `/api/memberships/create` | Create a new membership for a user. |
+| GET | `/api/memberships/list` | Retrieve a list of all memberships. Admin access required, members can retrieve their own memberships. |
+| POST | `/api/memberships/create` | Create a new membership for a member. |
 | GET | `/api/memberships/get` | Get details for a specific membership by ID. |
 | PATCH | `/api/memberships/update` | Update a specific membership by ID. |
 | DELETE | `/api/memberships/delete` | Delete a specific membership by ID. |
 
 #### GET /api/memberships/list
-Retrieve a list of all memberships. Admin access required, users can retrieve their own memberships.
+Retrieve a list of all memberships. Admin access required, members can retrieve their own memberships.
 
 **Headers:**
 ```
@@ -233,7 +233,7 @@ Authorization: Bearer <token>
 ```
 
 **Query Parameters:**
-- `user_id` (optional): Filter by user ID
+- `member_id` (optional): Filter by member ID
 - `status` (optional): Filter by membership status (active, expired, cancelled)
 - `limit` (optional): Number of results to return (max 100, default 20)
 - `offset` (optional): Number of records to skip (default 0)
@@ -244,7 +244,7 @@ Authorization: Bearer <token>
   "memberships": [
     {
       "id": "uuid-string",
-      "user_id": "user-uuid",
+      "member_id": "member-uuid",
       "plan_id": 1,
       "start_date": "2023-01-01",
       "end_date": "2023-12-31",
@@ -258,7 +258,7 @@ Authorization: Bearer <token>
 ```
 
 #### POST /api/memberships/create
-Create a new membership for a user.
+Create a new membership for a member.
 
 **Headers:**
 ```
@@ -268,7 +268,7 @@ Authorization: Bearer <token>
 **Request Body:**
 ```json
 {
-  "user_id": "user-uuid",
+  "member_id": "member-uuid",
   "plan_id": 1,
   "start_date": "2023-01-01",
   "end_date": "2023-12-31",
@@ -283,7 +283,7 @@ Authorization: Bearer <token>
   "success": true,
   "membership": {
     "id": "uuid-string",
-    "user_id": "user-uuid",
+    "member_id": "member-uuid",
     "plan_id": 1,
     "start_date": "2023-01-01",
     "end_date": "2023-12-31",
@@ -306,7 +306,7 @@ Authorization: Bearer <token>
 ```json
 {
   "id": "uuid-string",
-  "user_id": "user-uuid",
+  "member_id": "member-uuid",
   "plan_id": 1,
   "start_date": "2023-01-01",
   "end_date": "2023-12-31",
@@ -483,7 +483,7 @@ Authorization: Bearer <token>
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/api/check-ins/list` | Retrieve a list of check-in logs. |
-| POST | `/api/check-ins/create` | Record a new check-in for a user. |
+| POST | `/api/check-ins/create` | Record a new check-in for a member. |
 
 #### GET /api/check-ins/list
 Retrieve a list of check-in logs.
@@ -493,69 +493,16 @@ Retrieve a list of check-in logs.
 Authorization: Bearer <token>
 ```
 
-**Query Parameters:**
-- `user_id` (optional): Filter by user ID
-- `date` (optional): Filter by date (YYYY-MM-DD)
-- `limit` (optional): Number of results to return (max 100, default 20)
-- `offset` (optional): Number of records to skip (default 0)
-
-**Response:**
-```json
-{
-  "check_ins": [
-    {
-      "id": "uuid-string",
-      "user_id": "user-uuid",
-      "check_in_time": "2023-01-01T08:30:00Z",
-      "device": "mobile-app",
-      "check_in_method": "qr-scan"
-    }
-  ],
-  "total_count": 1
-}
-```
-
-#### POST /api/check-ins/create
-Record a new check-in for a user.
-
-**Headers:**
-```
-Authorization: Bearer <token>
-```
-
-**Request Body:**
-```json
-{
-  "user_id": "user-uuid",
-  "device": "mobile-app",
-  "check_in_method": "qr-scan"
-}
-```
-
-**Response:**
-```json
-{
-  "success": true,
-  "check_in": {
-    "id": "uuid-string",
-    "user_id": "user-uuid",
-    "check_in_time": "2023-01-01T08:30:00Z",
-    "device": "mobile-app",
-    "check_in_method": "qr-scan"
-  }
-}
-```
-
-### User Metrics
+### Member Metrics
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/user-metrics/list` | Retrieve a list of user metrics. |
-| POST | `/api/user-metrics/create` | Record new user metrics. |
-| GET | `/api/user-metrics/get` | Get details for a specific user metric by ID. |
+| GET | `/api/member-metrics/list` | Retrieve a list of member metrics. |
+| POST | `/api/member-metrics/create` | Record new member metrics. |
+| GET | `/api/member-metrics/get` | Get details for a specific member metric by ID. |
 
-#### GET /api/user-metrics/list
-Retrieve a list of user metrics.
+#### GET /api/member-metrics/list
+Retrieve a list of member metrics.
 
 **Headers:**
 ```
@@ -563,7 +510,7 @@ Authorization: Bearer <token>
 ```
 
 **Query Parameters:**
-- `user_id` (optional): Filter by user ID
+- `member_id` (optional): Filter by member ID
 - `date_from` (optional): Filter from date (YYYY-MM-DD)
 - `date_to` (optional): Filter to date (YYYY-MM-DD)
 - `limit` (optional): Number of results to return (max 100, default 20)
@@ -575,7 +522,7 @@ Authorization: Bearer <token>
   "metrics": [
     {
       "id": "uuid-string",
-      "user_id": "user-uuid",
+      "member_id": "member-uuid",
       "weight": 75.5,
       "height": 175.0,
       "bmi": 24.5,
@@ -586,8 +533,8 @@ Authorization: Bearer <token>
 }
 ```
 
-#### POST /api/user-metrics/create
-Record new user metrics.
+#### POST /api/member-metrics/create
+Record new member metrics.
 
 **Headers:**
 ```
@@ -597,7 +544,7 @@ Authorization: Bearer <token>
 **Request Body:**
 ```json
 {
-  "user_id": "user-uuid",
+  "member_id": "member-uuid",
   "weight": 75.5,
   "height": 175.0,
   "bmi": 24.5
@@ -610,7 +557,7 @@ Authorization: Bearer <token>
   "success": true,
   "metric": {
     "id": "uuid-string",
-    "user_id": "user-uuid",
+    "member_id": "member-uuid",
     "weight": 75.5,
     "height": 175.0,
     "bmi": 24.5,
@@ -619,8 +566,8 @@ Authorization: Bearer <token>
 }
 ```
 
-#### GET /api/user-metrics/get
-Get details for a specific user metric by ID.
+#### GET /api/member-metrics/get
+Get details for a specific member metric by ID.
 
 **Headers:**
 ```
@@ -631,7 +578,7 @@ Authorization: Bearer <token>
 ```json
 {
   "id": "uuid-string",
-  "user_id": "user-uuid",
+  "member_id": "member-uuid",
   "weight": 75.5,
   "height": 175.0,
   "bmi": 24.5,
@@ -732,7 +679,7 @@ Authorization: Bearer <token>
 ```
 
 **Query Parameters:**
-- `user_id` (optional): Filter by user ID
+- `member_id` (optional): Filter by member ID
 - `program_id` (optional): Filter by program ID
 - `date_from` (optional): Filter from date (YYYY-MM-DD)
 - `date_to` (optional): Filter to date (YYYY-MM-DD)
@@ -745,7 +692,7 @@ Authorization: Bearer <token>
   "progress_records": [
     {
       "id": "uuid-string",
-      "user_id": "user-uuid",
+      "member_id": "member-uuid",
       "program_id": "program-uuid",
       "date": "2023-01-01",
       "progress_note": "Felt great today!",
@@ -767,7 +714,7 @@ Authorization: Bearer <token>
 **Request Body:**
 ```json
 {
-  "user_id": "user-uuid",
+  "member_id": "member-uuid",
   "program_id": "program-uuid",
   "date": "2023-01-01",
   "progress_note": "Felt great today!",
@@ -781,7 +728,7 @@ Authorization: Bearer <token>
   "success": true,
   "progress": {
     "id": "uuid-string",
-    "user_id": "user-uuid",
+    "member_id": "member-uuid",
     "program_id": "program-uuid",
     "date": "2023-01-01",
     "progress_note": "Felt great today!",

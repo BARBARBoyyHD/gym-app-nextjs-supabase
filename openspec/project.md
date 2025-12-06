@@ -3,11 +3,11 @@
 ---
 
 ## Purpose
-Gym Membership Management App is a modern full-stack application for managing gym memberships, QR check-in systems, workout programs, and user progress tracking. The platform allows gym administrators to manage members, create membership packages, monitor check-ins, and track user progress. Members can purchase memberships, check in using QR codes, and track their fitness progress.
+Gym Membership Management App is a modern full-stack application for managing gym memberships, workout programs, and member progress tracking. The platform allows gym administrators to manage members, create membership packages, and track member progress. Members can purchase memberships and track their fitness progress.
 
 **Engineering Goals:**
 - Build a production-ready full-stack application with Next.js 16 and Supabase
-- Implement secure authentication and role-based access control
+- Implement secure authentication
 - Design scalable database architecture with RLS (Row Level Security)
 - Create clean, modern UI with responsive design
 
@@ -33,15 +33,14 @@ Gym Membership Management App is a modern full-stack application for managing gy
 
 **Backend / Data**
 - Supabase (PostgreSQL database)
-- Supabase Auth (authentication & user management)
+- Supabase Auth (authentication & admin user management)
 - Supabase RLS (Row Level Security)
 - Supabase Storage (optional: for images/documents)
-- Supabase Edge Functions (QR code validation)
+- Supabase Edge Functions (for custom business logic)
 
 **UI Libraries & Tools**
 - Geist Font (Google Fonts)
 - Chart.js / Recharts (analytics dashboards)
-- QR Code Generator (for check-in system)
 
 **Development & Build Tools**
 - ESLint (Next.js recommended config + TypeScript)
@@ -81,7 +80,6 @@ src/
  │   ├─ api/            # API routes
  │   ├─ dashboard/      # Admin dashboard pages
  │   ├─ membership/     # Membership-related pages
- │   ├─ checkin/        # QR check-in pages
  │   ├─ layout.tsx      # Root layout
  │   └─ page.tsx        # Homepage
  ├─ components/         # Reusable React components
@@ -121,7 +119,7 @@ src/
          ▼                                      ▼
 ┌─ Deployment ──────────────────┐    ┌─ Analytics ───────────────┐
 │                              │    │                             │
-│  Vercel (Frontend)           │    │  Check-in analytics        │
+│  Vercel (Frontend)           │    │  Membership analytics      │
 │  Supabase Hosting (Backend)  │    │  Membership analytics      │
 │                              │    │  Revenue & growth metrics  │
 └──────────────────────────────┘    └─────────────────────────────┘
@@ -131,28 +129,28 @@ src/
 ### Authentication
 
 * **POST /auth/sign-up**
-    * Register a new user account.
+    * Register a new admin user account.
 * **POST /auth/sign-in**
-    * Authenticate an existing user.
+    * Authenticate an existing admin user.
 * **POST /auth/sign-out**
-    * Sign out the authenticated user. **Requires JWT**.
+    * Sign out the authenticated admin user. **Requires JWT**.
 
-### Users
+### Members
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/users/list` | Retrieve a list of all users. **Admin access required**. |
-| POST | `/api/users/create` | Create a new user. **Admin access required**. |
-| GET | `/api/users/get` | Get details for a specific user by ID. **Requires JWT**. |
-| PUT | `/api/users/update` | Update a specific user. **Requires JWT**. |
-| DELETE | `/api/users/delete` | Delete a specific user. **Requires JWT**. |
+| GET | `/api/members/list` | Retrieve a list of all members. **Admin access required**. |
+| POST | `/api/members/create` | Create a new member. **Admin access required**. |
+| GET | `/api/members/get` | Get details for a specific member by ID. **Requires JWT**. |
+| PUT | `/api/members/update` | Update a specific member. **Requires JWT**. |
+| DELETE | `/api/members/delete` | Delete a specific member. **Requires JWT**. |
 
 ### Memberships
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/memberships/list` | Retrieve a list of all memberships. **Admin access required**, users can retrieve their own memberships. **Requires JWT**. |
-| POST | `/api/memberships/create` | Create a new membership for a user. **Requires JWT**. |
+| GET | `/api/memberships/list` | Retrieve a list of all memberships. **Admin access required**, members can retrieve their own memberships. **Requires JWT**. |
+| POST | `/api/memberships/create` | Create a new membership for a member. **Requires JWT**. |
 | GET | `/api/memberships/get` | Get details for a specific membership by ID. **Requires JWT**. |
 | PATCH | `/api/memberships/update` | Update a specific membership by ID. **Requires JWT**. |
 | DELETE | `/api/memberships/delete` | Delete a specific membership by ID. **Requires JWT**. |
@@ -167,20 +165,14 @@ src/
 | PUT | `/api/membership-plans/update` | Update a specific membership plan by ID. **Admin access required**. **Requires JWT**. |
 | DELETE | `/api/membership-plans/delete` | Delete a specific membership plan by ID. **Admin access required**. **Requires JWT**. |
 
-### Check-ins
+
+### Member Metrics
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/check-ins/list` | Retrieve a list of check-in logs. **Requires JWT**. |
-| POST | `/api/check-ins/create` | Record a new check-in for a user. **Requires JWT**. |
-
-### User Metrics
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| GET | `/api/user-metrics/list` | Retrieve a list of user metrics. **Requires JWT**. |
-| POST | `/api/user-metrics/create` | Record new user metrics. **Requires JWT**. |
-| GET | `/api/user-metrics/get` | Get details for a specific user metric by ID. **Requires JWT**. |
+| GET | `/api/member-metrics/list` | Retrieve a list of member metrics. **Requires JWT**. |
+| POST | `/api/member-metrics/create` | Record new member metrics. **Requires JWT**. |
+| GET | `/api/member-metrics/get` | Get details for a specific member metric by ID. **Requires JWT**. |
 
 ### Workout Programs
 
