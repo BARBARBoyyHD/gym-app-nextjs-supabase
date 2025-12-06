@@ -5,6 +5,7 @@ import Classes from "@/components/section/Classes";
 import PersonalTraining from "@/components/section/PersonalTraining";
 import Facility from "@/components/section/Facility";
 import GroupTraining from "@/components/section/GroupTraining";
+import CallToAction from "@/components/CallToAction";
 export default function page() {
   return (
     <>
@@ -15,6 +16,10 @@ export default function page() {
         <PersonalTraining />
         <Facility />
         <GroupTraining />
+        <CallToAction
+          title="GET YOUR FIRST CLASS FOR FREE!"
+          description=" Schedule your visit to LiftUp and attend any group training for free on this day."
+        />
         <Footer />
       </main>
     </>
