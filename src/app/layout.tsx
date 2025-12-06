@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins as PoppinsFont } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 
 // INISIALISASI FONT
 const poppins = PoppinsFont({
@@ -23,9 +21,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} antialiased bg-black text-white`}>
-        <div className="max-w-6xl mx-auto px-4">{children}</div>
-      </body>
+      <body className={`${poppins.variable} antialiased`}>{children}</body>
     </html>
   );
 }
