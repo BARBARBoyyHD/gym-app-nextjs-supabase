@@ -6,7 +6,7 @@ export default function Navbar() {
 
   return (
     <header className="bg-dark text-white">
-      <nav className="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <nav className="max-w-6xl mx-auto px-4 pt-8 pb-4 flex items-center justify-between">
         {/* Logo */}
         <div className="text-xl font-bold color-brand">LiftUp</div>
 
@@ -33,7 +33,7 @@ export default function Navbar() {
             </a>
           </li>
           <li>
-            <a href="#" className="nav-link font-semibold">
+            <a href="#" className="nav-link ">
               Contact
             </a>
           </li>
@@ -41,13 +41,13 @@ export default function Navbar() {
         {/* Social (Desktop) */}
         <ul className="hidden md:flex items-center gap-4 text-sm">
           <li>
-            <a href="#" className="hover:text-green-400">
-              YouTube
+            <a href="#" className="nav-link ">
+              YT
             </a>
           </li>
           <li>
-            <a href="#" className="hover:text-green-400">
-              Instagram
+            <a href="#" className="nav-link ">
+              IG
             </a>
           </li>
         </ul>
@@ -71,55 +71,40 @@ export default function Navbar() {
         <div className="md:hidden bg-black border-t border-white/10">
           <ul className="flex flex-col gap-4 px-4 py-6 text-lg">
             <li>
-              <a
-                href="#"
-                className="hover:text-green-400 transition font-semibold"
-              >
+              <a href="#" className="nav-link font-semibold">
                 About Us
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                className="hover:text-green-400 transition font-semibold"
-              >
+              <a href="#" className="nav-link font-semibold">
                 Classes
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                className="hover:text-green-400 transition font-semibold"
-              >
+              <a href="#" className="nav-link font-semibold">
                 Personal Trainer
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                className="hover:text-green-400 transition font-semibold"
-              >
+              <a href="#" className="nav-link font-semibold">
                 Plan
               </a>
             </li>
             <li>
-              <a
-                href="#"
-                className="hover:text-green-400 transition font-semibold"
-              >
+              <a href="#" className="nav-link font-semibold">
                 Contact
               </a>
             </li>
           </ul>
           <ul className="flex flex-col gap-2 px-4 pb-6 text-sm">
             <li>
-              <a href="#" className="hover:text-green-400">
-                YouTube
+              <a href="#" className="nav-link font-semibold">
+                YT
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-green-400">
-                Instagram
+              <a href="#" className="nav-link font-semibold">
+                IG
               </a>
             </li>
           </ul>

@@ -12,7 +12,7 @@ export default function Plans() {
           <div className="bg-dark-secondary border-brand h-[425px] p-8">
             <h3 className="text-white/70 uppercase text-2xl font-bold">Pro</h3>
             <h5 className="uppercase text-3xl font-bold my-4 ">
-              <span className="text-brand">$100</span>/Month
+              <span className="text-brand">$200</span>
             </h5>
             <span className="text-sm text-white/70">Pro Plans</span>
             <ul className="list-disc my-6 space-y-2">
@@ -28,7 +28,7 @@ export default function Plans() {
               10 Classes
             </h3>
             <h5 className="uppercase text-3xl font-bold my-4">
-              <span className="text-brand">$100</span>
+              <span className="text-brand">$100</span>/Month
             </h5>
             <span className="text-sm text-white/70">10 group classes</span>
             <ul className="list-disc my-6 space-y-2">
