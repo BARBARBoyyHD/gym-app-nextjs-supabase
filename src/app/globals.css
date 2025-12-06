@@ -24,6 +24,10 @@
     background-color: var(--background-dark);
     font-family: var(--font-poppins), sans-serif;
   }
+  p,
+  li {
+    @apply tracking-wider;
+  }
 }
 
 /* ========================================
