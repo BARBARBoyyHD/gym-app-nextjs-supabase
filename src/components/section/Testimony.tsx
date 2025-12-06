@@ -9,7 +9,7 @@ import "swiper/css/navigation";
 
 export default function Testimony() {
   return (
-    <section className="my-24">
+    <section className="mt-28 mb-32">
       <div className="max-w-6xl mx-auto">
         <Swiper
           modules={[Navigation, Autoplay]}
