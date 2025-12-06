@@ -35,7 +35,7 @@ export interface Database {
           {
             foreignKeyName: "check_in_logs_user_id_fkey";
             columns: ["user_id"];
-            referencedRelation: "users";
+            referencedRelation: "members";
             referencedColumns: ["id"];
           }
         ];
@@ -81,7 +81,7 @@ export interface Database {
           {
             foreignKeyName: "memberships_user_id_fkey";
             columns: ["user_id"];
-            referencedRelation: "users";
+            referencedRelation: "members";
             referencedColumns: ["id"];
           }
         ];
@@ -142,12 +142,12 @@ export interface Database {
           {
             foreignKeyName: "user_metrics_user_id_fkey";
             columns: ["user_id"];
-            referencedRelation: "users";
+            referencedRelation: "members";
             referencedColumns: ["id"];
           }
         ];
       };
-      users: {
+      members: {
         Row: {
           id: string;
           email: string | null;
@@ -200,7 +200,7 @@ export interface Database {
           {
             foreignKeyName: "workout_progress_user_id_fkey";
             columns: ["user_id"];
-            referencedRelation: "users";
+            referencedRelation: "members";
             referencedColumns: ["id"];
           },
           {

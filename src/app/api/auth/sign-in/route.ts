@@ -1,8 +1,22 @@
 import { createClient } from "@/lib/supabase/server";
 import { errorResponse, successResponse } from "@/utils/response";
 import { NextRequest } from "next/server";
+import { checkRateLimit, RateLimitConfig } from "@/middleware/rate-limit-middleware";
+
+// Rate limiting configuration for sign-in endpoint (more restrictive as it's sensitive to brute force)
+const signInRateLimitConfig: RateLimitConfig = {
+  windowMs: 5 * 60 * 1000, // 15 minutes
+  max: 2, // Limit each IP to 5 attempts per window for sign-in
+  message: 'Too many login attempts from this IP, please try again later.'
+};
 
 export async function POST(req: NextRequest) {
+  // Apply rate limiting for sign-in attempts
+  const rateLimitResult = await checkRateLimit(req, signInRateLimitConfig);
+  if (rateLimitResult) {
+    return rateLimitResult;
+  }
+
   try {
     const supabase = await createClient();
 

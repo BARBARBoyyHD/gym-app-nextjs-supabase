@@ -1,15 +1,18 @@
-// Response type definitions for API responses
+import type { ZodIssue } from "zod";
+
+export type ErrorType = {
+  success?: boolean;
+  status?: number;
+  message?: string;
+  error?: Error | string | unknown;
+  errors?: ZodIssue[]; // ⬅️ Typed!
+};
+
 
 export type SuccessType<T = unknown> = {
-  success: true;
+  success: boolean;
   status: number;
   message: string;
   data: T;
 };
 
-export type ErrorType = {
-  success?: false;
-  status?: number;
-  message?: string;
-  error?: Error | string | unknown;
-};

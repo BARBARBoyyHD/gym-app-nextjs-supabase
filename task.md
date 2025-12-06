@@ -1,7 +1,7 @@
 # 📋 Task List — Gym Membership Management App
 
 ## Project Overview
-A modern full-stack application for managing gym memberships, QR check-in systems, workout programs, and user progress tracking built with Next.js 16 and Supabase.
+A modern full-stack application for managing gym memberships, workout programs, and member progress tracking built with Next.js 16 and Supabase.
 
 ## 🚀 Phase 1: Core Infrastructure
 
@@ -13,18 +13,16 @@ A modern full-stack application for managing gym memberships, QR check-in system
 - [x] Set up environment variables for local and production
 
 ### 1.2 Authentication System
-- [ ] Implement Supabase Auth for user registration/login
-- [ ] Create role-based access control (admin/member)
-- [ ] Set up protected routes based on user roles
-- [ ] Create user profile management
+- [x] Implement Supabase Auth for admin user registration/login
+- [x] Set up protected routes based on user roles
+- [x] Create admin user profile management
 
 ### 1.3 Database Schema
-- [ ] Design and implement `users` table with Supabase RLS
-- [ ] Create `membership_plans` table for different packages
-- [ ] Implement `memberships` table linking users to plans
-- [ ] Design `check_in_logs` table for tracking gym visits
-- [ ] Create `workout_programs` and `workout_progress` tables
-- [ ] Implement `user_metrics` table for tracking BMI and progress
+- [x] Design and implement `members` table with Supabase RLS
+- [x] Create `membership_plans` table for different packages
+- [x] Implement `memberships` table linking members to plans
+- [x] Create `workout_programs` and `workout_progress` tables
+- [x] Implement `member_metrics` table for tracking BMI and progress
 
 ## 🏋️ Phase 2: Membership Management
 
@@ -34,8 +32,8 @@ A modern full-stack application for managing gym memberships, QR check-in system
 - [ ] Design pricing and duration options
 - [ ] Add descriptions and features for each plan
 
-### 2.2 User Membership Features
-- [ ] Create user interface for viewing membership status
+### 2.2 Member Membership Features
+- [ ] Create member interface for viewing membership status
 - [ ] Implement purchase/upgrade membership functionality
 - [ ] Add transaction history view
 - [ ] Create membership renewal options
@@ -45,95 +43,79 @@ A modern full-stack application for managing gym memberships, QR check-in system
 - [ ] Display active vs expired memberships
 - [ ] Show membership growth analytics
 - [ ] Create income reporting
-- [ ] Build user management interface
+- [ ] Build member management interface
 
-## 🔍 Phase 3: QR Check-in System
+## 📊 Phase 3: Workout & Progress Tracking
 
-### 3.1 QR Generation
-- [ ] Implement dynamic QR code generation for users
-- [ ] Create temporary QR codes with expiration
-- [ ] Secure QR codes with short validity periods
-- [ ] Generate QR codes at the point of entry
-
-### 3.2 Check-in Functionality
-- [ ] Create check-in scanning interface
-- [ ] Implement check-in logging with timestamps
-- [ ] Add device/method tracking for check-ins
-- [ ] Design daily check-in statistics for admins
-
-### 3.3 Security Implementation
-- [ ] Create Supabase Edge Function for QR validation
-- [ ] Implement time-based QR code expiration
-- [ ] Prevent QR sharing between users
-- [ ] Add rate limiting to prevent abuse
-
-## 📊 Phase 4: Workout & Progress Tracking
+### 3.1 Workout Programs
+- [ ] Create workout program management for admins
+- [ ] Design workout levels (beginner → advanced)
+- [ ] Implement workout program assignment to members
+- [ ] Add workout descriptions and materials
 
 ### 4.1 Workout Programs
 - [ ] Create workout program management for admins
 - [ ] Design workout levels (beginner → advanced)
-- [ ] Implement workout program assignment to users
+- [ ] Implement workout program assignment to members
 - [ ] Add workout descriptions and materials
 
 ### 4.2 Progress Tracking
-- [ ] Implement user progress logging
+- [ ] Implement member progress logging
 - [ ] Create BMI and weight tracking
 - [ ] Build progress visualization
 - [ ] Add goal setting functionality
 
-## 🎨 Phase 5: UI/UX Implementation
+## 🎨 Phase 4: UI/UX Implementation
 
-### 5.1 Responsive Design
+### 4.1 Responsive Design
 - [ ] Ensure mobile-first responsive design
 - [ ] Create consistent component library using shadcn/ui
 - [ ] Implement dark/light mode support
 - [ ] Optimize for accessibility
 
-### 5.2 Page Development
+### 4.2 Page Development
 - [ ] Create homepage with gym information
-- [ ] Design user dashboard with membership status
+- [ ] Design member dashboard with membership status
 - [ ] Build admin dashboard with analytics
 - [ ] Implement workout section with progress tracking
-- [ ] Create QR check-in interface
 
-## 🔐 Phase 6: Security & Deployment
+## 🔐 Phase 5: Security & Deployment
 
-### 6.1 Security Implementation
+### 5.1 Security Implementation
 - [ ] Finalize Row Level Security policies in Supabase
 - [ ] Implement rate limiting on sensitive operations
 - [ ] Add input validation and sanitization
 - [ ] Security audit and penetration testing
 
-### 6.2 Production Deployment
+### 5.2 Production Deployment
 - [ ] Deploy frontend to Vercel
 - [ ] Configure production database settings
 - [ ] Set up monitoring and error tracking
 - [ ] Performance optimization
 - [ ] SEO optimization
 
-## 🧪 Phase 7: Testing
+## 🧪 Phase 6: Testing
 
-### 7.1 Unit & Integration Testing
+### 6.1 Unit & Integration Testing
 - [ ] Write unit tests for core business logic
 - [ ] Create integration tests for API endpoints
 - [ ] Test authentication flow
 - [ ] Validate form submissions and data handling
 
-### 7.2 End-to-End Testing
-- [ ] Test user registration and login flows
+### 6.2 End-to-End Testing
+- [ ] Test admin user registration and login flows
 - [ ] Verify membership purchase process
-- [ ] Validate QR check-in functionality
 - [ ] Test admin dashboard features
 
-## 📈 Phase 8: Enhancements & Polish
+## 📈 Phase 7: Enhancements & Polish
 
-### 8.1 Additional Features
+### 7.1 Additional Features
 - [ ] Implement push notifications for expiring memberships
 - [ ] Add social features for workout challenges
 - [ ] Create reporting functionality for admins
 - [ ] Integrate payment processing for membership purchases
 
-### 8.2 Performance Optimization
+### 7.2 Performance Optimization
 - [ ] Optimize database queries
 - [ ] Implement caching strategies
 - [ ] Optimize image loading and storage
@@ -163,7 +145,7 @@ A modern full-stack application for managing gym memberships, QR check-in system
 
 ## 📞 Team Responsibilities
 
-- Frontend Developer: Phases 5 (UI/UX), partially 1 and 6
-- Backend Developer: Phases 1, 3, 6 (Security)
-- Full-stack Developer: Phases 2, 4, 7, 8
-- QA Engineer: Phase 7
+- Frontend Developer: Phases 4 (UI/UX), partially 1 and 5
+- Backend Developer: Phases 1, 2, 5 (Security)
+- Full-stack Developer: Phases 2, 3, 6, 7
+- QA Engineer: Phase 6

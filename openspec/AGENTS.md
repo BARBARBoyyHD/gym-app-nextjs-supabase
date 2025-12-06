@@ -2,6 +2,7 @@
 
 Instructions for AI coding assistants using OpenSpec for spec-driven development.
 Automatically use context7 for code generation and library documentation.
+Avoid DRY and spagethi code always using best practice and make it reusable.
 
 ## Project Context Understanding
 Before performing any work in this project, AI assistants must:
