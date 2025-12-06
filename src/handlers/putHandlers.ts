@@ -42,7 +42,7 @@ export async function putHandler<T extends Record<string, unknown>>({
       .from(table)
       .update(updatedPayload)
       .eq("id", id)
-      .select("id")
+      .select("*")
       .single();
 
     if (error) throw new Error(error.message);

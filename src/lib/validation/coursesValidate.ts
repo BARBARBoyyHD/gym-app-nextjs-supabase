@@ -4,7 +4,7 @@ import { z } from "zod";
 export const courseSchema = z.object({
   title: z
     .string()
-    .min(1, "Title is required")
+    .min(3, "Title is required")
     .max(255, "Title must be less than 255 characters"),
   description: z
     .string()
@@ -15,7 +15,7 @@ export const courseSchema = z.object({
     .string()
     .min(1, "Category is required")
     .max(100, "Category must be less than 100 characters"),
-  videoUrl: z
+  video_embed_url: z
     .string()
     .url("Video URL must be a valid URL")
     .optional()
@@ -25,10 +25,9 @@ export const courseSchema = z.object({
 
 // Validation schema for updating a course (all fields are optional)
 export const updateCourseSchema = z.object({
-  id: z.string().min(1, "ID is required"),
   title: z
     .string()
-    .min(1, "Title must be at least 1 character")
+    .min(3, "Title must be at least 1 character")
     .max(255, "Title must be less than 255 characters")
     .optional(),
   description: z
@@ -41,7 +40,7 @@ export const updateCourseSchema = z.object({
     .min(1, "Category must be at least 1 character")
     .max(100, "Category must be less than 100 characters")
     .optional(),
-  videoUrl: z
+  video_embed_url: z
     .string()
     .url("Video URL must be a valid URL")
     .optional()

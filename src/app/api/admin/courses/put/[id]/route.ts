@@ -1,10 +1,9 @@
-import { NextRequest } from "next/server";
-import { errorResponse, successResponse } from "@/utils/response";
 import { putHandler } from "@/handlers/putHandlers";
 import { updateCourseSchema } from "@/lib/validation/coursesValidate";
-import { ZodError } from "zod";
 import { checkRateLimit } from "@/middleware/rate-limit-middleware";
-import { requireAuth } from "@/lib/auth-utils";
+import { errorResponse } from "@/utils/response";
+import { NextRequest } from "next/server";
+import { ZodError } from "zod";
 
 export async function PUT(
   request: NextRequest,
@@ -21,51 +20,30 @@ export async function PUT(
     return rateLimitResult;
   }
 
-  // Check if the user is authenticated
-  const authResult = await requireAuth();
-  if (authResult) {
-    return authResult;
-  }
-
   try {
     const resolvedParams = await params;
     const { id } = resolvedParams;
-    const {
-      title,
-      description,
-      instructor,
-      duration,
-      level,
-      category,
-      price,
-      thumbnailUrl,
-      videoUrl,
-    } = await request.json();
+    const { title, description, category, video_embed_url } =
+      await request.json();
 
     // Validate the update data using Zod schema for updates
     const validatedUpdateData = updateCourseSchema.parse({
       title,
       description,
-      instructor,
-      duration,
-      level,
       category,
-      price,
-      thumbnailUrl,
-      videoUrl,
+      video_embed_url,
     });
 
     // Build update payload
     const updatePayload: Record<string, unknown> = {};
-    if (validatedUpdateData.title !== undefined) updatePayload.title = validatedUpdateData.title;
-    if (validatedUpdateData.description !== undefined) updatePayload.description = validatedUpdateData.description;
-    if (validatedUpdateData.instructor !== undefined) updatePayload.instructor = validatedUpdateData.instructor;
-    if (validatedUpdateData.duration !== undefined) updatePayload.duration = validatedUpdateData.duration;
-    if (validatedUpdateData.level !== undefined) updatePayload.level = validatedUpdateData.level;
-    if (validatedUpdateData.category !== undefined) updatePayload.category = validatedUpdateData.category;
-    if (validatedUpdateData.price !== undefined) updatePayload.price = validatedUpdateData.price;
-    if (validatedUpdateData.thumbnailUrl !== undefined) updatePayload.thumbnail_url = validatedUpdateData.thumbnailUrl;
-    if (validatedUpdateData.videoUrl !== undefined) updatePayload.video_url = validatedUpdateData.videoUrl;
+    if (validatedUpdateData.title !== undefined)
+      updatePayload.title = validatedUpdateData.title;
+    if (validatedUpdateData.description !== undefined)
+      updatePayload.description = validatedUpdateData.description;
+    if (validatedUpdateData.category !== undefined)
+      updatePayload.category = validatedUpdateData.category;
+    if (validatedUpdateData.video_embed_url !== undefined)
+      updatePayload.video_url = validatedUpdateData.video_embed_url;
 
     return putHandler({
       table: "courses",

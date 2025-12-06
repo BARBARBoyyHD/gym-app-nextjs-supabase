@@ -2,7 +2,6 @@ import { deleteHandler } from "@/handlers/deleteHandlers";
 import { checkRateLimit } from "@/middleware/rate-limit-middleware";
 import { errorResponse } from "@/utils/response";
 import { NextRequest } from "next/server";
-import { requireAuth } from "@/lib/auth-utils";
 
 export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   // Apply rate limiting for DELETE requests
@@ -14,12 +13,6 @@ export async function DELETE(request: NextRequest, { params }: { params: Promise
 
   if (rateLimitResult) {
     return rateLimitResult;
-  }
-
-  // Check if the user is authenticated
-  const authResult = await requireAuth();
-  if (authResult) {
-    return authResult;
   }
 
   try {

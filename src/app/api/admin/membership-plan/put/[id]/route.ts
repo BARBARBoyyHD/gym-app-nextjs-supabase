@@ -1,7 +1,8 @@
 import { NextRequest } from "next/server";
 import { errorResponse, successResponse } from "@/utils/response";
 import { putHandler } from "@/handlers/putHandlers";
-import { requireAuth } from "@/lib/auth-utils";
+import { updateMembershipPlanSchema } from "@/lib/validation/membershipPlansValidate";
+import { ZodError } from "zod";
 import { checkRateLimit } from "@/middleware/rate-limit-middleware";
 
 export async function PUT(
@@ -19,31 +20,61 @@ export async function PUT(
     return rateLimitResult;
   }
 
-  // Check if the user is authenticated
-  const authResult = await requireAuth();
-  if (authResult) {
-    return authResult;
-  }
-
   try {
     const resolvedParams = await params;
     const { id } = resolvedParams;
-    const { name, description, price, duration, features, isActive } = await request.json();
 
+    // Validate the ID parameter
+    if (!id) {
+      return errorResponse({
+        success: false,
+        status: 400,
+        message: 'Membership plan ID is required',
+      });
+    }
+
+    // Basic UUID validation
+
+    const {
+      name,
+      description,
+      price,
+      duration,
+
+    } = await request.json();
+
+    // Validate the input data using Zod schema for updates
+    const validatedUpdateData = updateMembershipPlanSchema.parse({
+      name,
+      description,
+      price,
+      duration,
+
+    });
+
+    // Build update payload
+    const updatePayload: Record<string, unknown> = {};
+    if (validatedUpdateData.name !== undefined) updatePayload.name = validatedUpdateData.name;
+    if (validatedUpdateData.description !== undefined) updatePayload.description = validatedUpdateData.description;
+    if (validatedUpdateData.price !== undefined) updatePayload.price = validatedUpdateData.price;
+ 
     return putHandler({
       table: "membership_plans",
       id: id,
+      data: updatePayload,
       message: "Membership plan updated successfully",
-      data: {
-        name,
-        description,
-        price,
-        duration,
-        features,
-        is_active: isActive,
-      },
     });
   } catch (error) {
+    if (error instanceof ZodError) {
+      // Handle Zod validation errors with prettier messages
+      return errorResponse({
+        success: false,
+        status: 400,
+        message: "Validation failed",
+        errors: error.issues,
+      });
+    }
+
     return errorResponse({
       success: false,
       status: 500,

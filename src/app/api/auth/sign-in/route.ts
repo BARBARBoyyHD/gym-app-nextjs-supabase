@@ -5,8 +5,8 @@ import { checkRateLimit, RateLimitConfig } from "@/middleware/rate-limit-middlew
 
 // Rate limiting configuration for sign-in endpoint (more restrictive as it's sensitive to brute force)
 const signInRateLimitConfig: RateLimitConfig = {
-  windowMs: 5 * 60 * 1000, // 15 minutes
-  max: 2, // Limit each IP to 5 attempts per window for sign-in
+  windowMs: 1* 60 * 1000, // 1 minutes
+  max: 5, // Limit each IP to 5 attempts per window for sign-in
   message: 'Too many login attempts from this IP, please try again later.'
 };
 

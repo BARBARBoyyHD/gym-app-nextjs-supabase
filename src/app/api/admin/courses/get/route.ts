@@ -3,7 +3,6 @@ import { createClient } from "@/lib/supabase/server";
 import { NextRequest } from "next/server";
 import { getHandler } from "@/handlers/getHandlers";
 import { checkRateLimit } from "@/middleware/rate-limit-middleware";
-import { requireAdmin } from "@/lib/auth-utils";
 
 export async function GET(req: NextRequest) {
   // Apply rate limiting for GET requests - allow more requests as these are read-only
@@ -17,13 +16,6 @@ export async function GET(req: NextRequest) {
     return rateLimitResult;
   }
 
-  // Check if the user is an admin (not required for viewing courses, but we'll still verify)
-  const adminCheck = await requireAdmin();
-  if (adminCheck) {
-    // For GET requests that don't modify data, we can allow non-admins with appropriate permissions
-    // But for consistency with other admin-only APIs, we'll require admin access
-    return adminCheck;
-  }
 
   try {
     const supabase = await createClient();
@@ -42,12 +34,12 @@ export async function GET(req: NextRequest) {
     // No email parameter was provided, use regular getHandler
     return await getHandler({
       table: "courses",
-      column: "*",
+      column: "id, title, description, category, created_at",
       client: supabase,
       // Pass the new parameters to getHandler
       search: search,
       // Define the columns you want to search against
-      searchColumns: ["title", "description", "instructor", "category"],
+      searchColumns: ["title", "description","category"],
       page: page,
       limit: limit,
       sortBy: sortBy,
