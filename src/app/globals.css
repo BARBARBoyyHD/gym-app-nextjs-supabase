@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
-/* ------------------------------
-   ROOT VARIABLES
------------------------------- */
+/* ========================================
+   Root Variables
+======================================== */
 :root {
   --font-poppins: var(--font-poppins);
 
@@ -10,71 +10,97 @@
   --brand: #d6fb00;
   --brand-hover: #c2ea00;
   --brand-dark: #a8d400;
+  --dark: #0f0f0f;
 
-  /* Dark Gray Background */
-  --background-dark: #0f0f0f; /* abu tua */
+  /* Background */
+  --background-dark: #0f0f0f;
+  --background-dark-secondary: #1b1b1b;
 }
 
-/* ------------------------------
-   GLOBAL FONT
------------------------------- */
-body {
-  background-color: var(--background-dark);
-  color: white;
-  font-family: var(--font-poppins), sans-serif;
-}
-.nav-link {
-  position: relative;
-  color: rgba(255, 255, 255, 0.75);
-  transition: color 0.3s ease;
-}
-
-.nav-link::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: -5px;
-  width: 0%;
-  height: 2px;
-  background-color: #d6fb00;
-  transition: width 0.3s ease;
+/* ========================================
+   Base Styles
+======================================== */
+@layer base {
+  body {
+    @apply text-white;
+    background-color: var(--background-dark);
+    font-family: var(--font-poppins), sans-serif;
+  }
+  p,
+  li {
+    @apply tracking-wider;
+  }
 }
 
-.nav-link:hover {
-  color: white;
-}
+/* ========================================
+   Utilities (Semantic Custom Utilities)
+======================================== */
+@layer utilities {
+  /* Brand Colors */
+  .text-brand {
+    color: var(--brand);
+  }
+  .text-brand-hover:hover {
+    color: var(--brand-hover);
+  }
+  .text-dark {
+    color: var(--dark);
+  }
+  .bg-brand {
+    background-color: var(--brand);
+  }
+  .bg-brand-hover:hover {
+    background-color: var(--brand-hover);
+  }
+  .bg-brand-dark:active {
+    background-color: var(--brand-dark);
+  }
 
-.nav-link:hover::after {
-  width: 100%;
-}
+  .border-brand {
+    border-color: var(--brand);
+  }
+  .bg-dark {
+    background-color: var(--background-dark);
+  }
+  .bg-dark-hover:hover {
+    background-color: white;
+  }
+  .bg-dark-secondary {
+    background-color: var(--background-dark-secondary);
+  }
+  .bg-dark-secondary.border-brand {
+    border-width: 1px;
+    border-color: var(--dark);
+    transition: all 0.15s ease-in-out;
+  }
+  .bg-dark-secondary.border-brand:hover {
+    border-width: 1px;
+    border-color: var(--brand);
+  }
 
-.color-brand {
-  color: var(--brand);
-}
+  /* Navbar Hover Underline Animation */
+  .nav-link {
+    @apply relative text-white/75 transition-colors;
+  }
+  .nav-link:hover {
+    @apply text-white;
+  }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0%;
+    height: 2px;
+    background-color: var(--brand);
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover::after {
+    width: 100%;
+  }
 
-.text-brand:hover {
-  color: var(--brand-hover);
-}
-
-/* Background Brand */
-.bg-brand {
-  background-color: var(--brand);
-}
-
-.bg-brand-hover:hover {
-  background-color: var(--brand-hover);
-}
-
-.bg-brand-dark:active {
-  background-color: var(--brand-dark);
-}
-
-/* Border Brand */
-.border-brand {
-  border-color: var(--brand);
-}
-
-/* Smooth transitions for UI feel */
-* {
-  transition: background-color 0.2s ease, color 0.2s ease;
+  /* Marker (List Bullet) Brand Color */
+  .marker-brand::marker {
+    color: var(--brand);
+  }
 }
