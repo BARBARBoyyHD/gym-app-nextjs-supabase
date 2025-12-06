@@ -1,10 +1,9 @@
-import { NextRequest } from "next/server";
-import { errorResponse, successResponse } from "@/utils/response";
 import { putHandler } from "@/handlers/putHandlers";
 import { updateMemberSchema } from "@/lib/validation/membersValidate";
-import { ZodError } from "zod";
 import { checkRateLimit } from "@/middleware/rate-limit-middleware";
-import { requireAuth } from "@/lib/auth-utils";
+import { errorResponse } from "@/utils/response";
+import { NextRequest } from "next/server";
+import { ZodError } from "zod";
 
 export async function PUT(
   request: NextRequest,
@@ -19,12 +18,6 @@ export async function PUT(
 
   if (rateLimitResult) {
     return rateLimitResult;
-  }
-
-  // Check if the user is authenticated
-  const authResult = await requireAuth();
-  if (authResult) {
-    return authResult;
   }
 
   try {

@@ -19,7 +19,7 @@ export async function postHandler<T>({ table, data }: PostHandlerProps<T>) {
 
     return successResponse({
       success: true,
-      status: 200,
+      status: 201, // 201 Created is the appropriate status for successful POST operations
       message: "Success",
       data: postData,
     });

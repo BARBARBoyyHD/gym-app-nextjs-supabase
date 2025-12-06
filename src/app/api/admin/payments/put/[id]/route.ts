@@ -1,7 +1,6 @@
 import { NextRequest } from "next/server";
 import { errorResponse, successResponse } from "@/utils/response";
 import { putHandler } from "@/handlers/putHandlers";
-import { requireAuth } from "@/lib/auth-utils";
 import { checkRateLimit } from "@/middleware/rate-limit-middleware";
 
 export async function PUT(
@@ -17,12 +16,6 @@ export async function PUT(
 
   if (rateLimitResult) {
     return rateLimitResult;
-  }
-
-  // Check if the user is authenticated
-  const authResult = await requireAuth();
-  if (authResult) {
-    return authResult;
   }
 
   try {

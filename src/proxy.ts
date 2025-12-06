@@ -10,7 +10,7 @@ export async function proxy(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
   const path = request.nextUrl.pathname;
-  const isProtectedApi = path.startsWith("/api/v1/admin");
+  const isProtectedApi = path.startsWith("/api/admin");
   const isProtectedPage = path.startsWith("/admin");
 
   // If user is not authenticated
@@ -38,5 +38,5 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/confirm", "/admin/:path*", "/api/v1/admin/:path*"],
+  matcher: ["/confirm", "/admin/:path*", "/api/admin/:path*"],
 };

@@ -1,9 +1,8 @@
 import { getSingleHandler } from "@/handlers/getHandlers";
 import { createClient } from "@/lib/supabase/server";
-import { errorResponse, successResponse } from "@/utils/response";
-import { NextRequest } from "next/server";
 import { checkRateLimit } from "@/middleware/rate-limit-middleware";
-import { requireAdmin } from "@/lib/auth-utils";
+import { errorResponse } from "@/utils/response";
+import { NextRequest } from "next/server";
 
 export async function GET(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   // Apply rate limiting for GET requests - allow more requests as these are read-only
@@ -17,12 +16,6 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     return rateLimitResult;
   }
 
-  // Check if the user is an admin
-  const adminCheck = await requireAdmin();
-  if (adminCheck) {
-    return adminCheck;
-  }
-
   try {
     const supabase = await createClient();
     const resolvedParams = await params;
@@ -31,7 +24,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     // Get a specific course by ID
     return getSingleHandler({
       table: "courses",
-      column: "*",  // Including all relevant columns
+      column: "id, title, description, category, created_at",  // Including all relevant columns
       id: id,
       client: supabase,
     });

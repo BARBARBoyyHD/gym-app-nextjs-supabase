@@ -18,22 +18,28 @@ export async function POST(request: NextRequest) {
     return rateLimitResult;
   }
 
-
-
   try {
-    const { title, description, category, video_embeded_url } = await request.json();
+    const { title, description, category, video_embed_url } =
+      await request.json();
     const validatedData = courseSchema.parse({
       title,
       description,
       category,
-      video_embeded_url,
+      video_embed_url,
     });
+    const postPayload: Record<string, unknown> = {};
+    if (validatedData.title !== undefined)
+      postPayload.title = validatedData.title;
+    if (validatedData.description !== undefined)
+      postPayload.description = validatedData.description;
+    if (validatedData.category !== undefined)
+      postPayload.category = validatedData.category;
+    if (validatedData.video_embed_url !== undefined)
+      postPayload.video_url = validatedData.video_embed_url;
 
     return postHandler({
       table: "courses",
-      data: {
-        ...validatedData,
-      },
+      data: postPayload,
     });
   } catch (error) {
     if (error instanceof ZodError) {
