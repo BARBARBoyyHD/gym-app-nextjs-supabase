@@ -7,6 +7,7 @@ import Facility from "@/components/section/Facility";
 import GroupTraining from "@/components/section/GroupTraining";
 import CallToAction from "@/components/CallToAction";
 import Coaches from "@/components/section/Coaches";
+import GetStarted from "@/components/section/GetStarted";
 export default function page() {
   return (
     <>
@@ -22,6 +23,7 @@ export default function page() {
           description=" Schedule your visit to LiftUp and attend any group training for free on this day."
         />
         <Coaches />
+        <GetStarted />
         <Footer />
       </main>
     </>
