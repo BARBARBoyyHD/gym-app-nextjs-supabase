@@ -10,9 +10,11 @@
   --brand: #d6fb00;
   --brand-hover: #c2ea00;
   --brand-dark: #a8d400;
+  --dark: #0f0f0f;
 
   /* Background */
   --background-dark: #0f0f0f;
+  --background-dark-secondary: #1b1b1b;
 }
 
 /* ========================================
@@ -41,7 +43,9 @@
   .text-brand-hover:hover {
     color: var(--brand-hover);
   }
-
+  .text-dark {
+    color: var(--dark);
+  }
   .bg-brand {
     background-color: var(--brand);
   }
@@ -54,6 +58,15 @@
 
   .border-brand {
     border-color: var(--brand);
+  }
+  .bg-dark {
+    background-color: var(--background-dark);
+  }
+  .bg-dark:hover {
+    background-color: white;
+  }
+  .bg-dark-secondary {
+    background-color: var(--background-dark-secondary);
   }
 
   /* Navbar Hover Underline Animation */

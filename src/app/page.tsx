@@ -8,6 +8,8 @@ import GroupTraining from "@/components/section/GroupTraining";
 import CallToAction from "@/components/CallToAction";
 import Coaches from "@/components/section/Coaches";
 import GetStarted from "@/components/section/GetStarted";
+import CallToActionBlock from "@/components/CallToActionBlock";
+
 export default function page() {
   return (
     <>
@@ -24,6 +26,12 @@ export default function page() {
         />
         <Coaches />
         <GetStarted />
+        <CallToActionBlock
+          title="Start Your Membership Experience now!"
+          description="Each membership provides full access to the facilities and equipment.
+
+"
+        />
         <Footer />
       </main>
     </>
