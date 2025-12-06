@@ -15,7 +15,6 @@ import Contact from "@/components/section/Contact";
 export default function page() {
   return (
     <>
-      <Navbar />
       <main>
         <Home />
         <Classes />
@@ -38,7 +37,6 @@ export default function page() {
         <Testimony />
         <Contact />
       </main>
-      <Footer />
     </>
   );
 }

@@ -1,41 +1,42 @@
 "use client";
+import Link from "next/link";
 import { useState } from "react";
-
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-
   return (
     <header className="bg-dark text-white">
       <nav className="max-w-6xl mx-auto px-4 pt-8 pb-4 flex items-center justify-between">
         {/* Logo */}
-        <div className="text-xl font-bold color-brand">LiftUp</div>
+        <div className="text-xl font-bold color-brand">
+          <a href="/"> LiftUp</a>
+        </div>
 
         {/* Desktop Menu */}
         <ul className="hidden md:flex items-center gap-10">
           <li>
-            <a href="#" className="nav-link font-medium">
+            <Link href="/about" className="nav-link font-medium">
               About Us
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#" className="nav-link font-medium">
+            <Link href="/classes" className="nav-link font-medium">
               Classes
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#" className="nav-link font-medium">
+            <Link href="/coaches" className="nav-link font-medium">
               Coaches
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#" className="nav-link font-medium">
+            <Link href="/plan" className="nav-link font-medium">
               Plan
-            </a>
+            </Link>
           </li>
           <li>
-            <a href="#" className="nav-link ">
+            <Link href="/contact" className="nav-link font-medium">
               Contact
-            </a>
+            </Link>
           </li>
         </ul>
         {/* Social (Desktop) */}
