@@ -1,3 +1,5 @@
+import ButtonBrand from "../button/ButtonBrand";
+
 export default function Home() {
   return (
     <section className="h-screen flex items-center">
@@ -12,9 +14,7 @@ export default function Home() {
           <p className="text-lg text-white/70 max-w-md leading-7">
             Our professional instructors will help you stay active and healthy
           </p>
-          <button className="bg-brand bg-brand-hover text-black font-semibold px-6 py-3 w-fit cursor-pointer  mt-2">
-            Join Now
-          </button>
+          <ButtonBrand title="Join Now" />
         </div>
       </div>
     </section>
