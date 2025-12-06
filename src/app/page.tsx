@@ -9,6 +9,7 @@ import CallToAction from "@/components/CallToAction";
 import Coaches from "@/components/section/Coaches";
 import GetStarted from "@/components/section/GetStarted";
 import CallToActionBlock from "@/components/CallToActionBlock";
+import Plans from "@/components/section/Plans";
 
 export default function page() {
   return (
@@ -32,8 +33,9 @@ export default function page() {
 
 "
         />
-        <Footer />
+        <Plans />
       </main>
+      <Footer />
     </>
   );
 }

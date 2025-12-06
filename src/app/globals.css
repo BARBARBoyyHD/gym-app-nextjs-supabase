@@ -62,11 +62,20 @@
   .bg-dark {
     background-color: var(--background-dark);
   }
-  .bg-dark:hover {
+  .bg-dark-hover:hover {
     background-color: white;
   }
   .bg-dark-secondary {
     background-color: var(--background-dark-secondary);
+  }
+  .bg-dark-secondary.border-brand {
+    border-width: 1px;
+    border-color: var(--dark);
+    transition: all 0.15s ease-in-out;
+  }
+  .bg-dark-secondary.border-brand:hover {
+    border-width: 1px;
+    border-color: var(--brand);
   }
 
   /* Navbar Hover Underline Animation */
