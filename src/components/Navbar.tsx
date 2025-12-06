@@ -1,17 +1,23 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
+import { FaInstagram } from "react-icons/fa";
+import { FaYoutube } from "react-icons/fa";
+import { FaFacebook } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   return (
-    <header className="bg-dark text-white">
+    <header className="bg-darktext-white">
       <nav className="max-w-6xl mx-auto px-4 pt-8 pb-4 flex items-center justify-between">
-        {/* Logo */}
         <div className="text-xl font-bold color-brand">
-          <a href="/"> LiftUp</a>
+          <a href="/">
+            {" "}
+            Lift<span className="text-brand">Up</span>
+          </a>
         </div>
 
-        {/* Desktop Menu */}
         <ul className="hidden md:flex items-center gap-10">
           <li>
             <Link href="/about" className="nav-link font-medium">
@@ -40,15 +46,37 @@ export default function Navbar() {
           </li>
         </ul>
         {/* Social (Desktop) */}
-        <ul className="hidden md:flex items-center gap-4 text-sm">
+        <ul className="hidden md:flex items-center gap-3 text-sm">
           <li>
-            <a href="#" className="nav-link ">
-              YT
+            <a
+              href="#"
+              className="text-brand inline-block p-1 border bg-brand-hover duration-75 text-dark-hover border-brand"
+            >
+              <FaFacebook size={20} />
             </a>
           </li>
           <li>
-            <a href="#" className="nav-link ">
-              IG
+            <a
+              href="#"
+              className="text-brand inline-block p-1 border bg-brand-hover duration-75 text-dark-hover border-brand"
+            >
+              <FaYoutube size={20} />
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              className="text-brand inline-block p-1 border bg-brand-hover duration-75 text-dark-hover border-brand"
+            >
+              <FaInstagram size={20} />
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              className="text-brand inline-block p-1 border bg-brand-hover duration-75 text-dark-hover border-brand"
+            >
+              <FaXTwitter size={20} />
             </a>
           </li>
         </ul>
@@ -99,13 +127,35 @@ export default function Navbar() {
           </ul>
           <ul className="flex flex-col gap-2 px-4 pb-6 text-sm">
             <li>
-              <a href="#" className="nav-link font-semibold">
-                YT
+              <a
+                href="#"
+                className="text-brand inline-block p-1 border bg-brand-hover duration-75 text-dark-hover border-brand"
+              >
+                <FaFacebook size={20} />
               </a>
             </li>
             <li>
-              <a href="#" className="nav-link font-semibold">
-                IG
+              <a
+                href="#"
+                className="text-brand inline-block p-1 border bg-brand-hover duration-75 text-dark-hover border-brand"
+              >
+                <FaYoutube size={20} />
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="text-brand inline-block p-1 border bg-brand-hover duration-75 text-dark-hover border-brand"
+              >
+                <FaInstagram size={20} />
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                className="text-brand inline-block p-1 border bg-brand-hover duration-75 text-dark-hover border-brand"
+              >
+                <FaXTwitter size={20} />
               </a>
             </li>
           </ul>
