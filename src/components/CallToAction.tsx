@@ -6,7 +6,7 @@ export default function CallToAction({
   buttonTitle = "Order now!",
 }: {
   title: string;
-  buttonTitle: string;
+  buttonTitle?: string;
   description: string;
 }) {
   return (
