@@ -5,7 +5,9 @@ export default function GroupTraining() {
         <div className="flex flex-wrap">
           <div className="flex-1 flex items-center flex-wrap ">
             <div>
-              <h2 className="text-5xl font-bold mb-3">Group Training</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-3">
+                Group Training
+              </h2>
               <p className="my-6">Work in groups to become a better you.</p>
               <p className="text-white/70 mb-4 leading-relaxed">
                 If you prefer to train in groups, we have something to offer

@@ -2,7 +2,9 @@ export default function Coaches() {
   return (
     <section>
       <div className="max-w-6xl mx-auto px-4 mb-12">
-        <h2 className="text-4xl font-bold mb-4 text-center">Our Coaches</h2>
+        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">
+          Our <span className="text-brand">Coaches</span>
+        </h2>
         <p className="text-white/70 text-center">
           Our team of highly trained and certified fitness instructors will help
           you set your goals.

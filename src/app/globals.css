@@ -94,7 +94,7 @@
 
   /* Navbar Hover Underline Animation */
   .nav-link {
-    @apply relative text-white/75 transition-colors;
+    @apply relative text-white/75 transition-colors font-medium;
   }
   .nav-link:hover {
     @apply text-white;
@@ -111,6 +111,19 @@
   }
   .nav-link:hover::after {
     width: 100%;
+  }
+  .nav-link.active {
+    @apply text-white;
+  }
+  .nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 100%;
+    height: 2px;
+    background-color: var(--brand);
+    transition: width 0.3s ease;
   }
 
   /* Marker (List Bullet) Brand Color */

@@ -5,7 +5,7 @@ export default function CallToActionBlock({
   description,
 }: {
   title: string;
-  description: string;
+  description?: string;
 }) {
   return (
     <div className="max-w-6xl mx-auto px-4 my-24 text-center bg-brand py-16">

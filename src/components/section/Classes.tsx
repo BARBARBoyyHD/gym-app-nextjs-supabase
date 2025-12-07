@@ -22,6 +22,14 @@ export default function Classes() {
       title: "Crossfit",
       desc: "Boost endurance and build muscle with a variety of high-intensity functional exercises.",
     },
+    {
+      title: "Pilates",
+      desc: "Strengthen your core, improve posture, and increase mobility through controlled, low-impact movements.",
+    },
+    {
+      title: "HIIT",
+      desc: "A fast-paced interval workout designed to maximize calorie burn and improve cardiovascular endurance in a short time.",
+    },
   ];
 
   const toggle = (index: number) => {
@@ -37,15 +45,16 @@ export default function Classes() {
     <section>
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-3">Our Classes</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-3">
+            Our <span className="text-brand">Classes</span>
+          </h2>
           <p className="text-white/70">
             Whatever your fitness goals are, our dedicated fitness instructors
             will help you achieve them.
           </p>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 space-x-6 space-y-6">
-          {classesData.map((item, index) => (
+          {classesData.slice(0, 4).map((item, index) => (
             <div key={index}>
               <div className="bg-gray-800 w-full h-80 mb-6"></div>
 

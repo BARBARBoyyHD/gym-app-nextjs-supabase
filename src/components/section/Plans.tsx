@@ -4,7 +4,9 @@ export default function Plans() {
   return (
     <section>
       <div className="max-w-6xl mx-auto px-4 mb-12">
-        <h2 className="text-4xl font-bold mb-4 text-center">Pricing Plans</h2>
+        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">
+          Pricing <span className="text-brand">Plans </span>
+        </h2>
         <p className="text-white/70 text-center">
           Choose a pricing plan which suits your fitness goals.
         </p>
@@ -46,7 +48,7 @@ export default function Plans() {
             <h5 className="uppercase text-3xl font-bold my-4 ">
               <span className="text-brand">$12</span>/Visit
             </h5>
-            <span className="text-sm text-white/70">Pro Plans</span>
+            <span className="text-sm text-white/70">Open gym</span>
             <ul className="list-disc my-6 space-y-2">
               <li className="ml-4 marker-brand">Full acces to the gym</li>
               <li className="ml-4 marker-brand">Open from 8am to 9pm</li>

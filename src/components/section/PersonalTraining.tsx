@@ -10,7 +10,9 @@ export default function Coaches() {
           </div>
           <div className="flex-1 flex items-center flex-wrap">
             <div>
-              <h2 className="text-5xl font-bold mb-3">Personal Training</h2>
+              <h2 className="text-4xl md:text-5xl font-bold mb-3">
+                Personal Training
+              </h2>
               <p className="my-6">
                 Maximum results and flexible training schedule.
               </p>
