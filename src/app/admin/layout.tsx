@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Poppins as PoppinsFont } from "next/font/google";
 import "../globals.css";
 import Navbar from "@/components/Navbar";
+import AdminRootLayout from "./adminRootLayout";
+import { TanstackProvider } from "@/utils/ReactQueryProviders";
 
 // INISIALISASI FONT
 const poppins = PoppinsFont({
@@ -21,11 +23,8 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={`${poppins.variable} antialiased bg-black text-white`}>
-        <Navbar />
-        <div className="max-w-6xl mx-auto px-4">{children}</div>
-      </body>
-    </html>
+    <TanstackProvider>
+      <AdminRootLayout>{children}</AdminRootLayout>
+    </TanstackProvider>
   );
 }

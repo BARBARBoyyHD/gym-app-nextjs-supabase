@@ -1,34 +1,70 @@
-import { NextResponse } from "next/server";
-import { errorResponse, successResponse } from "@/utils/response";
-import { createClient } from "@/lib/supabase/server";
-import { PaymentInput } from "@/types/payment";
+import { NextRequest } from "next/server";
 import { postHandler } from "@/handlers/postHandlers";
+import { errorResponse } from "@/utils/response";
+import { checkRateLimit } from "@/middleware/rate-limit-middleware";
+import { createClient } from "@/lib/supabase/server";
+import { createPaymentSchema } from "@/lib/validation/paymentValidate";
+import { ZodError } from "zod";
 
-export async function POST(request: Request) {
+// POST /api/admin/payments/post
+export async function POST(request: NextRequest) {
+  // Apply rate limiting for POST requests
+  const rateLimitResult = await checkRateLimit(request, {
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 10, // Limit each IP to 10 requests per window
+    message: "Too many requests to create payments, please try again later.",
+  });
+
+  if (rateLimitResult) {
+    return rateLimitResult;
+  }
+
   try {
+    const supabase = await createClient();
+
+    // Check if user is authenticated
     const {
-      memberId,
-      membershipPlanId,
+      data: { user },
+      error: userError,
+    } = await supabase.auth.getUser();
+    if (userError || !user) {
+      return errorResponse({
+        success: false,
+        status: 401,
+        message: "User not authenticated",
+      });
+    }
+
+    const { member_id, membership_id, amount, method } = await request.json();
+
+    // Validate the input data using Zod schema
+    const validatedData = createPaymentSchema.parse({
+      member_id,
+      membership_id,
       amount,
-      currency,
-      status,
-      transactionId,
-      paymentMethod,
-    } = await request.json();
+      method,
+    });
+
+    // Build the payload with proper field names mapping to database columns
+    const postPayload = {
+      ...validatedData,
+    };
 
     return postHandler({
       table: "payments",
-      data: {
-        member_id: memberId,
-        membership_plan_id: membershipPlanId,
-        amount,
-        currency,
-        status,
-        transaction_id: transactionId,
-        payment_method: paymentMethod,
-      },
+      data: postPayload,
     });
   } catch (error) {
+    if (error instanceof ZodError) {
+      // Handle Zod validation errors with prettier messages
+      return errorResponse({
+        success: false,
+        status: 400,
+        message: "Validation failed",
+        errors: error.issues,
+      });
+    }
+
     return errorResponse({
       success: false,
       status: 500,
