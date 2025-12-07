@@ -29,7 +29,7 @@ export async function proxy(request: NextRequest) {
     } else {
       // Redirect for page routes
       const redirectUrl = request.nextUrl.clone();
-      redirectUrl.pathname = "/login";
+      redirectUrl.pathname = "/auth/login";
       return NextResponse.redirect(redirectUrl);
     }
   }

@@ -6,8 +6,8 @@ import { NextRequest } from "next/server";
 export async function DELETE(request: NextRequest, { params }: { params: Promise<{ id: string }> }) {
   // Apply rate limiting for DELETE requests
   const rateLimitResult = await checkRateLimit(request, {
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 5, // Limit each IP to 5 DELETE requests per window (more restrictive for destructive operations)
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 1000, // Limit each IP to 1000 DELETE requests per window
     message: 'Too many requests to delete courses, please try again later.'
   });
 

@@ -17,6 +17,7 @@ import {
   FaChartBar,
   FaUserCircle,
   FaSignOutAlt,
+  FaGraduationCap,
 } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -50,6 +51,11 @@ export function AppSidebar() {
       title: "Memberships",
       url: "/admin/memberships",
       icon: FaDollarSign,
+    },
+    {
+      title: "Courses",
+      url: "/admin/courses",
+      icon: FaGraduationCap,
     },
     {
       title: "Payments",

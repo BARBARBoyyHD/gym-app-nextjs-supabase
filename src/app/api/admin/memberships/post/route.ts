@@ -9,8 +9,8 @@ import { ZodError } from "zod";
 export async function POST(request: NextRequest) {
   // Apply rate limiting for POST requests
   const rateLimitResult = await checkRateLimit(request, {
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limit each IP to 10 requests per window
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 1000, // Limit each IP to 1000 requests per window
     message: "Too many requests to create memberships, please try again later.",
   });
 
@@ -26,7 +26,11 @@ export async function POST(request: NextRequest) {
 
     // Build the payload with proper field names mapping to database columns
     const postPayload = {
-      ...validatedData,
+      member_id: validatedData.member_id,
+      plan_id: validatedData.plan_id,
+      start_date: new Date(validatedData.start_date),
+      end_date: new Date(validatedData.end_date),
+      status: validatedData.status,
     };
 
     return postHandler({

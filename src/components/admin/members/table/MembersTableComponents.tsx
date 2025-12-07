@@ -99,6 +99,10 @@ export const columns: ColumnDef<Members>[] = [
             <DropdownMenuItem>
               View Details
             </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => window.dispatchEvent(new CustomEvent('openAddMembershipModal', { detail: { memberId: member.id, memberName: member.full_name } }))}>
+              Add Membership
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

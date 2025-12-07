@@ -3,44 +3,48 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-    Pagination,
-    PaginationContent,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
 } from "@/components/ui/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table";
 import { useGetData } from "@/hooks/use-Fetch";
-import { Members } from "@/types/member";
+import { Membership } from "@/types/membership";
+
+// Define the type for the membership as returned by the API with nested objects
+type MembershipWithRelations = Membership & {
+  member_id: { id: string; full_name: string } | string;
+  plan_id: { id: string; name: string } | string;
+};
 import { PaginationParams } from "@/types/queryTypes";
 import {
-    ColumnFiltersState,
-    SortingState,
-    VisibilityState,
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    useReactTable
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
-import {columns} from "./table/MembersTableComponents";
-import { EditMemberModal } from "./modal/EditMemberModal";
-import { AddMemberModal } from "./modal/AddMemberModal";
-import { AddMembershipModal } from "../memberships/modal/AddMembershipModal";
+import { AddMembershipModal } from "./modal/AddMembershipModal";
+import { columns } from "./table/MembershipsTableComponent";
 
 
-export default function MembersListComponents() {
+export default function MembershipsListComponents() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
   const [limit] = useState(10); // Fixed limit per page
@@ -48,12 +52,7 @@ export default function MembersListComponents() {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editingMemberId, setEditingMemberId] = useState<string | null>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [isAddMembershipModalOpen, setIsAddMembershipModalOpen] = useState(false);
-  const [membershipModalMemberId, setMembershipModalMemberId] = useState<string | null>(null);
-  const [membershipModalMemberName, setMembershipModalMemberName] = useState<string | null>(null);
 
   // Create params object for the hook
   const queryParams: PaginationParams = {
@@ -62,53 +61,16 @@ export default function MembersListComponents() {
     limit,
   };
 
-  // Listen for the custom event to open the edit modal
-  useEffect(() => {
-    const handleOpenEditModal = (e: CustomEvent) => {
-      const memberId = e.detail as string;
-      setEditingMemberId(memberId);
-      setIsEditModalOpen(true);
-    };
-
-    // Cast window to any to add custom event listener
-    (window as any).handleOpenEditModal = handleOpenEditModal;
-
-    window.addEventListener('openEditMemberModal', handleOpenEditModal as EventListener);
-
-    return () => {
-      window.removeEventListener('openEditMemberModal', handleOpenEditModal as EventListener);
-    };
-  }, []);
-
-  // Listen for the custom event to open the add membership modal
-  useEffect(() => {
-    const handleOpenAddMembershipModal = (e: CustomEvent) => {
-      const { memberId, memberName } = e.detail;
-      setMembershipModalMemberId(memberId);
-      setMembershipModalMemberName(memberName);
-      setIsAddMembershipModalOpen(true);
-    };
-
-    // Cast window to any to add custom event listener
-    (window as any).handleOpenAddMembershipModal = handleOpenAddMembershipModal;
-
-    window.addEventListener('openAddMembershipModal', handleOpenAddMembershipModal as EventListener);
-
-    return () => {
-      window.removeEventListener('openAddMembershipModal', handleOpenAddMembershipModal as EventListener);
-    };
-  }, []);
-
-  // Fetch members data from API using the useGetData hook
+  // Fetch memberships data from API using the useGetData hook
   const {
-    data: membersData,
+    data: membershipsData,
     isLoading,
     isError,
     error,
     refetch,
-  } = useGetData<Members>({
-    endpoint: "/api/admin/members/get",
-    queryKeyBase: "members",
+  } = useGetData<MembershipWithRelations>({
+    endpoint: "/api/admin/memberships/get",
+    queryKeyBase: "memberships",
     params: queryParams,
   });
 
@@ -118,12 +80,12 @@ export default function MembersListComponents() {
   }, [search]);
 
   // Prepare table data
-  const tableData = membersData?.data || [];
-  const totalMembers = membersData?.total_count || 0;
-  const totalPages = Math.ceil(totalMembers / limit);
+  const tableData: MembershipWithRelations[] = membershipsData?.data || [];
+  const totalMemberships = membershipsData?.total_count || 0;
+  const totalPages = Math.ceil(totalMemberships / limit);
 
   // Initialize the table
-  const table = useReactTable({
+  const table = useReactTable<MembershipWithRelations>({
     data: tableData,
     columns,
     onSortingChange: setSorting,
@@ -160,17 +122,17 @@ export default function MembersListComponents() {
 
   // Handle edit success - refresh data
   const handleEditSuccess = () => {
-    refetch(); // Refresh the members list after successful edit
+    refetch(); // Refresh the memberships list after successful edit
   };
 
   if (isError) {
     return (
       <div className="p-6 bg-dark-secondary rounded-xl border border-brand/30">
         <div className="text-center p-8">
-          <h2 className="text-xl font-bold text-white mb-2">Error Loading Members</h2>
-          <p className="text-white/70 mb-4">{(error as Error)?.message || "Failed to load members"}</p>
-          <Button 
-            onClick={() => refetch()} 
+          <h2 className="text-xl font-bold text-white mb-2">Error Loading Memberships</h2>
+          <p className="text-white/70 mb-4">{(error as Error)?.message || "Failed to load memberships"}</p>
+          <Button
+            onClick={() => refetch()}
             className="bg-brand hover:bg-brand/90 text-black"
           >
             Retry
@@ -184,15 +146,15 @@ export default function MembersListComponents() {
     <div className="p-6 bg-dark-secondary rounded-xl border border-brand/30">
       <div className="mb-8 flex justify-between items-center">
         <div>
-          <h1 className="text-2xl font-bold">Members Management</h1>
-          <p className="text-white/70">View and manage all gym members</p>
+          <h1 className="text-2xl font-bold">Memberships Management</h1>
+          <p className="text-white/70">View and manage all gym memberships</p>
         </div>
         <Button
           variant="default"
           className="bg-brand hover:bg-brand/90 text-black"
           onClick={() => setIsAddModalOpen(true)}
         >
-          Create Member
+          Create Membership
         </Button>
       </div>
 
@@ -202,7 +164,7 @@ export default function MembersListComponents() {
           <div className="grow">
             <Input
               type="text"
-              placeholder="Search members (name, email, or phone)..."
+              placeholder="Search memberships (status)..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
               className="bg-black/30 border border-white/20 focus:border-brand focus:ring-brand/30"
@@ -214,7 +176,7 @@ export default function MembersListComponents() {
         </div>
       </form>
 
-      {/* Members Table */}
+      {/* Memberships Table */}
       <div className="rounded-lg border border-white/20">
         <div className="overflow-x-auto">
           <Table>
@@ -266,7 +228,7 @@ export default function MembersListComponents() {
               ) : (
                 <TableRow>
                   <TableCell colSpan={columns.length} className="h-24 text-center">
-                    {search ? `No members found matching "${search}"` : 'No members found'}
+                    {search ? `No memberships found matching "${search}"` : 'No memberships found'}
                   </TableCell>
                 </TableRow>
               )}
@@ -292,11 +254,11 @@ export default function MembersListComponents() {
               </PaginationItem>
 
               {/* Page numbers */}
-              {Array.from({ 
-                length: Math.min(5, totalPages) 
+              {Array.from({
+                length: Math.min(5, totalPages)
               }, (_, i) => {
                 let pageNum: number;
-                
+
                 if (totalPages <= 5) {
                   // If total pages <= 5, show all pages
                   pageNum = i + 1;
@@ -310,7 +272,7 @@ export default function MembersListComponents() {
                   // Otherwise, show 2 before and 2 after current page
                   pageNum = page - 2 + i;
                 }
-                
+
                 return (
                   <PaginationItem key={pageNum}>
                     <PaginationLink
@@ -345,39 +307,18 @@ export default function MembersListComponents() {
 
       {/* Results Info */}
       <div className="mt-4 text-sm text-white/70">
-        Showing {totalMembers > 0
+        Showing {totalMemberships > 0
           ? ((page - 1) * limit + 1)
-          : 0} - {Math.min(page * limit, totalMembers)} of {totalMembers} members
+          : 0} - {Math.min(page * limit, totalMemberships)} of {totalMemberships} memberships
       </div>
 
-      {/* Edit Member Modal */}
-      {editingMemberId && (
-        <EditMemberModal
-          isOpen={isEditModalOpen}
-          onClose={() => setIsEditModalOpen(false)}
-          memberId={editingMemberId}
-          onEditSuccess={handleEditSuccess}
-        />
-      )}
-
-      {/* Add Member Modal */}
-      <AddMemberModal
-        isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
-        onAddSuccess={handleEditSuccess}  // Using same handler to refresh data
-      />
+      {/* Edit Membership Modal */}
 
       {/* Add Membership Modal */}
       <AddMembershipModal
-        isOpen={isAddMembershipModalOpen}
-        onClose={() => {
-          setIsAddMembershipModalOpen(false);
-          setMembershipModalMemberId(null);
-          setMembershipModalMemberName(null);
-        }}
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
         onAddSuccess={handleEditSuccess}  // Using same handler to refresh data
-        prefillMemberId={membershipModalMemberId || undefined}
-        prefillMemberName={membershipModalMemberName || undefined}
       />
     </div>
   );
