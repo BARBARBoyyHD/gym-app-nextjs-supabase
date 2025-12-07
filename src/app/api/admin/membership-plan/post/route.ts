@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
   // Apply rate limiting for POST requests
   const rateLimitResult = await checkRateLimit(request, {
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 10, // Limit each IP to 10 requests per window
+    max: 100, // Limit each IP to 10 requests per window
     message: 'Too many requests to create membership plans, please try again later.',
   });
 
@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
       name,
       description,
       price,
-      duration,
+      duration_day,
     } = await request.json();
 
     // Validate the input data using Zod schema
@@ -31,7 +31,7 @@ export async function POST(request: NextRequest) {
       name,
       description,
       price,
-      duration,
+      duration_day,
     });
 
     // Build the payload with proper field names mapping to database columns
@@ -39,6 +39,7 @@ export async function POST(request: NextRequest) {
       name: validatedData.name,
       description: validatedData.description,
       price: validatedData.price,
+      duration_day: validatedData.duration_day, // Map duration from API to duration_day in DB
     };
 
     return postHandler({
