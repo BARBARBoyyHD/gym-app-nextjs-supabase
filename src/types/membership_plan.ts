@@ -4,13 +4,12 @@ export interface MembershipPlan extends BaseEntity {
   name: string;
   description: string;
   price: number;
-  currency: string;
-  duration: number; // in days
-  features: string[];
-  maxCheckInsPerWeek?: number;
-  isActive: boolean;
+  duration_day: number; // in days
 }
 
 export type MembershipPlanInput = BaseInput<MembershipPlan> & {
-  currency?: string;
+  name: string;
+  description?: string;
+  price: number;
+  duration_day: number;
 };

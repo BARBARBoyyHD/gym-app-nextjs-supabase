@@ -14,7 +14,7 @@ const baseMembershipPlanSchema = z.object({
     .number( 'Price is required' )
     .positive('Price must be a positive number'),
   duration_day: z
-    .number('Duration is required' )
+    .number('Duration_day is required' )
     .int('Duration must be a whole number')
     .positive('Duration must be a positive number'),
 });

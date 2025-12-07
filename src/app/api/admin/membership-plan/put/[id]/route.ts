@@ -12,7 +12,7 @@ export async function PUT(
   // Apply rate limiting for PUT requests
   const rateLimitResult = await checkRateLimit(request, {
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 20, // Limit each IP to 20 requests per window (updates might be more frequent)
+    max: 100, // Limit each IP to 20 requests per window (updates might be more frequent)
     message: "Too many requests to update membership plans, please try again later.",
   });
 
@@ -39,7 +39,7 @@ export async function PUT(
       name,
       description,
       price,
-      duration,
+      duration_day,
 
     } = await request.json();
 
@@ -48,7 +48,7 @@ export async function PUT(
       name,
       description,
       price,
-      duration,
+      duration_day,
 
     });
 
@@ -57,6 +57,7 @@ export async function PUT(
     if (validatedUpdateData.name !== undefined) updatePayload.name = validatedUpdateData.name;
     if (validatedUpdateData.description !== undefined) updatePayload.description = validatedUpdateData.description;
     if (validatedUpdateData.price !== undefined) updatePayload.price = validatedUpdateData.price;
+    if (validatedUpdateData.duration_day !== undefined) updatePayload.duration_day = validatedUpdateData.duration_day; // Map duration to duration_day for DB
  
     return putHandler({
       table: "membership_plans",

@@ -1,12 +1,12 @@
 import { BaseEntity, BaseInput } from './base';
 
 export interface Membership extends BaseEntity {
-  memberId: string;
-  membershipPlanId: string;
-  startDate: Date;
-  endDate: Date;
+  member_id: string;
+  plan_id: string;
+  start_date: Date;
+  end_date: Date;
   status: 'active' | 'expired' | 'cancelled' | 'pending';
-  autoRenew: boolean;
+  auto_renew: boolean;
 }
 
 export type MembershipInput = BaseInput<Membership>;

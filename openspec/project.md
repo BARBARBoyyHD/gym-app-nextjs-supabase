@@ -149,11 +149,11 @@ src/
 
 | Method | Endpoint | Description |
 |--------|----------|-------------|
-| GET | `/api/memberships/list` | Retrieve a list of all memberships. **Admin access required**, members can retrieve their own memberships. **Requires JWT**. |
-| POST | `/api/memberships/create` | Create a new membership for a member. **Requires JWT**. |
-| GET | `/api/memberships/get` | Get details for a specific membership by ID. **Requires JWT**. |
-| PATCH | `/api/memberships/update` | Update a specific membership by ID. **Requires JWT**. |
-| DELETE | `/api/memberships/delete` | Delete a specific membership by ID. **Requires JWT**. |
+| GET | `/api/admin/memberships/get` | Retrieve a list of all memberships. **Admin access required**. **Requires JWT**. |
+| POST | `/api/admin/memberships/post` | Create a new membership for a member. **Admin access required**. **Requires JWT**. |
+| GET | `/api/admin/memberships/get/[id]` | Get details for a specific membership by ID. **Admin access required**. **Requires JWT**. |
+| PUT | `/api/admin/memberships/put/[id]` | Update a specific membership by ID. **Admin access required**. **Requires JWT**. |
+| DELETE | `/api/admin/memberships/delete/[id]` | Delete a specific membership by ID. **Admin access required**. **Requires JWT**. |
 
 ### Membership Plans
 
@@ -188,6 +188,16 @@ src/
 |--------|----------|-------------|
 | GET | `/api/workout-progress/list` | Retrieve a list of workout progress records. **Requires JWT**. |
 | POST | `/api/workout-progress/create` | Record new workout progress. **Requires JWT**. |
+
+### Payments
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/admin/payments/get` | Retrieve a list of all payments. **Admin access required**. **Requires JWT**. |
+| POST | `/api/admin/payments/post` | Create a new payment. **Admin access required**. **Requires JWT**. |
+| GET | `/api/admin/payments/get/[id]` | Get details for a specific payment by ID. **Admin access required**. **Requires JWT**. |
+| PUT | `/api/admin/payments/put/[id]` | Update a specific payment by ID. **Admin access required**. **Requires JWT**. |
+| DELETE | `/api/admin/payments/delete/[id]` | Delete a specific payment by ID. **Admin access required**. **Requires JWT**. |
 
 ---
 
