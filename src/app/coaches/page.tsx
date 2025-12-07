@@ -6,7 +6,7 @@ export default function CoachesPage() {
     <>
       <Navbar />
       <main>
-        <section className="max-w-6xl mx-auto px-4 mt-24 mb-12">
+        <section className="max-w-6xl mx-auto px-4 mt-18 mb-24">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">
             Our <span className="text-brand">Coaches</span>
           </h2>

@@ -32,7 +32,7 @@ export default function ClassesPage() {
     <>
       <Navbar />
       <main>
-        <section className="max-w-6xl mx-auto px-4 my-24">
+        <section className="max-w-6xl mx-auto px-4 mt-18 my-24">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">
             Our <span className="text-brand">Classes</span>
           </h2>
@@ -48,7 +48,6 @@ export default function ClassesPage() {
                   <h5 className="text-2xl font-bold text-brand mb-3 uppercase ">
                     {item.title}
                   </h5>
-
                   <p className="text-white/70 leading-7 text-lg">{item.desc}</p>
                 </div>
               </div>
