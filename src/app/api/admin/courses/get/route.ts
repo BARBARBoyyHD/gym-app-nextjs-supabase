@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
   // Apply rate limiting for GET requests - allow more requests as these are read-only
   const rateLimitResult = await checkRateLimit(req, {
     windowMs: 1 * 60 * 1000, // 1 minute
-    max: 100, // Limit each IP to 100 requests per window
+    max: 1000, // Limit each IP to 1000 requests per window
     message: 'Too many requests to view courses, please try again later.'
   });
 

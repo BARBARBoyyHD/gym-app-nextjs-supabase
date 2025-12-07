@@ -11,8 +11,8 @@ export async function GET(
 ) {
   // Apply rate limiting for GET requests - allow more requests as these are read-only
   const rateLimitResult = await checkRateLimit(request, {
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limit each IP to 100 requests per window
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 1000, // Limit each IP to 1000 requests per window
     message: 'Too many requests to view membership plan, please try again later.'
   });
 

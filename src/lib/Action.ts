@@ -1,5 +1,6 @@
 "use server";
 import { createClient } from "@/lib/supabase/server";
+import { toast } from "sonner";
 
 export async function login(formData: FormData) {
   const email = formData.get('email') as string
@@ -10,7 +11,8 @@ export async function login(formData: FormData) {
   const { error } = await supabase.auth.signInWithPassword({ email, password })
 
   if (error) {
-    return { success: false, message: error.message }
+    toast.error('Login failed: ' + error.message)
+    return { success: false, message: error.message }   
   }
 
   return { success: true }

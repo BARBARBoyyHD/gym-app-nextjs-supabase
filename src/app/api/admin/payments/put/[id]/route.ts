@@ -13,8 +13,8 @@ export async function PUT(
 ) {
   // Apply rate limiting for PUT requests
   const rateLimitResult = await checkRateLimit(request, {
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 20, // Limit each IP to 20 requests per window (updates might be more frequent)
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 1000, // Limit each IP to 1000 requests per window
     message: 'Too many requests to update payments, please try again later.',
   });
 
@@ -64,11 +64,8 @@ export async function PUT(
     // Build update payload
     const updatePayload: Record<string, unknown> = {};
     if (validatedUpdateData.member_id !== undefined) updatePayload.member_id = validatedUpdateData.member_id;
-    if (validatedUpdateData.plan_id !== undefined) updatePayload.plan_id = validatedUpdateData.plan_id;
+    if (validatedUpdateData.membership_id !== undefined) updatePayload.membership_id = validatedUpdateData.membership_id;
     if (validatedUpdateData.amount !== undefined) updatePayload.amount = validatedUpdateData.amount;
-    if (validatedUpdateData.currency !== undefined) updatePayload.currency = validatedUpdateData.currency;
-    if (validatedUpdateData.status !== undefined) updatePayload.status = validatedUpdateData.status;
-    if (validatedUpdateData.transaction_id !== undefined) updatePayload.transaction_id = validatedUpdateData.transaction_id;
     if (validatedUpdateData.method !== undefined) updatePayload.method = validatedUpdateData.method;
 
     return putHandler({

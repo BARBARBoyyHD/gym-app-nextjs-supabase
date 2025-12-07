@@ -12,8 +12,8 @@ export async function PUT(
 ) {
   // Apply rate limiting for PUT requests
   const rateLimitResult = await checkRateLimit(request, {
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limit each IP to 20 requests per window (updates might be more frequent)
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 1000, // Limit each IP to 1000 requests per window
     message: "Too many requests to update memberships, please try again later.",
   });
 
@@ -64,11 +64,13 @@ export async function PUT(
     if (validatedUpdateData.plan_id !== undefined)
       updatePayload.plan_id = validatedUpdateData.plan_id;
     if (validatedUpdateData.start_date !== undefined)
-      updatePayload.start_date = validatedUpdateData.start_date;
+      updatePayload.start_date = new Date(validatedUpdateData.start_date);
     if (validatedUpdateData.end_date !== undefined)
-      updatePayload.end_date = validatedUpdateData.end_date;
+      updatePayload.end_date = new Date(validatedUpdateData.end_date);
     if (validatedUpdateData.status !== undefined)
       updatePayload.status = validatedUpdateData.status;
+    if (validatedUpdateData.auto_renew !== undefined)
+      updatePayload.auto_renew = validatedUpdateData.auto_renew;
 
     return putHandler({
       table: "memberships",

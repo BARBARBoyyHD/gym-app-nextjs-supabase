@@ -10,8 +10,8 @@ export async function DELETE(
 ) {
   // Apply rate limiting for DELETE requests
   const rateLimitResult = await checkRateLimit(request, {
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limit each IP to 5 DELETE requests per window (more restrictive for destructive operations)
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 1000, // Limit each IP to 1000 DELETE requests per window
     message: 'Too many requests to delete memberships, please try again later.'
   });
 

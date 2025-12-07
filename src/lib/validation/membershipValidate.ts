@@ -3,12 +3,12 @@ import { z } from "zod";
 // Base schema with common fields for memberships
 const baseMembershipSchema = z.object({
   member_id: z.string().uuid("Member ID must be a valid UUID"),
-  plan_id: z.number("Plan ID must be a number").positive("Plan ID must be positive"),
+  plan_id: z.number().int({ message: "Plan ID must be an integer" }),
   start_date: z.string().date("Start date must be a valid date"),
   end_date: z.string().date("End date must be a valid date"),
   status: z
-    .enum(["active", "inactive", "expired", "pending"], "Status must be valid")
-    .default("active"),
+    .enum(["active", "expired", "cancelled", "pending"], "Status must be valid")
+    .default("pending"),
 });
 
 // Schema for creating new memberships

@@ -10,8 +10,8 @@ import { ZodError } from "zod";
 export async function POST(request: NextRequest) {
   // Apply rate limiting for POST requests
   const rateLimitResult = await checkRateLimit(request, {
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 10, // Limit each IP to 10 requests per window
+    windowMs: 1 * 60 * 1000, // 1 minute
+    max: 1000, // Limit each IP to 1000 requests per window
     message: "Too many requests to create payments, please try again later.",
   });
 
