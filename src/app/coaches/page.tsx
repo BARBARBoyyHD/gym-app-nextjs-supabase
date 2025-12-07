@@ -1,0 +1,77 @@
+import CallToAction from "@/components/CallToAction";
+import Footer from "@/components/Footer";
+import Navbar from "@/components/Navbar";
+export default function CoachesPage() {
+  return (
+    <>
+      <Navbar />
+      <main>
+        <section className="max-w-6xl mx-auto px-4 mt-24 mb-12">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">
+            Our <span className="text-brand">Coaches</span>
+          </h2>
+          <p className="text-white/70 text-center">
+            Our team of highly trained and certified fitness instructors will
+            help you set your goals.
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 space-y-6 text-center mt-12 gap-8">
+            <div>
+              <div className="bg-gray-800 h-[400px]"></div>
+              <div className="mt-6">
+                <h5 className="text-2xl font-semibold text-brand">
+                  Hank Wilson
+                </h5>
+                <p className="text-white/70">Professional Trainer</p>
+              </div>
+            </div>
+            <div>
+              <div className="bg-gray-800 h-[400px]"></div>
+              <div className="mt-6">
+                <h5 className="text-2xl font-semibold text-brand">
+                  Frank Stone
+                </h5>
+                <p className="text-white/70">Founder/Head Coach</p>
+              </div>
+            </div>
+            <div>
+              <div className="bg-gray-800 h-[400px]"></div>
+              <div className="mt-6">
+                <h5 className="text-2xl font-semibold text-brand">Donald</h5>
+                <p className="text-white/70">Professional Trainer</p>
+              </div>
+            </div>
+            <div>
+              <div className="bg-gray-800 h-[400px]"></div>
+              <div className="mt-6">
+                <h5 className="text-2xl font-semibold text-brand">Petersen</h5>
+                <p className="text-white/70">Professional Trainer</p>
+              </div>
+            </div>
+            <div>
+              <div className="bg-gray-800 h-[400px]"></div>
+              <div className="mt-6">
+                <h5 className="text-2xl font-semibold text-brand">Steve</h5>
+                <p className="text-white/70">Professional Trainer</p>
+              </div>
+            </div>
+            <div>
+              <div className="bg-gray-800 h-[400px]"></div>
+              <div className="mt-6">
+                <h5 className="text-2xl font-semibold text-brand">Mary Grey</h5>
+                <p className="text-white/70">Professional Trainer</p>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section>
+          <CallToAction
+            title="NEED ASSISTANCE? CONTACT US"
+            description="In order to offer you the best services, we will ask you a couple of questions about your fitness goals."
+            buttonTitle="Contact Us"
+          />
+        </section>
+      </main>
+      <Footer />
+    </>
+  );
+}

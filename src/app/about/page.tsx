@@ -122,7 +122,7 @@ export default function AboutPage() {
             </div>
             <div className="flex-1 flex items-center flex-wrap">
               <div>
-                <h2 className="text-5xl font-bold uppercase">
+                <h2 className="text-4xl md:text-5xl font-bold uppercase">
                   Our <span className="text-brand">Mission</span>
                 </h2>
                 <p className="text-lg my-6">
