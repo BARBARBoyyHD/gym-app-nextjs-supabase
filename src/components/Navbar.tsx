@@ -5,9 +5,12 @@ import { FaInstagram } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { FaFacebook } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const path = usePathname();
+
   return (
     <header className="bg-darktext-white">
       <nav className="max-w-6xl mx-auto px-4 pt-8 pb-4 flex items-center justify-between">
@@ -20,27 +23,42 @@ export default function Navbar() {
 
         <ul className="hidden md:flex items-center gap-10">
           <li>
-            <Link href="/about" className="nav-link font-medium">
+            <Link
+              href="/about"
+              className={`nav-link ${path.startsWith("/about") && "active"}`}
+            >
               About Us
             </Link>
           </li>
           <li>
-            <Link href="/classes" className="nav-link font-medium">
+            <Link
+              href="/classes"
+              className={`nav-link ${path.startsWith("/classes") && "active"} `}
+            >
               Classes
             </Link>
           </li>
           <li>
-            <Link href="/coaches" className="nav-link font-medium">
+            <Link
+              href="/coaches"
+              className={`nav-link ${path.startsWith("/coaches") && "active"}`}
+            >
               Coaches
             </Link>
           </li>
           <li>
-            <Link href="/plan" className="nav-link font-medium">
-              Plan
+            <Link
+              href="/pricing"
+              className={`nav-link ${path.startsWith("/pricing") && "active"}`}
+            >
+              Pricing
             </Link>
           </li>
           <li>
-            <Link href="/contact" className="nav-link font-medium">
+            <Link
+              href="/contact"
+              className={`nav-link ${path.startsWith("/contact") && "active"}`}
+            >
               Contact
             </Link>
           </li>
