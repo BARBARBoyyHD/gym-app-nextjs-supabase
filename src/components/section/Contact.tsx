@@ -14,8 +14,8 @@ export default function Contact() {
       <div className="max-w-6xl mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 mb-20">
           <div>
-            <h2 className="text-5xl font-bold uppercase mb-3">
-              Let's Get started
+            <h2 className="text-4xl md:text-5xl font-bold uppercase mb-3">
+              Let's Get <span className="text-brand">started</span>
             </h2>
             <p className="my-6">Fill out the form or contact us directly</p>
             <p className="text-white/70 mb-4 leading-relaxed">

@@ -17,42 +17,42 @@ export default function CoachesPage() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 space-y-6 mt-12">
             <div>
               <div className="bg-gray-800 h-[400px]"></div>
-              <div className="mt-6">
+              <div className="mt-6 text-center">
                 <h5 className="text-2xl font-bold text-brand">Hank Wilson</h5>
                 <p className="text-white/70">Professional Trainer</p>
               </div>
             </div>
             <div>
               <div className="bg-gray-800 h-[400px]"></div>
-              <div className="mt-6">
+              <div className="mt-6 text-center">
                 <h5 className="text-2xl font-bold text-brand">Frank Stone</h5>
                 <p className="text-white/70">Founder/Head Coach</p>
               </div>
             </div>
             <div>
               <div className="bg-gray-800 h-[400px]"></div>
-              <div className="mt-6">
+              <div className="mt-6 text-center">
                 <h5 className="text-2xl font-bold text-brand">Donald</h5>
                 <p className="text-white/70">Professional Trainer</p>
               </div>
             </div>
             <div>
               <div className="bg-gray-800 h-[400px]"></div>
-              <div className="mt-6">
+              <div className="mt-6 text-center">
                 <h5 className="text-2xl font-bold text-brand">Petersen</h5>
                 <p className="text-white/70">Professional Trainer</p>
               </div>
             </div>
             <div>
               <div className="bg-gray-800 h-[400px]"></div>
-              <div className="mt-6">
+              <div className="mt-6 text-center">
                 <h5 className="text-2xl font-bold text-brand">Steve</h5>
                 <p className="text-white/70">Professional Trainer</p>
               </div>
             </div>
             <div>
               <div className="bg-gray-800 h-[400px]"></div>
-              <div className="mt-6">
+              <div className="mt-6 text-center">
                 <h5 className="text-2xl font-bold text-brand">Mary Grey</h5>
                 <p className="text-white/70">Professional Trainer</p>
               </div>

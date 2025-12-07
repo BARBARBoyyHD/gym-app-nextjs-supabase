@@ -45,7 +45,9 @@ export default function Classes() {
     <section>
       <div className="max-w-6xl mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-3">Our Classes</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-3">
+            Our <span className="text-brand">Classes</span>
+          </h2>
           <p className="text-white/70">
             Whatever your fitness goals are, our dedicated fitness instructors
             will help you achieve them.

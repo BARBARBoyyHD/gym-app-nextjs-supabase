@@ -9,7 +9,7 @@ export default function Home() {
         </div>
         <div className="flex flex-col justify-center text-left space-y-4 order-2 md:order-1">
           <h1 className="text-4xl md:text-7xl font-bold leading-tight">
-            GET FIT AND FEEL <span className="color-brand">GREAT!</span>
+            GET FIT AND FEEL <span className="text-brand">GREAT!</span>
           </h1>
           <p className="text-lg text-white/70 max-w-md leading-7">
             Our professional instructors will help you stay active and healthy
