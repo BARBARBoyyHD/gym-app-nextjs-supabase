@@ -3,7 +3,6 @@ import "../globals.css";
 import AdminRootLayout from "./adminRootLayout";
 import { TanstackProvider } from "@/utils/ReactQueryProviders";
 
-
 export const metadata: Metadata = {
   title: "LiftUp Gym",
   description: "Modern Gym & Fitness Platform",

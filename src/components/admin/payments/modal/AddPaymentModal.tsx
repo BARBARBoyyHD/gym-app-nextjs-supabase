@@ -1,47 +1,70 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useGetData, useGetSingleData, usePostData } from "@/hooks/use-Fetch";
 import { createPaymentSchema } from "@/lib/validation/paymentValidate";
-import { Members, PaginatedMembersResponse } from "@/types/member";
+import { Members } from "@/types/member";
 import { MembershipPlan } from "@/types/membership_plan";
-import type { Membership } from "@/types/membership";
 import { PaymentInput } from "@/types/payment";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-const PaymentFormSchema = createPaymentSchema;
-
 interface AddPaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
   onAddSuccess: () => void;
-  membershipId?: string;  // Optional: Pre-fill with specific membership ID
-  member_id?: string;      // Optional: Pre-fill with specific member ID
+  membershipId?: string; // Optional: Pre-fill with specific membership ID
+  member_id?: string; // Optional: Pre-fill with specific member ID
 }
 
-export function AddPaymentModal({ isOpen, onClose, onAddSuccess, membershipId, member_id }: AddPaymentModalProps) {
-
+export function AddPaymentModal({
+  isOpen,
+  onClose,
+  onAddSuccess,
+  membershipId,
+  member_id,
+}: AddPaymentModalProps) {
   // Fetch members and membership plans for dropdown
-  const { data: membersData, isLoading: membersLoading } = useGetData<PaginatedMembersResponse>({
+  const { data: membersData, isLoading: membersLoading } = useGetData<
+    Members[]
+  >({
     endpoint: "/api/admin/members/get",
     queryKeyBase: "members",
-    params: { limit: 1000 } // Get all members
+    params: { limit: 1000 }, // Get all members
   });
 
-  const { data: plansData, isLoading: plansLoading } = useGetData<{ data: MembershipPlan[] }>({
+  const { data: plansData } = useGetData<MembershipPlan[]>({
     endpoint: "/api/admin/membership-plans/get",
     queryKeyBase: "membership-plans",
-    params: { limit: 1000 } // Get all plans
+    params: { limit: 1000 }, // Get all plans
   });
 
   // Fetch membership details if membershipId is provided
+
   const { data: membershipData, isLoading: membershipLoading } = useGetSingleData<Membership>(
     membershipId || '',
     '/api/admin/memberships/get',
@@ -49,12 +72,27 @@ export function AddPaymentModal({ isOpen, onClose, onAddSuccess, membershipId, m
     { enabled: !!membershipId }
   );
 
+  const { data: membershipData, isLoading: membershipLoading } =
+    useGetSingleData<{
+      member_id: string | { id: string };
+      id: string;
+      plan_id: number;
+      start_date: string;
+      end_date: string;
+      status: string;
+      created_at: string;
+      updated_at: string;
+    }>(membershipId || "", "/api/admin/memberships/get", "membership", {
+      enabled: !!membershipId,
+    });
+
+
   // Define the form
   const form = useForm<z.infer<typeof createPaymentSchema>>({
     resolver: zodResolver(createPaymentSchema),
     defaultValues: {
       member_id: member_id || "",
-      membership_id: membershipId || "",  // Use the membershipId prop directly
+      membership_id: membershipId || "", // Use the membershipId prop directly
       amount: 0,
       method: "cash",
     },
@@ -64,13 +102,14 @@ export function AddPaymentModal({ isOpen, onClose, onAddSuccess, membershipId, m
   useEffect(() => {
     if (isOpen) {
       // Extract member ID from the membership data
-      const extractedmember_id = typeof membershipData?.member_id === 'object'
-        ? (membershipData?.member_id as { id: string }).id
-        : membershipData?.member_id;
+      const extractedmember_id =
+        typeof membershipData?.member_id === "object"
+          ? (membershipData?.member_id as { id: string }).id
+          : membershipData?.member_id;
 
       form.reset({
         member_id: member_id || extractedmember_id || "",
-        membership_id: membershipId || "",  // Use the membershipId prop directly
+        membership_id: membershipId || "", // Use the membershipId prop directly
         amount: 0,
         method: "cash",
       });
@@ -78,7 +117,10 @@ export function AddPaymentModal({ isOpen, onClose, onAddSuccess, membershipId, m
   }, [isOpen, member_id, membershipData, membershipId, form]);
 
   // Define mutation for creating a payment
-  const createPaymentMutation = usePostData<PaymentInput>("/api/admin/payments/post", "payments");
+  const createPaymentMutation = usePostData<PaymentInput>(
+    "/api/admin/payments/post",
+    "payments"
+  );
 
   // Handle form submission
   function onSubmit(values: z.infer<typeof createPaymentSchema>) {
@@ -87,6 +129,7 @@ export function AddPaymentModal({ isOpen, onClose, onAddSuccess, membershipId, m
       membership_id: values.membership_id,
       amount: values.amount,
       method: values.method,
+      paid_at: new Date().toISOString(), // Add the required paid_at field
     };
 
     createPaymentMutation.mutate(paymentData, {
@@ -101,7 +144,9 @@ export function AddPaymentModal({ isOpen, onClose, onAddSuccess, membershipId, m
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[500px] bg-dark-secondary border border-brand/30">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold text-white">Add Payment</DialogTitle>
+          <DialogTitle className="text-xl font-bold text-white">
+            Add Payment
+          </DialogTitle>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -120,13 +165,24 @@ export function AddPaymentModal({ isOpen, onClose, onAddSuccess, membershipId, m
                       disabled={!!member_id} // Disable if member_id is provided as prop
                     >
                       <FormControl>
-                        <SelectTrigger className={`bg-black/30 border border-white/20 ${!!member_id ? 'opacity-50' : ''}`}>
-                          <SelectValue placeholder="Select a member" className="text-white" />
+                        <SelectTrigger
+                          className={`bg-black/30 border border-white/20 ${
+                            !!member_id ? "opacity-50" : ""
+                          }`}
+                        >
+                          <SelectValue
+                            placeholder="Select a member"
+                            className="text-white"
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent className="bg-dark-secondary border border-white/20">
-                        {membersData?.data && membersData.data.map((member: Members) => (
-                          <SelectItem key={member.id} value={member.id} className="text-white">
+                        {membersData?.data?.[0]?.map((member: Members) => (
+                          <SelectItem
+                            key={member.id}
+                            value={member.id}
+                            className="text-white"
+                          >
                             {member.full_name} ({member.email})
                           </SelectItem>
                         ))}
@@ -153,15 +209,36 @@ export function AddPaymentModal({ isOpen, onClose, onAddSuccess, membershipId, m
                       disabled={!!membershipId} // Disable if membershipId is provided as prop
                     >
                       <FormControl>
-                        <SelectTrigger className={`bg-black/30 border border-white/20 ${!!membershipId ? 'opacity-50' : ''}`}>
-                          <SelectValue placeholder="Select a membership" className="text-white" />
+                        <SelectTrigger
+                          className={`bg-black/30 border border-white/20 ${
+                            !!membershipId ? "opacity-50" : ""
+                          }`}
+                        >
+                          <SelectValue
+                            placeholder="Select a membership"
+                            className="text-white"
+                          />
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent className="bg-dark-secondary border border-white/20">
-                        {membershipId && (
-                           <SelectItem key={membershipId} value={membershipId} className="text-white">
-                             Membership: {membershipId.substring(0, 8)}...
-                           </SelectItem>
+                        {membershipId ? (
+                          <SelectItem
+                            key={membershipId}
+                            value={membershipId}
+                            className="text-white"
+                          >
+                            Membership: {membershipId.substring(0, 8)}...
+                          </SelectItem>
+                        ) : (
+                          plansData?.data?.[0]?.map((plan) => (
+                            <SelectItem
+                              key={plan.id}
+                              value={plan.id}
+                              className="text-white"
+                            >
+                              {plan.name} (${plan.price})
+                            </SelectItem>
+                          ))
                         )}
                       </SelectContent>
                     </Select>
@@ -198,18 +275,31 @@ export function AddPaymentModal({ isOpen, onClose, onAddSuccess, membershipId, m
               render={({ field }) => (
                 <FormItem>
                   <FormLabel className="text-white">Payment Method</FormLabel>
-                  <Select onValueChange={field.onChange} defaultValue={field.value}>
+                  <Select
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                  >
                     <FormControl>
                       <SelectTrigger className="bg-black/30 border border-white/20">
                         <SelectValue className="text-white" />
                       </SelectTrigger>
                     </FormControl>
                     <SelectContent className="bg-dark-secondary border border-white/20">
-                      <SelectItem value="credit_card" className="text-white">Credit Card</SelectItem>
-                      <SelectItem value="debit_card" className="text-white">Debit Card</SelectItem>
-                      <SelectItem value="paypal" className="text-white">PayPal</SelectItem>
-                      <SelectItem value="bank_transfer" className="text-white">Bank Transfer</SelectItem>
-                      <SelectItem value="cash" className="text-white">Cash</SelectItem>
+                      <SelectItem value="credit_card" className="text-white">
+                        Credit Card
+                      </SelectItem>
+                      <SelectItem value="debit_card" className="text-white">
+                        Debit Card
+                      </SelectItem>
+                      <SelectItem value="paypal" className="text-white">
+                        PayPal
+                      </SelectItem>
+                      <SelectItem value="bank_transfer" className="text-white">
+                        Bank Transfer
+                      </SelectItem>
+                      <SelectItem value="cash" className="text-white">
+                        Cash
+                      </SelectItem>
                     </SelectContent>
                   </Select>
                   <FormMessage />
@@ -231,7 +321,9 @@ export function AddPaymentModal({ isOpen, onClose, onAddSuccess, membershipId, m
                 className="bg-brand hover:bg-brand/90 text-black"
                 disabled={createPaymentMutation.isPending}
               >
-                {createPaymentMutation.isPending ? "Creating..." : "Add Payment"}
+                {createPaymentMutation.isPending
+                  ? "Creating..."
+                  : "Add Payment"}
               </Button>
             </div>
           </form>

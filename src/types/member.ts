@@ -6,7 +6,10 @@ export interface Members {
   created_at: string;
 }
 
-export type CreateMemberInput = Omit<Members, "id" | "created_at" | "updated_at">;
+export type CreateMemberInput = Omit<
+  Members,
+  "id" | "created_at" | "updated_at"
+>;
 
 // Define the query parameters for searching and filtering members
 export interface MemberQueryParams {
@@ -14,7 +17,7 @@ export interface MemberQueryParams {
   limit?: number;
   search?: string; // For searching across full_name, email, and phone
   sortBy?: keyof Members;
-  sortOrder?: 'asc' | 'desc';
+  sortOrder?: "asc" | "desc";
 }
 
 // Define the response type for paginated member results

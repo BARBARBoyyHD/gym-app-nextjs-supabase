@@ -22,7 +22,7 @@ interface EditCourseModalProps {
 }
 
 const EditCourseModal = ({ isOpen, onClose, course_id, onEditSuccess }: EditCourseModalProps) => {
-  const { data: course, isLoading, isError } = useGetSingleData<Course>(
+  const { data: course, isError } = useGetSingleData<Course>(
     course_id,
     "/api/admin/courses/get",
     `course-${course_id}`

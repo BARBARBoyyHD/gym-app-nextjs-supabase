@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { createMembershipPlanSchema, CreateMembershipPlanInput } from "@/lib/validation/membershipPlansValidate";
+import { createMembershipPlanSchema } from "@/lib/validation/membershipPlansValidate";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { 
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -15,7 +15,6 @@ import {
 } from "@/components/ui/dialog";
 import { usePostData } from "@/hooks/use-Fetch";
 import { toast } from "sonner";
-import { MembershipPlan } from "@/types/membership_plan";
 
 type MembershipPlanInput = z.infer<typeof createMembershipPlanSchema>;
 
@@ -43,9 +42,6 @@ export function AddMembershipModal({
   // Use the post hook for creating new membership plans
   const {
     mutate: createPlan,
-    isPending: isCreatePending,
-    isError: isCreateError,
-    error: createError,
     reset: resetCreate
   } = usePostData<MembershipPlanInput>('/api/admin/membership-plan/post', 'membership-plans');
 

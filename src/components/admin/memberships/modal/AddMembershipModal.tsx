@@ -1,5 +1,6 @@
 "use client";
 
+/* eslint-disable react-hooks/set-state-in-effect */
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -65,7 +66,7 @@ export function AddMembershipModal({
         member_id: prefillMemberId
       }));
     }
-  }, [prefillMemberId]);
+  }, [prefillMemberId, formData.member_id]);
 
   // Fetch all membership plans for the dropdown
   const {

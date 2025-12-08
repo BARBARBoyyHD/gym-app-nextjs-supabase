@@ -1,5 +1,3 @@
-import { BaseInput } from './base';
-
 // Define the input type for creating a new member with validation
 export interface CreateMemberInput {
   name: string;

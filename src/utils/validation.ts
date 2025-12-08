@@ -10,19 +10,6 @@ interface ValidationResult {
   errors: ValidationError[];
 }
 
-// Define the shape of validation rules
-interface ValidationRule {
-  required?: boolean;
-  type?: "string" | "number" | "boolean" | "object" | "function";
-  minLength?: number;
-  maxLength?: number;
-  min?: number;
-  max?: number;
-  pattern?: RegExp;
-  message?: string;
-  validator?: (value: unknown) => boolean | string;
-}
-
 // Individual validation functions for specific fields
 export function validateFullName(value: unknown): ValidationResult {
   const errors: ValidationError[] = [];

@@ -25,8 +25,7 @@ export interface RateLimitResult {
 export function rateLimit(config: RateLimitConfig) {
   return function (ip: string): RateLimitResult {
     const now = Date.now();
-    const windowStart = now - config.windowMs;
-    
+
     // Check if this IP exists in the store
     if (!rateLimitStore[ip]) {
       // Create new entry for this IP
@@ -34,23 +33,23 @@ export function rateLimit(config: RateLimitConfig) {
         count: 1,
         resetTime: now + config.windowMs
       };
-      
+
       return {
         success: true,
         remaining: config.max - 1,
         resetTime: rateLimitStore[ip].resetTime
       };
     }
-    
+
     const ipRecord = rateLimitStore[ip];
-    
+
     // If the window has passed, reset the counter
     if (now > ipRecord.resetTime) {
       rateLimitStore[ip] = {
         count: 1,
         resetTime: now + config.windowMs
       };
-      
+
       return {
         success: true,
         remaining: config.max - 1,
