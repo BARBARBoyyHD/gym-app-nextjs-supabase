@@ -1,3 +1,4 @@
+import Image from "next/image";
 export default function GroupTraining() {
   return (
     <section>
@@ -33,7 +34,16 @@ export default function GroupTraining() {
             </div>
           </div>
           <div className="flex-1 flex justify-end">
-            <div className="bg-gray-800 w-[468px] h-[600px]"></div>
+            <div className="relative bg-gray-800 w-[468px] h-[600px]">
+              <Image
+                src="/images/group-training.jpg"
+                alt="Group Training Image"
+                fill
+                className="object-cover"
+                priority
+                sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
 import CallToActionBlock from "@/components/CallToActionBlock";
+import Image from "next/image";
 export default function ClassesPage() {
   const classesData = [
     {
@@ -12,8 +13,8 @@ export default function ClassesPage() {
       desc: "Enhance flexibility, reduce stress, and strengthen your core through mindful yoga sessions suitable for all levels.",
     },
     {
-      title: "Zumba",
-      desc: "A fun and energetic dance workout designed to burn calories while enjoying upbeat music.",
+      title: "Aerobics",
+      desc: "A high-energy workout that improves cardio, coordination, and overall endurance.",
     },
     {
       title: "Crossfit",
@@ -41,17 +42,31 @@ export default function ClassesPage() {
             Select the activities you like the most!
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 space-y-6 mt-12">
-            {classesData.map((item, index) => (
-              <div key={index}>
-                <div className="bg-gray-800 w-full h-80 mb-6"></div>
-                <div>
-                  <h5 className="text-2xl font-bold text-brand mb-3 uppercase ">
-                    {item.title}
-                  </h5>
-                  <p className="text-white/70 leading-7 text-lg">{item.desc}</p>
+            {classesData.map((item, index) => {
+              const imageName = item.title.toLowerCase() + ".jpg";
+              return (
+                <div key={index} className="space-y-4">
+                  <div className="relative bg-gray-800 w-full h-80 mb-6">
+                    <Image
+                      src={`/images/${imageName}`}
+                      alt={item.title}
+                      fill
+                      className="object-cover"
+                      priority
+                      sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
+                    />
+                  </div>
+                  <div>
+                    <h5 className="text-2xl font-bold text-brand mb-3 uppercase ">
+                      {item.title}
+                    </h5>
+                    <p className="text-white/70 leading-7 text-lg">
+                      {item.desc}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </section>
         <section>

@@ -7,6 +7,7 @@ import { RiArchiveDrawerLine } from "react-icons/ri";
 import { CiDumbbell } from "react-icons/ci";
 import { PiBabyLight } from "react-icons/pi";
 import { PiFlowerLotusLight } from "react-icons/pi";
+import Image from "next/image";
 export default function AboutPage() {
   return (
     <>
@@ -27,13 +28,31 @@ export default function AboutPage() {
             </div>
             <div className="relative w-80 h-80 md:col-span-2">
               <div
-                className="w-64 h-64 bg-gray-800 rounded-xl absolute top-0 left-0 
-                  transform -translate-x-8 -translate-y-8"
-              ></div>
+                className="w-64 h-64 bg-gray-800 absolute top-0 left-0 
+                  transform -translate-x-12 -translate-y-8 border-brand border-4"
+              >
+                <Image
+                  src="/images/fitness-center-01.jpg"
+                  alt="Fitness Center Image"
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
+                />
+              </div>
               <div
-                className="w-64 h-64 bg-gray-700 rounded-xl absolute bottom-0 right-0 
-                  transform translate-x-8 translate-y-8"
-              ></div>
+                className="w-64 h-64 bg-gray-700 absolute bottom-0 right-0 
+                  transform translate-x-8 translate-y-8 border-brand border-4"
+              >
+                <Image
+                  src="/images/fitness-center-02.jpg"
+                  alt="Fitness Center Image"
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
+                />
+              </div>
             </div>
           </div>
         </section>
@@ -118,7 +137,16 @@ export default function AboutPage() {
         <section className="max-w-6xl mx-auto px-4 my-24">
           <div className="flex flex-wrap">
             <div className="flex-1 flex justify-start">
-              <div className="bg-gray-800 w-[468px] h-[600px]"></div>
+              <div className="relative bg-gray-800 w-[468px] h-[600px]">
+                <Image
+                  src="/images/hero-02.jpg"
+                  alt="Our mission Image"
+                  fill
+                  className="object-cover"
+                  priority
+                  sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
+                />
+              </div>
             </div>
             <div className="flex-1 flex items-center flex-wrap">
               <div>
