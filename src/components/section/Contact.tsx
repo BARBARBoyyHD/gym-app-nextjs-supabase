@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import ButtonBrand from "../button/ButtonBrand";
+import Image from "next/image";
 
 export default function Contact() {
   return (
@@ -75,27 +76,112 @@ export default function Contact() {
           className="w-full"
         >
           <SwiperSlide>
-            <div className="w-[355px] h-[355px] bg-gray-700 mx-auto"></div>
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <div className="w-[355px] h-[355px] bg-gray-700 mx-auto"></div>
-          </SwiperSlide>
-
-          <SwiperSlide>
-            <div className="w-[355px] h-[355px] bg-gray-700 mx-auto"></div>
-          </SwiperSlide>
-          <SwiperSlide>
-            <div className="w-[355px] h-[355px] bg-gray-700 mx-auto"></div>
+            <div className="relative w-[355px] h-[355px] bg-gray-700 mx-auto">
+              <Image
+                src="/images/fitness-center-01.jpg"
+                alt="LiftUp Image"
+                fill
+                className="object-cover object-center"
+                priority
+                sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
+              />
+            </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="w-[355px] h-[355px] bg-gray-700 mx-auto"></div>
+            <div className="relative w-[355px] h-[355px] bg-gray-700 mx-auto">
+              <Image
+                src="/images/fitness-center-02.jpg"
+                alt="LiftUp Image"
+                fill
+                className="object-cover object-center"
+                priority
+                sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
+              />
+            </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="w-[355px] h-[355px] bg-gray-700 mx-auto"></div>
+            <div className="relative w-[355px] h-[355px] bg-gray-700 mx-auto">
+              <Image
+                src="/images/hero-03.jpg"
+                alt="LiftUp Image"
+                fill
+                className="object-cover object-center"
+                priority
+                sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
+              />
+            </div>
           </SwiperSlide>
           <SwiperSlide>
-            <div className="w-[355px] h-[355px] bg-gray-700 mx-auto"></div>
+            <div className="relative w-[355px] h-[355px] bg-gray-700 mx-auto">
+              <Image
+                src="/images/boxing.jpg"
+                alt="LiftUp Image"
+                fill
+                className="object-cover object-center"
+                priority
+                sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
+              />
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="relative w-[355px] h-[355px] bg-gray-700 mx-auto">
+              <Image
+                src="/images/hiit.jpg"
+                alt="LiftUp Image"
+                fill
+                className="object-cover object-center"
+                priority
+                sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
+              />
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="relative w-[355px] h-[355px] bg-gray-700 mx-auto">
+              <Image
+                src="/images/pilates.jpg"
+                alt="LiftUp Image"
+                fill
+                className="object-cover object-center"
+                priority
+                sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
+              />
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="relative w-[355px] h-[355px] bg-gray-700 mx-auto">
+              <Image
+                src="/images/yoga.jpg"
+                alt="LiftUp Image"
+                fill
+                className="object-cover object-center"
+                priority
+                sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
+              />
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="relative w-[355px] h-[355px] bg-gray-700 mx-auto">
+              <Image
+                src="/images/crossfit.jpg"
+                alt="LiftUp Image"
+                fill
+                className="object-cover object-center"
+                priority
+                sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
+              />
+            </div>
+          </SwiperSlide>
+          <SwiperSlide>
+            <div className="relative w-[355px] h-[355px] bg-gray-700 mx-auto">
+              <Image
+                src="/images/hero-02.jpg"
+                alt="LiftUp Image"
+                fill
+                className="object-cover object-center"
+                priority
+                sizes="(max-width:640px) 100vw, (max-width:1024px) 50vw, 33vw"
+              />
+            </div>
           </SwiperSlide>
         </Swiper>
       </div>
