@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { errorResponse, successResponse } from "@/utils/response";
+import { errorResponse } from "@/utils/response";
 import { putHandler } from "@/handlers/putHandlers";
 import { updateMembershipPlanSchema } from "@/lib/validation/membershipPlansValidate";
 import { ZodError } from "zod";

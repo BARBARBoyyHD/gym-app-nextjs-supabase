@@ -14,7 +14,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { usePostData } from "@/hooks/use-Fetch";
-import { Members,CreateMemberInput } from "@/types/member";
+import { CreateMemberInput } from "@/types/member";
 import { toast } from "sonner";
 
 type MemberInput = z.infer<typeof memberSchema>;
@@ -42,9 +42,6 @@ export function AddMemberModal({
   // Use the post hook for creating new members
   const {
     mutate: createMember,
-    isPending: isCreatePending,
-    isError: isCreateError,
-    error: createError,
     reset: resetCreate
   } = usePostData<CreateMemberInput>('/api/admin/members/post', 'members');
 
@@ -116,7 +113,7 @@ export function AddMemberModal({
         <DialogHeader>
           <DialogTitle className="text-white">Add New Member</DialogTitle>
           <DialogDescription className="text-white/70">
-            Add a new member to the gym. Click save when you're done.
+            Add a new member to the gym. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-4">

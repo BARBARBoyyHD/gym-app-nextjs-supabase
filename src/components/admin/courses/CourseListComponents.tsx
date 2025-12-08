@@ -20,7 +20,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useGetData } from "@/hooks/use-Fetch";
-import { Course } from "@/types/course";
 import { CourseListResponse } from "./table/CourseTableComponents";
 import { PaginationParams } from "@/types/queryTypes";
 import {
@@ -63,21 +62,27 @@ export default function CourseListComponents() {
 
   // Listen for the custom event to open the edit modal
   useEffect(() => {
-    const handleOpenEditModal = (e: CustomEvent) => {
-      const courseId = e.detail as string;
+    const handleOpenEditModal = (e: CustomEvent<string>) => {
+      const courseId = e.detail;
       setEditingCourseId(courseId);
       setIsEditModalOpen(true);
     };
 
-    const handleOpenDeleteModal = (e: CustomEvent) => {
-      const courseId = e.detail as string;
+    const handleOpenDeleteModal = (e: CustomEvent<string>) => {
+      const courseId = e.detail;
       setDeletingCourseId(courseId);
       setIsDeleteModalOpen(true);
     };
 
-    // Cast window to any to add custom event listener
-    (window as any).handleOpenEditModal = handleOpenEditModal;
-    (window as any).handleOpenDeleteModal = handleOpenDeleteModal;
+    // Define custom properties on window with appropriate type assertion
+    (window as Window & typeof globalThis & {
+      handleOpenEditModal: (e: CustomEvent<string>) => void;
+      handleOpenDeleteModal: (e: CustomEvent<string>) => void;
+    }).handleOpenEditModal = handleOpenEditModal;
+    (window as Window & typeof globalThis & {
+      handleOpenEditModal: (e: CustomEvent<string>) => void;
+      handleOpenDeleteModal: (e: CustomEvent<string>) => void;
+    }).handleOpenDeleteModal = handleOpenDeleteModal;
 
     window.addEventListener('openEditCourseModal', handleOpenEditModal as EventListener);
     window.addEventListener('openDeleteCourseModal', handleOpenDeleteModal as EventListener);

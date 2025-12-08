@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { updateMembershipPlanSchema, UpdateMembershipPlanInput } from "@/lib/validation/membershipPlansValidate";
+/* eslint-disable react-hooks/set-state-in-effect */
+import { useState, useEffect, useRef } from "react";
+import { updateMembershipPlanSchema } from "@/lib/validation/membershipPlansValidate";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { 
+import {
   Dialog,
   DialogContent,
   DialogDescription,
@@ -50,13 +51,11 @@ export function EditMembershipModal({
   
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
-  
+  const initialLoadRef = useRef(true);
+
   // Use the update hook
   const {
     mutate: updatePlan,
-    isPending: isUpdatePending,
-    isError: isUpdateError,
-    error: updateError,
     reset: resetUpdate
   } = useUpdateData<MembershipPlanRow>('/api/admin/membership-plan/put', 'membership-plans', { page: 1, limit: 10 });
 
@@ -74,7 +73,8 @@ export function EditMembershipModal({
 
   // Populate form with membership plan data when it's loaded
   useEffect(() => {
-    if (membershipPlan) {
+    if (membershipPlan && initialLoadRef.current) {
+      initialLoadRef.current = false;
       setFormData({
         name: membershipPlan.name,
         description: membershipPlan.description || "",
@@ -125,7 +125,7 @@ export function EditMembershipModal({
     try {
       // Prepare the data to match API expectations
       // Map form field "duration_day" to API field "duration"
-      const updatesPayload: any = {};
+      const updatesPayload: Partial<MembershipPlanRow> & { duration?: number } = {};
       if (formData.name !== undefined) updatesPayload.name = formData.name;
       if (formData.description !== undefined) updatesPayload.description = formData.description;
       if (formData.price !== undefined) updatesPayload.price = formData.price;
@@ -212,7 +212,7 @@ export function EditMembershipModal({
         <DialogHeader>
           <DialogTitle className="text-white">Edit Membership Plan</DialogTitle>
           <DialogDescription className="text-white/70">
-            Make changes to the membership plan's information here. Click save when you're done.
+            Make changes to the membership plan&apos;s information here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-4">

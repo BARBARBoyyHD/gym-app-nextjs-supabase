@@ -1,6 +1,4 @@
 import { BaseEntity, BaseInput } from "./base";
-import { Members } from "./member";
-import { MembershipPlan } from "./membership_plan";
 
 export interface Payment extends BaseEntity {
   member_id: string;

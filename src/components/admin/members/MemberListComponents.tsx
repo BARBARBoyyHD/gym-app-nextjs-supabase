@@ -64,14 +64,16 @@ export default function MembersListComponents() {
 
   // Listen for the custom event to open the edit modal
   useEffect(() => {
-    const handleOpenEditModal = (e: CustomEvent) => {
-      const memberId = e.detail as string;
+    const handleOpenEditModal = (e: CustomEvent<string>) => {
+      const memberId = e.detail;
       setEditingMemberId(memberId);
       setIsEditModalOpen(true);
     };
 
-    // Cast window to any to add custom event listener
-    (window as any).handleOpenEditModal = handleOpenEditModal;
+    // Define custom properties on window with appropriate type assertion
+    (window as Window & typeof globalThis & {
+      handleOpenEditModal: (e: CustomEvent<string>) => void;
+    }).handleOpenEditModal = handleOpenEditModal;
 
     window.addEventListener('openEditMemberModal', handleOpenEditModal as EventListener);
 
@@ -82,15 +84,17 @@ export default function MembersListComponents() {
 
   // Listen for the custom event to open the add membership modal
   useEffect(() => {
-    const handleOpenAddMembershipModal = (e: CustomEvent) => {
+    const handleOpenAddMembershipModal = (e: CustomEvent<{ memberId: string, memberName: string }>) => {
       const { memberId, memberName } = e.detail;
       setMembershipModalMemberId(memberId);
       setMembershipModalMemberName(memberName);
       setIsAddMembershipModalOpen(true);
     };
 
-    // Cast window to any to add custom event listener
-    (window as any).handleOpenAddMembershipModal = handleOpenAddMembershipModal;
+    // Define custom properties on window with appropriate type assertion
+    (window as Window & typeof globalThis & {
+      handleOpenAddMembershipModal: (e: CustomEvent<{ memberId: string, memberName: string }>) => void;
+    }).handleOpenAddMembershipModal = handleOpenAddMembershipModal;
 
     window.addEventListener('openAddMembershipModal', handleOpenAddMembershipModal as EventListener);
 

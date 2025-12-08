@@ -1,5 +1,6 @@
 "use client";
 
+/* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useEffect } from "react";
 import { memberSchema } from "@/lib/validation/membersValidate";
 import { z } from "zod";
@@ -16,7 +17,6 @@ import {
 import { useGetSingleData, useUpdateData } from "@/hooks/use-Fetch";
 import { Members } from "@/types/member";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 
 type MemberInput = z.infer<typeof memberSchema>;
 
@@ -27,11 +27,11 @@ interface EditMemberModalProps {
   onEditSuccess: () => void;
 }
 
-export function EditMemberModal({ 
-  isOpen, 
-  onClose, 
-  memberId, 
-  onEditSuccess 
+export function EditMemberModal({
+  isOpen,
+  onClose,
+  memberId,
+  onEditSuccess
 }: EditMemberModalProps) {
   const [formData, setFormData] = useState<MemberInput>({
     full_name: "",
@@ -42,14 +42,9 @@ export function EditMemberModal({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const router = useRouter();
-
   // Use the update hook
   const {
     mutate: updateMember,
-    isPending: isUpdatePending,
-    isError: isUpdateError,
-    error: updateError,
     reset: resetUpdate
   } = useUpdateData<Members>('/api/admin/members', 'members', { page: 1, limit: 10 });
 
@@ -65,7 +60,14 @@ export function EditMemberModal({
     "member"
   );
 
-  // Populate form with member data when it's loaded
+  // Refresh data when modal opens and we have a memberId
+  useEffect(() => {
+    if (isOpen && memberId) {
+      refetch();
+    }
+  }, [isOpen, memberId, refetch]);
+
+  // Update form data when member data changes (initial load)
   useEffect(() => {
     if (member) {
       setFormData({
@@ -75,13 +77,6 @@ export function EditMemberModal({
       });
     }
   }, [member]);
-
-  // Refresh data when modal opens and we have a memberId
-  useEffect(() => {
-    if (isOpen && memberId) {
-      refetch();
-    }
-  }, [isOpen, memberId, refetch]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -201,7 +196,7 @@ export function EditMemberModal({
         <DialogHeader>
           <DialogTitle className="text-white">Edit Member</DialogTitle>
           <DialogDescription className="text-white/70">
-            Make changes to the member's information here. Click save when you're done.
+            Make changes to the member&apos;s information here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-4">

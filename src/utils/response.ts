@@ -1,6 +1,5 @@
 import type { SuccessType } from "@/types/responseType";
 import type { ErrorType } from "@/types/responseType";
-import type { ZodIssue } from "zod";
 import { NextResponse } from "next/server";
 
 export function successResponse<T>({
