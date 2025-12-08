@@ -43,7 +43,7 @@ export async function PUT(
     if (validatedUpdateData.category !== undefined)
       updatePayload.category = validatedUpdateData.category;
     if (validatedUpdateData.video_embed_url !== undefined)
-      updatePayload.video_url = validatedUpdateData.video_embed_url;
+      updatePayload.video_embed_url = validatedUpdateData.video_embed_url;
 
     return putHandler({
       table: "courses",

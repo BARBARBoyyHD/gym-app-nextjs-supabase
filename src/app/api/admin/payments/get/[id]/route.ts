@@ -46,7 +46,7 @@ export async function GET(
 
     return await getSingleHandler({
       table: 'payments', // Supabase table name
-      column: 'id, member_id, plan_id, amount, currency, status, transaction_id, method, created_at, updated_at',
+      column: 'id,member_id,members(id,full_name),membership_id,memberships(id,plan_id,membership_plans(id,name)),amount,method,paid_at,created_at',
       id,
       client: supabase,
     });

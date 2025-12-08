@@ -46,7 +46,7 @@ export function useLogin(
     },
 
     onSuccess: (data) => {
-      toast.success("Login Successful!", {
+      toast("Login Successful!", {
         description: data.message || "Welcome back!",
       });
 
@@ -54,7 +54,7 @@ export function useLogin(
     },
 
     onError: (error) => {
-      toast.error("Login Failed", {
+      toast("Login Failed", {
         description: error.message || "Invalid email or password.",
       });
     },

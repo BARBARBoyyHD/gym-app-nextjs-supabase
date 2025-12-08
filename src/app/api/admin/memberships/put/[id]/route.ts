@@ -69,8 +69,6 @@ export async function PUT(
       updatePayload.end_date = new Date(validatedUpdateData.end_date);
     if (validatedUpdateData.status !== undefined)
       updatePayload.status = validatedUpdateData.status;
-    if (validatedUpdateData.auto_renew !== undefined)
-      updatePayload.auto_renew = validatedUpdateData.auto_renew;
 
     return putHandler({
       table: "memberships",

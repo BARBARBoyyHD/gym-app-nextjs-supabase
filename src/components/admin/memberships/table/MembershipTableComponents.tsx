@@ -12,61 +12,6 @@ import {
 import { Membership } from "@/types/membership";
 import { ColumnDef } from "@tanstack/react-table";
 import { MoreHorizontal } from "lucide-react";
-import { useState } from "react";
-import { AddPaymentModal } from "../../payments/modal/AddPaymentModal";
-
-// Wrapper component to handle the table row actions with modal
-function MembershipActions({ membership }: { membership: Membership & { member_id: { id: string; full_name: string } | string; plan_id: { id: string; name: string } | string; } }) {
-  const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
-
-  // Extract member ID from the membership data
-  const memberId = typeof membership.member_id === 'object'
-    ? (membership.member_id as { id: string }).id
-    : membership.member_id;
-
-  const openPaymentModal = () => {
-    setIsPaymentModalOpen(true);
-  };
-
-  const closePaymentModal = () => {
-    setIsPaymentModalOpen(false);
-  };
-
-  return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="ghost" className="h-8 w-8 p-0">
-            <span className="sr-only">Open menu</span>
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="bg-black">
-          <DropdownMenuLabel>Actions</DropdownMenuLabel>
-          <DropdownMenuItem
-            onClick={() => navigator.clipboard.writeText(membership.id)}
-          >
-            Copy Membership ID
-          </DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>View Details</DropdownMenuItem>
-          <DropdownMenuItem onClick={openPaymentModal}>Add Payment</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-
-      <AddPaymentModal
-        isOpen={isPaymentModalOpen}
-        onClose={closePaymentModal}
-        onAddSuccess={() => {
-          // Optionally refresh data or show a success message
-          closePaymentModal();
-        }}
-        membershipId={membership.id}
-        member_id={memberId}
-      />
-    </>
-  );
-}
 
 export const columns: ColumnDef<
   Membership & {
@@ -171,8 +116,51 @@ export const columns: ColumnDef<
     cell: ({ row }) => {
       const membership = row.original;
 
+      // Extract member and plan IDs (handling both object and string formats)
+      const memberId =
+        typeof membership.member_id === "object" && membership.member_id !== null && "id" in membership.member_id
+          ? (membership.member_id as { id: string }).id
+          : membership.member_id;
+
+      const planId =
+        typeof membership.plan_id === "object" && membership.plan_id !== null && "id" in membership.plan_id
+          ? (membership.plan_id as { id: string }).id
+          : membership.plan_id;
+
       return (
-        <MembershipActions membership={membership} />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" className="h-8 w-8 p-0">
+              <span className="sr-only">Open menu</span>
+              <MoreHorizontal className="h-4 w-4" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="bg-black">
+            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuItem
+              onClick={() => navigator.clipboard.writeText(membership.id)}
+            >
+              Copy Membership ID
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>View Details</DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem 
+              onClick={() => {
+                // Dispatch a custom event to open the AddPaymentModal with prefilled data
+                window.dispatchEvent(new CustomEvent('openAddPaymentForMembership', { 
+                  detail: { 
+                    membershipId: membership.id,
+                    memberId: memberId,
+                    planId: planId
+                  } 
+                }));
+              }}
+            >
+              Add Payment
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       );
     },
   },

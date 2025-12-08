@@ -34,7 +34,7 @@ export async function GET(req: NextRequest) {
     // No email parameter was provided, use regular getHandler
     return await getHandler({
       table: "courses",
-      column: "id, title, description, category, created_at",
+      column: "id, title, description, category,  video_embed_url, created_at",
       client: supabase,
       // Pass the new parameters to getHandler
       search: search,
