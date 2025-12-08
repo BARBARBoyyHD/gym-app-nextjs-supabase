@@ -212,7 +212,7 @@ export function EditMembershipModal({
         <DialogHeader>
           <DialogTitle className="text-white">Edit Membership Plan</DialogTitle>
           <DialogDescription className="text-white/70">
-            Make changes to the membership plan's information here. Click save when you're done.
+            Make changes to the membership plan&apos;s information here. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-4">

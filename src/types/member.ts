@@ -4,7 +4,6 @@ export interface Members {
   email: string;
   phone?: string;
   created_at: string;
-  updated_at: string;
 }
 
 export type CreateMemberInput = Omit<Members, "id" | "created_at" | "updated_at">;

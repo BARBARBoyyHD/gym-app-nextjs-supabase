@@ -114,7 +114,7 @@ export function AddMembershipModal({
         <DialogHeader>
           <DialogTitle className="text-white">Add New Membership Plan</DialogTitle>
           <DialogDescription className="text-white/70">
-            Add a new membership plan for the gym. Click save when you're done.
+            Add a new membership plan for the gym. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-4">

@@ -118,7 +118,7 @@ export default function AboutPage() {
                 Child Care
               </h3>
               <p className="text-white/70 leading-relaxed">
-                We provide a safe and secure children's area for children from 6
+                We provide a safe and secure children&apos;s area for children from 6
                 weeks to 12 years of age.
               </p>
             </div>

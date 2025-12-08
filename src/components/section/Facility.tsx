@@ -26,7 +26,7 @@ export default function Facility() {
             SELECT YOUR ACTIVITY
           </h3>
           <p className="text-white/70 leading-relaxed">
-            Choose the activities which suit you and don't pay for the
+            Choose the activities which suit you and don&apos;t pay for the
             unnecessary ones.
           </p>
         </div>

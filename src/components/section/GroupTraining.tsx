@@ -29,7 +29,7 @@ export default function GroupTraining() {
               </ul>
               <p className="text-white/70 mb-4 leading-relaxed">
                 At the same time, you meet wonderful people and train with great
-                interest. You won't want to miss our workouts!
+                interest. You won&apos;t want to miss our workouts!
               </p>
             </div>
           </div>

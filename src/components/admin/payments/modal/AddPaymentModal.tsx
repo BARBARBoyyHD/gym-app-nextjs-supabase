@@ -42,7 +42,7 @@ export function AddPaymentModal({ isOpen, onClose, onAddSuccess, membershipId, m
   });
 
   // Fetch membership details if membershipId is provided
-  const { data: membershipData, isLoading: membershipLoading } = useGetSingleData<any>(
+  const { data: membershipData, isLoading: membershipLoading } = useGetSingleData<Membership>(
     membershipId || '',
     '/api/admin/memberships/get',
     'membership',

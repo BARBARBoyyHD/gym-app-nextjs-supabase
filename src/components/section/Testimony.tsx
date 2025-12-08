@@ -24,12 +24,12 @@ export default function Testimony() {
         >
           <SwiperSlide>
             <div className="text-white text-center w-full px-6 md:w-2/3 mx-auto flex items-center justify-center flex-col relative">
-              <span className="absolute top-0 text-8xl text-brand">"</span>
+              <span className="absolute top-0 text-8xl text-brand">&quot;</span>
               <p className="italic font-medium leading-8 text-xl tracking-normal mt-14">
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                &quot;Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Corrupti velit tempora et. Illo velit odit architecto! Doloribus
                 iure, amet autem velit cupiditate quaerat quidem
-                necessitatibus!"{" "}
+                necessitatibus!&quot;{" "}
               </p>
               <span className="font-bold text-lg mt-8 mb-4">Daniel </span>
               <p className="text-white/70">September 22, 2025</p>
@@ -37,12 +37,12 @@ export default function Testimony() {
           </SwiperSlide>
           <SwiperSlide>
             <div className="text-white text-center w-full px-6 md:w-2/3 mx-auto flex items-center justify-center flex-col relative">
-              <span className="absolute top-0 text-8xl text-brand">"</span>
+              <span className="absolute top-0 text-8xl text-brand">&quot;</span>
               <p className="italic font-medium leading-8 text-xl tracking-normal mt-14">
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                &quot;Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Corrupti velit tempora et. Illo velit odit architecto! Doloribus
                 iure, amet autem velit cupiditate quaerat quidem
-                necessitatibus!"{" "}
+                necessitatibus!&quot;{" "}
               </p>
               <span className="font-bold text-lg mt-8 mb-4">Alexander </span>
               <p className="text-white/70">December 03, 2025</p>
@@ -50,12 +50,12 @@ export default function Testimony() {
           </SwiperSlide>
           <SwiperSlide>
             <div className="text-white text-center w-full px-6 md:w-2/3 mx-auto flex items-center justify-center flex-col relative">
-              <span className="absolute top-0 text-8xl text-brand">"</span>
+              <span className="absolute top-0 text-8xl text-brand">&quot;</span>
               <p className="italic font-medium leading-8 text-xl tracking-normal mt-14">
-                "Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                &quot;Lorem ipsum dolor sit amet consectetur adipisicing elit.
                 Corrupti velit tempora et. Illo velit odit architecto! Doloribus
                 iure, amet autem velit cupiditate quaerat quidem
-                necessitatibus!"{" "}
+                necessitatibus!&quot;{" "}
               </p>
               <span className="font-bold text-lg mt-8 mb-4">Bradley </span>
               <p className="text-white/70">December 06, 2025</p>
