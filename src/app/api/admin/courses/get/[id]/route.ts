@@ -24,7 +24,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
     // Get a specific course by ID
     return getSingleHandler({
       table: "courses",
-      column: "id, title, description, category, created_at",  // Including all relevant columns
+      column: "id, title, description, category,  video_embed_url, created_at",  // Including all relevant columns
       id: id,
       client: supabase,
     });

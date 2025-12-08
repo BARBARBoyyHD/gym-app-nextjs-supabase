@@ -38,7 +38,14 @@ export async function getHandler({
     // Apply search if provided
     if (search && searchColumns && searchColumns.length > 0) {
       // Build a condition string to search across multiple columns
-      const conditions = searchColumns.map(col => `${col}.ilike.%${search}%`).join(',');
+      const conditions = searchColumns
+        .map((col) => {
+          // convert members(full_name) → members.full_name
+          const formatted = col.replace(/\((.*)\)/, ".$1");
+          return `${formatted}.ilike.%${search}%`;
+        })
+        .join(",");
+
       query = query.or(conditions);
     }
 
@@ -106,9 +113,15 @@ export async function getSingleHandler({
       .single();
 
     if (error) {
-      console.error(`Supabase error retrieving single record from ${table} with id ${id}:`, error);
+      console.error(
+        `Supabase error retrieving single record from ${table} with id ${id}:`,
+        error
+      );
       // Differentiate between "not found" and other errors
-      if (error.code === 'PGRST116' || error.message.includes('Row not found')) {
+      if (
+        error.code === "PGRST116" ||
+        error.message.includes("Row not found")
+      ) {
         return errorResponse({
           success: false,
           status: 404,
@@ -125,7 +138,9 @@ export async function getSingleHandler({
     }
 
     if (!data) {
-      console.warn(`No data returned for ${table} with id ${id}, but no error occurred`);
+      console.warn(
+        `No data returned for ${table} with id ${id}, but no error occurred`
+      );
       return errorResponse({
         success: false,
         status: 404,
@@ -140,7 +155,10 @@ export async function getSingleHandler({
       data,
     });
   } catch (error: unknown) {
-    console.error(`Unexpected error retrieving single record from ${table} with id ${id}:`, error);
+    console.error(
+      `Unexpected error retrieving single record from ${table} with id ${id}:`,
+      error
+    );
     if (error instanceof Error) {
       return errorResponse({
         success: false,

@@ -35,7 +35,7 @@ export async function POST(request: NextRequest) {
     if (validatedData.category !== undefined)
       postPayload.category = validatedData.category;
     if (validatedData.video_embed_url !== undefined)
-      postPayload.video_url = validatedData.video_embed_url;
+      postPayload.video_embed_url = validatedData.video_embed_url;
 
     return postHandler({
       table: "courses",

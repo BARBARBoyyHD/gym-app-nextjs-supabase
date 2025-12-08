@@ -23,15 +23,15 @@ export const useGetData = <T>({
 }: {
   endpoint: string;
   queryKeyBase: string;
-  params: PaginationParams;
+  params?: PaginationParams;
 }): UseQueryResult<FetchResponse<T>, Error> => {
-  const queryKey = useMemo(() => [queryKeyBase, params], [queryKeyBase, params]);
+  const queryKey = useMemo(() => [queryKeyBase, params || {}], [queryKeyBase, params]);
 
   return useQuery({
     queryKey,
 
     queryFn: async () => {
-      const queryString = getQueryString(params);
+      const queryString = getQueryString(params || {});
       const url = `${endpoint}?${queryString}`;
 
       const response = await fetch(url, { method: "GET" });
@@ -54,7 +54,7 @@ export const useGetData = <T>({
       const data = query.state.data?.data;
 
       // 🚫 Stop when searching & no results
-      if (params.search && Array.isArray(data) && data.length === 0) {
+      if (params?.search && Array.isArray(data) && data.length === 0) {
         return false;
       }
 
