@@ -1,5 +1,6 @@
 "use client";
 
+/* eslint-disable react-hooks/set-state-in-effect */
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -65,7 +66,7 @@ export function AddMembershipModal({
         member_id: prefillMemberId
       }));
     }
-  }, [prefillMemberId]);
+  }, [prefillMemberId, formData.member_id]);
 
   // Fetch all membership plans for the dropdown
   const {
@@ -173,7 +174,7 @@ export function AddMembershipModal({
         <DialogHeader>
           <DialogTitle className="text-white">Add New Membership</DialogTitle>
           <DialogDescription className="text-white/70">
-            Add a new membership with member and plan details. Click save when you're done.
+            Add a new membership with member and plan details. Click save when you&apos;re done.
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 py-4">

@@ -1,13 +1,16 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-import { Payment, PaymentWithDetails } from "@/types/payment";
-import { Members } from "@/types/member";
-import { MembershipPlan } from "@/types/membership_plan";
 import {
-    ColumnDef
-} from "@tanstack/react-table";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { PaymentWithDetails } from "@/types/payment";
+import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown, MoreHorizontal } from "lucide-react";
 
 export const columns: ColumnDef<PaymentWithDetails>[] = [
@@ -16,9 +19,11 @@ export const columns: ColumnDef<PaymentWithDetails>[] = [
     header: "ID",
     cell: ({ row }) => {
       const id = row.getValue("id");
-      const idString = typeof id === 'string' ? id : String(id);
+      const idString = typeof id === "string" ? id : String(id);
       return (
-        <div className="font-medium text-white">{idString.substring(0, 8)}...</div>
+        <div className="font-medium text-white">
+          {idString.substring(0, 8)}...
+        </div>
       );
     },
   },
@@ -38,7 +43,7 @@ export const columns: ColumnDef<PaymentWithDetails>[] = [
     },
     cell: ({ row }) => {
       const member = row.original.members;
-      return <div className="text-white">{member?.full_name || 'N/A'}</div>;
+      return <div className="text-white">{member?.full_name || "N/A"}</div>;
     },
   },
   {
@@ -57,7 +62,11 @@ export const columns: ColumnDef<PaymentWithDetails>[] = [
     },
     cell: ({ row }) => {
       const membership = row.original.memberships;
-      return <div className="text-white">{membership?.membership_plans?.name || 'N/A'}</div>;
+      return (
+        <div className="text-white">
+          {membership?.membership_plans?.name || "N/A"}
+        </div>
+      );
     },
   },
   {
@@ -76,9 +85,14 @@ export const columns: ColumnDef<PaymentWithDetails>[] = [
     },
     cell: ({ row }) => {
       const amountValue = row.getValue("amount");
-      const amount = typeof amountValue === 'number' ? amountValue : Number(amountValue);
+      const amount =
+        typeof amountValue === "number" ? amountValue : Number(amountValue);
       // Format the amount as currency (assuming IDR based on the value 99999)
-      return <div className="text-white">Rp{isNaN(amount) ? '0' : amount.toLocaleString('id-ID')}</div>;
+      return (
+        <div className="text-white">
+          Rp{isNaN(amount) ? "0" : amount.toLocaleString("id-ID")}
+        </div>
+      );
     },
   },
   {
@@ -86,7 +100,7 @@ export const columns: ColumnDef<PaymentWithDetails>[] = [
     header: "Method",
     cell: ({ row }) => {
       const method = row.getValue("method");
-      const methodStr = typeof method === 'string' ? method : String(method);
+      const methodStr = typeof method === "string" ? method : String(method);
       return <div className="text-white capitalize">{methodStr}</div>;
     },
   },
@@ -95,17 +109,18 @@ export const columns: ColumnDef<PaymentWithDetails>[] = [
     header: "Paid Date",
     cell: ({ row }) => {
       const paid_at = row.getValue("paid_at");
-      const dateStr = typeof paid_at === 'string' ? paid_at : String(paid_at);
+      const dateStr = typeof paid_at === "string" ? paid_at : String(paid_at);
       const date = new Date(dateStr);
       return (
         <div className="text-white">
-          {date.toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-          })} {date.toLocaleTimeString('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
+          {date.toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          })}{" "}
+          {date.toLocaleTimeString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
           })}
         </div>
       );
@@ -133,12 +148,18 @@ export const columns: ColumnDef<PaymentWithDetails>[] = [
               Copy Payment ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => window.dispatchEvent(new CustomEvent('openEditPaymentModal', { detail: payment.id }))}>
+            <DropdownMenuItem
+              onClick={() =>
+                window.dispatchEvent(
+                  new CustomEvent("openEditPaymentModal", {
+                    detail: payment.id,
+                  })
+                )
+              }
+            >
               Edit Payment
             </DropdownMenuItem>
-            <DropdownMenuItem>
-              View Details
-            </DropdownMenuItem>
+            <DropdownMenuItem>View Details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

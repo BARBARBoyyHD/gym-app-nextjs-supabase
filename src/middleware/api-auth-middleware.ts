@@ -7,17 +7,11 @@ import { requireAuth } from "@/lib/auth-utils";
  */
 export async function apiAuthMiddleware(request: NextRequest): Promise<NextResponse> {
   // Check if user is authenticated
-  const authResult = await requireAuth();
-  
+  const authResult = await requireAuth(request);
+
   if (authResult) {
     // If requireAuth returns an error response, return that
-    return NextResponse.json(
-      { 
-        success: false, 
-        message: authResult.body ? JSON.parse(authResult.body as string).message : "Authentication required" 
-      },
-      { status: authResult.status || 401 }
-    );
+    return authResult;
   }
 
   // If authenticated, continue to the next middleware/route handler

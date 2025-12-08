@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useDeleteData } from "@/hooks/use-Fetch";
-import { Course } from "@/types/course";
 import { toast } from "sonner";
 
 interface DeleteCourseModalProps {

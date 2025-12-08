@@ -1,5 +1,5 @@
 import { NextRequest } from "next/server";
-import { errorResponse, successResponse } from "@/utils/response";
+import { errorResponse } from "@/utils/response";
 import { deleteHandler } from "@/handlers/deleteHandlers";
 import { checkRateLimit } from "@/middleware/rate-limit-middleware";
 

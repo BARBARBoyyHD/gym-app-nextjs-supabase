@@ -15,10 +15,10 @@ export default function Navbar() {
     <header className="bg-darktext-white">
       <nav className="max-w-6xl mx-auto px-4 pt-8 pb-4 flex items-center justify-between">
         <div className="text-xl font-bold color-brand">
-          <a href="/">
+          <Link href="/">
             {" "}
             Lift<span className="text-brand">Up</span>
-          </a>
+          </Link>
         </div>
 
         <ul className="hidden md:flex items-center gap-10">

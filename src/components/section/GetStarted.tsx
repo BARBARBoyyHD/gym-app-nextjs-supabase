@@ -42,7 +42,7 @@ export default function GetStarted() {
               </h5>
               <p className="text-white/70 mb-4 leading-relaxed">
                 You have a great chance to experience a free trial of the class
-                of your choice and determine if it's right for you.
+                of your choice and determine if it&apos;s right for you.
               </p>
             </div>
           </div>

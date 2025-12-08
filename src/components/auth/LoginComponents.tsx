@@ -1,6 +1,7 @@
 "use client";
 import { useLogin } from "@/hooks/use-Auth";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useState } from "react";
 import { toast } from "sonner";
 import { FaEye } from "react-icons/fa";
@@ -42,9 +43,9 @@ export default function LoginComponents() {
     <section className="min-h-screen flex items-center justify-center bg-background text-white px-4">
       <div className="w-full max-w-md bg-dark-secondary p-8 rounded-2xl shadow-xl border border-brand/30">
         <h1 className="text-3xl font-bold text-center mb-10">
-          <a href="/">
+          <Link href="/">
             Lift<span className="text-brand">Up</span>
-          </a>
+          </Link>
         </h1>
 
         <form className="space-y-5" onSubmit={handleSubmit}>
@@ -94,7 +95,7 @@ export default function LoginComponents() {
           </button>
 
           <p className="text-center text-white/60 text-sm mt-4">
-            Can't access your account? Contact the administrator.
+            Can&apos;t access your account? Contact the administrator.
           </p>
         </form>
       </div>

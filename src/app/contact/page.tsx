@@ -16,7 +16,7 @@ export default function ContactPage() {
                 </h1>
                 <p className="text-white/70 leading-relaxed mb-8">
                   Feel free to reach out through this form or contact us
-                  directly. We're here to help you with anything you need.
+                  directly. We&apos;re here to help you with anything you need.
                 </p>
 
                 {/* PHONE */}

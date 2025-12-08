@@ -1,4 +1,4 @@
-import { BaseEntity, BaseInput } from './base';
+import { BaseEntity } from './base';
 
 export interface Membership extends BaseEntity {
   member_id: string;

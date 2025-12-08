@@ -30,12 +30,6 @@ export async function POST(request: NextRequest) {
     });
   } catch (error) {
     if (error instanceof ZodError) {
-      const formattedErrors = error.issues.map((err) => ({
-        field: err.path.join("."),
-        message: err.message,
-        code: err.code,
-      }));
-
       return errorResponse({
         success: false,
         status: 400,
