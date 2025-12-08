@@ -44,7 +44,7 @@ const AddCourseModal = ({ isOpen, onClose, onAddSuccess }: AddCourseModalProps) 
     addCourse(
       {
         ...values,
-       video_embed_url: values.video_embed_url || null, // Convert empty string to null
+       video_embed_url: values.video_embed_url , // Convert empty string to null
       },
       {
         onSuccess: () => {

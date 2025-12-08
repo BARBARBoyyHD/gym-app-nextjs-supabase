@@ -64,6 +64,14 @@ export function AddPaymentModal({
   });
 
   // Fetch membership details if membershipId is provided
+
+  const { data: membershipData, isLoading: membershipLoading } = useGetSingleData<Membership>(
+    membershipId || '',
+    '/api/admin/memberships/get',
+    'membership',
+    { enabled: !!membershipId }
+  );
+
   const { data: membershipData, isLoading: membershipLoading } =
     useGetSingleData<{
       member_id: string | { id: string };
@@ -77,6 +85,7 @@ export function AddPaymentModal({
     }>(membershipId || "", "/api/admin/memberships/get", "membership", {
       enabled: !!membershipId,
     });
+
 
   // Define the form
   const form = useForm<z.infer<typeof createPaymentSchema>>({

@@ -10,7 +10,6 @@ export interface Payment extends BaseEntity {
     | "paypal"
     | "bank_transfer"
     | "cash";
-  paid_at: string; // Added for payment-specific timestamp
 }
 
 export interface PaymentWithDetails {

@@ -118,29 +118,29 @@ export default function Navbar() {
         <div className="md:hidden bg-black border-t border-white/10">
           <ul className="flex flex-col gap-4 px-4 py-6 text-lg">
             <li>
-              <a href="#" className="nav-link font-semibold">
+              <Link href="/about" className="nav-link font-semibold">
                 About Us
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="nav-link font-semibold">
+              <Link href="/classes" className="nav-link font-semibold">
                 Classes
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="nav-link font-semibold">
+              <Link href="/coaches" className="nav-link font-semibold">
                 Personal Trainer
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="nav-link font-semibold">
+              <Link href="/pricing" className="nav-link font-semibold">
                 Plan
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="nav-link font-semibold">
+              <Link href="/contact" className="nav-link font-semibold">
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
           <ul className="flex flex-col gap-2 px-4 pb-6 text-sm">

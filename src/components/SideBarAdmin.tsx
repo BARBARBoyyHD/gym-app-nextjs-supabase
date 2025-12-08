@@ -21,9 +21,11 @@ import {
 } from "react-icons/fa";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useLogout } from "@/hooks/useLogout";
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const { logout } = useLogout();
 
   // Nav items for the admin sidebar
   const navItems = [
@@ -119,13 +121,16 @@ export function AppSidebar() {
                 </Link>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <Link href="/logout">
+                <button
+                  onClick={() => logout()}
+                  className="w-full text-left"
+                >
                   <SidebarMenuButton className="hover:bg-brand/20">
                     {" "}
                     <FaSignOutAlt className="size-5" />
                     <span>Logout</span>
                   </SidebarMenuButton>
-                </Link>
+                </button>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
