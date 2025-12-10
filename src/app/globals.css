@@ -85,6 +85,9 @@
   .bg-dark {
     background-color: var(--background-dark);
   }
+  .bg-dark-navbar {
+    background-color: var(--background-dark);
+  }
   .bg-dark-hover:hover {
     background-color: white;
   }

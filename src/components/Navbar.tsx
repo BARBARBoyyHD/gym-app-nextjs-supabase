@@ -12,8 +12,8 @@ export default function Navbar() {
   const path = usePathname();
 
   return (
-    <header className="bg-dark text-white">
-      <nav className="max-w-6xl mx-auto px-4 pt-8 pb-4 flex items-center justify-between">
+    <header className="bg-black md:bg-transparent fixed md:static w-full top-0 z-10 text-white">
+      <nav className="max-w-6xl mx-auto px-4 py-8 flex items-center justify-between">
         <div className="text-xl font-bold color-brand">
           <Link href="/">
             {" "}
@@ -123,7 +123,7 @@ export default function Navbar() {
 
       {/* Mobile Menu */}
       {open && (
-        <div className="md:hidden bg-black border-t border-white/10">
+        <div className="md:hidden border-t border-white/10">
           <ul className="flex flex-col gap-4 px-4 py-6 text-lg">
             <li>
               <Link href="/about" className="nav-link font-semibold">
@@ -142,7 +142,7 @@ export default function Navbar() {
             </li>
             <li>
               <Link href="/coaches" className="nav-link font-semibold">
-                Personal Trainer
+                Coaches
               </Link>
             </li>
             <li>
