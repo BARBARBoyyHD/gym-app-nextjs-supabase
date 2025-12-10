@@ -3,42 +3,41 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-    Pagination,
-    PaginationContent,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
 } from "@/components/ui/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table";
 import { useGetData } from "@/hooks/use-Fetch";
 import { Members } from "@/types/member";
 import { PaginationParams } from "@/types/queryTypes";
 import {
-    ColumnFiltersState,
-    SortingState,
-    VisibilityState,
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    useReactTable
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
-import {columns} from "./table/MembersTableComponents";
+import { columns } from "./table/MembersTableComponents";
 import { EditMemberModal } from "./modal/EditMemberModal";
 import { AddMemberModal } from "./modal/AddMemberModal";
 import { AddMembershipModal } from "../memberships/modal/AddMembershipModal";
-
 
 export default function MembersListComponents() {
   const [search, setSearch] = useState("");
@@ -51,9 +50,14 @@ export default function MembersListComponents() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [editingMemberId, setEditingMemberId] = useState<string | null>(null);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [isAddMembershipModalOpen, setIsAddMembershipModalOpen] = useState(false);
-  const [membershipModalMemberId, setMembershipModalMemberId] = useState<string | null>(null);
-  const [membershipModalMemberName, setMembershipModalMemberName] = useState<string | null>(null);
+  const [isAddMembershipModalOpen, setIsAddMembershipModalOpen] =
+    useState(false);
+  const [membershipModalMemberId, setMembershipModalMemberId] = useState<
+    string | null
+  >(null);
+  const [membershipModalMemberName, setMembershipModalMemberName] = useState<
+    string | null
+  >(null);
 
   // Create params object for the hook
   const queryParams: PaginationParams = {
@@ -71,20 +75,31 @@ export default function MembersListComponents() {
     };
 
     // Define custom properties on window with appropriate type assertion
-    (window as Window & typeof globalThis & {
-      handleOpenEditModal: (e: CustomEvent<string>) => void;
-    }).handleOpenEditModal = handleOpenEditModal;
+    (
+      window as Window &
+        typeof globalThis & {
+          handleOpenEditModal: (e: CustomEvent<string>) => void;
+        }
+    ).handleOpenEditModal = handleOpenEditModal;
 
-    window.addEventListener('openEditMemberModal', handleOpenEditModal as EventListener);
+    window.addEventListener(
+      "openEditMemberModal",
+      handleOpenEditModal as EventListener
+    );
 
     return () => {
-      window.removeEventListener('openEditMemberModal', handleOpenEditModal as EventListener);
+      window.removeEventListener(
+        "openEditMemberModal",
+        handleOpenEditModal as EventListener
+      );
     };
   }, []);
 
   // Listen for the custom event to open the add membership modal
   useEffect(() => {
-    const handleOpenAddMembershipModal = (e: CustomEvent<{ memberId: string, memberName: string }>) => {
+    const handleOpenAddMembershipModal = (
+      e: CustomEvent<{ memberId: string; memberName: string }>
+    ) => {
       const { memberId, memberName } = e.detail;
       setMembershipModalMemberId(memberId);
       setMembershipModalMemberName(memberName);
@@ -92,14 +107,25 @@ export default function MembersListComponents() {
     };
 
     // Define custom properties on window with appropriate type assertion
-    (window as Window & typeof globalThis & {
-      handleOpenAddMembershipModal: (e: CustomEvent<{ memberId: string, memberName: string }>) => void;
-    }).handleOpenAddMembershipModal = handleOpenAddMembershipModal;
+    (
+      window as Window &
+        typeof globalThis & {
+          handleOpenAddMembershipModal: (
+            e: CustomEvent<{ memberId: string; memberName: string }>
+          ) => void;
+        }
+    ).handleOpenAddMembershipModal = handleOpenAddMembershipModal;
 
-    window.addEventListener('openAddMembershipModal', handleOpenAddMembershipModal as EventListener);
+    window.addEventListener(
+      "openAddMembershipModal",
+      handleOpenAddMembershipModal as EventListener
+    );
 
     return () => {
-      window.removeEventListener('openAddMembershipModal', handleOpenAddMembershipModal as EventListener);
+      window.removeEventListener(
+        "openAddMembershipModal",
+        handleOpenAddMembershipModal as EventListener
+      );
     };
   }, []);
 
@@ -168,12 +194,16 @@ export default function MembersListComponents() {
 
   if (isError) {
     return (
-      <div className="p-6 bg-dark-secondary rounded-xl border border-brand/30">
+      <div className="m-6 p-6 bg-dark-secondary rounded-xl border border-brand/30">
         <div className="text-center p-8">
-          <h2 className="text-xl font-bold text-white mb-2">Error Loading Members</h2>
-          <p className="text-white/70 mb-4">{(error as Error)?.message || "Failed to load members"}</p>
-          <Button 
-            onClick={() => refetch()} 
+          <h2 className="text-xl font-bold text-white mb-2">
+            Error Loading Members
+          </h2>
+          <p className="text-white/70 mb-4">
+            {(error as Error)?.message || "Failed to load members"}
+          </p>
+          <Button
+            onClick={() => refetch()}
             className="bg-brand hover:bg-brand/90 text-black"
           >
             Retry
@@ -184,7 +214,7 @@ export default function MembersListComponents() {
   }
 
   return (
-    <div className="p-6 bg-dark-secondary rounded-xl border border-brand/30">
+    <div className="m-6 p-6 bg-dark-secondary rounded-xl border border-brand/30">
       <div className="mb-8 flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold">Members Management</h1>
@@ -211,7 +241,10 @@ export default function MembersListComponents() {
               className="bg-black/30 border border-white/20 focus:border-brand focus:ring-brand/30"
             />
           </div>
-          <Button type="submit" className="bg-brand hover:bg-brand/90 text-black">
+          <Button
+            type="submit"
+            className="bg-brand hover:bg-brand/90 text-black"
+          >
             Search
           </Button>
         </div>
@@ -223,7 +256,10 @@ export default function MembersListComponents() {
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id} className="hover:bg-transparent border-b border-white/20">
+                <TableRow
+                  key={headerGroup.id}
+                  className="hover:bg-transparent border-b border-white/20"
+                >
                   {headerGroup.headers.map((header) => {
                     return (
                       <TableHead key={header.id} className="text-white/70">
@@ -244,12 +280,24 @@ export default function MembersListComponents() {
                 // Loading skeleton
                 Array.from({ length: 5 }).map((_, index) => (
                   <TableRow key={index} className="border-b border-white/10">
-                    <TableCell><Skeleton className="h-4 w-16 bg-white/20" /></TableCell>
-                    <TableCell><Skeleton className="h-4 w-32 bg-white/20" /></TableCell>
-                    <TableCell><Skeleton className="h-4 w-40 bg-white/20" /></TableCell>
-                    <TableCell><Skeleton className="h-4 w-24 bg-white/20" /></TableCell>
-                    <TableCell><Skeleton className="h-4 w-28 bg-white/20" /></TableCell>
-                    <TableCell><Skeleton className="h-4 w-8 bg-white/20" /></TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-16 bg-white/20" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-32 bg-white/20" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-40 bg-white/20" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-24 bg-white/20" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-28 bg-white/20" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-8 bg-white/20" />
+                    </TableCell>
                   </TableRow>
                 ))
               ) : table.getRowModel().rows?.length ? (
@@ -261,15 +309,23 @@ export default function MembersListComponents() {
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
                       </TableCell>
                     ))}
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={columns.length} className="h-24 text-center">
-                    {search ? `No members found matching "${search}"` : 'No members found'}
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    {search
+                      ? `No members found matching "${search}"`
+                      : "No members found"}
                   </TableCell>
                 </TableRow>
               )}
@@ -290,46 +346,55 @@ export default function MembersListComponents() {
                     e.preventDefault();
                     if (page > 1) handlePageChange(page - 1);
                   }}
-                  className={`${page <= 1 ? 'opacity-50 pointer-events-none' : ''} text-white hover:text-brand`}
+                  className={`${
+                    page <= 1 ? "opacity-50 pointer-events-none" : ""
+                  } text-white hover:text-brand`}
                 />
               </PaginationItem>
 
               {/* Page numbers */}
-              {Array.from({ 
-                length: Math.min(5, totalPages) 
-              }, (_, i) => {
-                let pageNum: number;
-                
-                if (totalPages <= 5) {
-                  // If total pages <= 5, show all pages
-                  pageNum = i + 1;
-                } else if (page <= 3) {
-                  // If current page is in first 3, show 1-5
-                  pageNum = i + 1;
-                } else if (page >= totalPages - 2) {
-                  // If current page is in last 3, show last 5
-                  pageNum = totalPages - 4 + i;
-                } else {
-                  // Otherwise, show 2 before and 2 after current page
-                  pageNum = page - 2 + i;
+              {Array.from(
+                {
+                  length: Math.min(5, totalPages),
+                },
+                (_, i) => {
+                  let pageNum: number;
+
+                  if (totalPages <= 5) {
+                    // If total pages <= 5, show all pages
+                    pageNum = i + 1;
+                  } else if (page <= 3) {
+                    // If current page is in first 3, show 1-5
+                    pageNum = i + 1;
+                  } else if (page >= totalPages - 2) {
+                    // If current page is in last 3, show last 5
+                    pageNum = totalPages - 4 + i;
+                  } else {
+                    // Otherwise, show 2 before and 2 after current page
+                    pageNum = page - 2 + i;
+                  }
+
+                  return (
+                    <PaginationItem key={pageNum}>
+                      <PaginationLink
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handlePageChange(pageNum);
+                        }}
+                        isActive={page === pageNum}
+                        className={`${
+                          page === pageNum
+                            ? "bg-brand text-black"
+                            : "text-white hover:bg-brand/20"
+                        }`}
+                      >
+                        {pageNum}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
                 }
-                
-                return (
-                  <PaginationItem key={pageNum}>
-                    <PaginationLink
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handlePageChange(pageNum);
-                      }}
-                      isActive={page === pageNum}
-                      className={`${page === pageNum ? 'bg-brand text-black' : 'text-white hover:bg-brand/20'}`}
-                    >
-                      {pageNum}
-                    </PaginationLink>
-                  </PaginationItem>
-                );
-              })}
+              )}
 
               <PaginationItem>
                 <PaginationNext
@@ -338,7 +403,9 @@ export default function MembersListComponents() {
                     e.preventDefault();
                     if (page < totalPages) handlePageChange(page + 1);
                   }}
-                  className={`${page >= totalPages ? 'opacity-50 pointer-events-none' : ''} text-white hover:text-brand`}
+                  className={`${
+                    page >= totalPages ? "opacity-50 pointer-events-none" : ""
+                  } text-white hover:text-brand`}
                 />
               </PaginationItem>
             </PaginationContent>
@@ -348,9 +415,8 @@ export default function MembersListComponents() {
 
       {/* Results Info */}
       <div className="mt-4 text-sm text-white/70">
-        Showing {totalMembers > 0
-          ? ((page - 1) * limit + 1)
-          : 0} - {Math.min(page * limit, totalMembers)} of {totalMembers} members
+        Showing {totalMembers > 0 ? (page - 1) * limit + 1 : 0} -{" "}
+        {Math.min(page * limit, totalMembers)} of {totalMembers} members
       </div>
 
       {/* Edit Member Modal */}
@@ -367,7 +433,7 @@ export default function MembersListComponents() {
       <AddMemberModal
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
-        onAddSuccess={handleEditSuccess}  // Using same handler to refresh data
+        onAddSuccess={handleEditSuccess} // Using same handler to refresh data
       />
 
       {/* Add Membership Modal */}
@@ -378,7 +444,7 @@ export default function MembersListComponents() {
           setMembershipModalMemberId(null);
           setMembershipModalMemberName(null);
         }}
-        onAddSuccess={handleEditSuccess}  // Using same handler to refresh data
+        onAddSuccess={handleEditSuccess} // Using same handler to refresh data
         prefillMemberId={membershipModalMemberId || undefined}
         prefillMemberName={membershipModalMemberName || undefined}
       />

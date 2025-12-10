@@ -93,8 +93,8 @@ export function AppSidebar() {
                       <SidebarMenuButton
                         className={`${
                           isActive
-                            ? "bg-brand text-brand font-semibold text-black hover:text-white"
-                            : "hover:bg-brand/20 text-white"
+                            ? "bg-brand text-brand font-semibold text-black "
+                            : "bg-brand-hover font-semibold text-white"
                         } transition-colors duration-200`}
                       >
                         <item.icon className="size-5" />
@@ -113,7 +113,7 @@ export function AppSidebar() {
             <SidebarMenu>
               <SidebarMenuItem>
                 <Link href="/admin/profile">
-                  <SidebarMenuButton className="hover:bg-brand/20">
+                  <SidebarMenuButton className="bg-brand-hover text-white">
                     {" "}
                     <FaUserCircle className="size-5" />
                     <span>Profile</span>
@@ -121,11 +121,8 @@ export function AppSidebar() {
                 </Link>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <button
-                  onClick={() => logout()}
-                  className="w-full text-left"
-                >
-                  <SidebarMenuButton className="hover:bg-brand/20">
+                <button onClick={() => logout()} className="w-full text-left">
+                  <SidebarMenuButton className="bg-brand-hover text-white">
                     {" "}
                     <FaSignOutAlt className="size-5" />
                     <span>Logout</span>
