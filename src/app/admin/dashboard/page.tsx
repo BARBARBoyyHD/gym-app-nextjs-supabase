@@ -12,10 +12,13 @@ import {
   DollarSign,
   Calendar,
   TrendingUp,
-  RefreshCw
+  RefreshCw,
 } from "lucide-react";
 import { MetricCard } from "@/components/admin/dashboard/MetricCard";
-import { RecentActivity, type RecentActivityItem } from "@/components/admin/dashboard/RecentActivity";
+import {
+  RecentActivity,
+  type RecentActivityItem,
+} from "@/components/admin/dashboard/RecentActivity";
 
 // Define types for dashboard metrics
 interface DashboardMetrics {
@@ -42,7 +45,7 @@ export default function DashboardPage() {
     data: membersData,
     isLoading: membersLoading,
     isError: membersError,
-    refetch: refetchMembers
+    refetch: refetchMembers,
   } = useGetData<Members>({
     endpoint: "/api/admin/members/get",
     queryKeyBase: "dashboard-members",
@@ -54,7 +57,7 @@ export default function DashboardPage() {
     data: membershipsData,
     isLoading: membershipsLoading,
     isError: membershipsError,
-    refetch: refetchMemberships
+    refetch: refetchMemberships,
   } = useGetData<Membership>({
     endpoint: "/api/admin/memberships/get",
     queryKeyBase: "dashboard-memberships",
@@ -66,7 +69,7 @@ export default function DashboardPage() {
     data: paymentsData,
     isLoading: paymentsLoading,
     isError: paymentsError,
-    refetch: refetchPayments
+    refetch: refetchPayments,
   } = useGetData<Payment>({
     endpoint: "/api/admin/payments/get",
     queryKeyBase: "dashboard-payments",
@@ -76,28 +79,34 @@ export default function DashboardPage() {
   // Calculate dashboard metrics
   const totalMembers = membersData?.total_count || 0;
   const totalMemberships = membershipsData?.data?.length || 0;
-  const activeMemberships = membershipsData?.data?.filter(
-    (m: any) => m.status === "active"
-  ).length || 0;
+  const activeMemberships =
+    membershipsData?.data?.filter((m: any) => m.status === "active").length ||
+    0;
 
-  const monthlyRevenue = paymentsData?.data?.reduce((sum: number, payment: any) => {
-    // Assuming we only want payments from current month
-    const paymentDate = new Date(payment.paid_at);
-    const now = new Date();
-    if (paymentDate.getMonth() === now.getMonth() &&
-        paymentDate.getFullYear() === now.getFullYear()) {
-      return sum + payment.amount;
-    }
-    return sum;
-  }, 0) || 0;
+  const monthlyRevenue =
+    paymentsData?.data?.reduce((sum: number, payment: any) => {
+      // Assuming we only want payments from current month
+      const paymentDate = new Date(payment.paid_at);
+      const now = new Date();
+      if (
+        paymentDate.getMonth() === now.getMonth() &&
+        paymentDate.getFullYear() === now.getFullYear()
+      ) {
+        return sum + payment.amount;
+      }
+      return sum;
+    }, 0) || 0;
 
   // Calculate new members this month
-  const newMembersThisMonth = membersData?.data?.filter((member: any) => {
-    const memberDate = new Date(member.created_at);
-    const now = new Date();
-    return memberDate.getMonth() === now.getMonth() &&
-           memberDate.getFullYear() === now.getFullYear();
-  }).length || 0;
+  const newMembersThisMonth =
+    membersData?.data?.filter((member: any) => {
+      const memberDate = new Date(member.created_at);
+      const now = new Date();
+      return (
+        memberDate.getMonth() === now.getMonth() &&
+        memberDate.getFullYear() === now.getFullYear()
+      );
+    }).length || 0;
 
   // Combine all loading states
   const isLoading = membersLoading || membershipsLoading || paymentsLoading;
@@ -145,7 +154,7 @@ export default function DashboardPage() {
     await Promise.all([
       refetchMembers(),
       refetchMemberships(),
-      refetchPayments()
+      refetchPayments(),
     ]);
     setRefreshing(false);
   };
@@ -153,9 +162,11 @@ export default function DashboardPage() {
   // Show error state
   if (isError) {
     return (
-      <div className="p-6 bg-dark-secondary rounded-xl border border-brand/30">
+      <div className="m-6 p-6 bg-dark-secondary rounded-xl border border-brand/30">
         <div className="text-center p-8">
-          <h2 className="text-xl font-bold text-white mb-2">Error Loading Dashboard Data</h2>
+          <h2 className="text-xl font-bold text-white mb-2">
+            Error Loading Dashboard Data
+          </h2>
           <p className="text-white/70 mb-4">Failed to load dashboard metrics</p>
           <Button
             onClick={() => {
@@ -173,11 +184,17 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="p-6 bg-dark-secondary rounded-xl border border-brand/30" role="main" aria-label="Admin Dashboard">
+    <div
+      className="m-6 p-6 bg-dark-secondary rounded-xl border border-brand/30"
+      role="main"
+      aria-label="Admin Dashboard"
+    >
       {/* Dashboard Header */}
       <div className="mb-8 flex justify-between items-center" role="banner">
         <div>
-          <h1 className="text-2xl font-bold" aria-level="1">Dashboard</h1>
+          <h1 className="text-2xl font-bold" aria-level="1">
+            Dashboard
+          </h1>
           <p className="text-white/70">Overview of gym management metrics</p>
         </div>
         <Button
@@ -188,10 +205,10 @@ export default function DashboardPage() {
           aria-label={refreshing ? "Refreshing data" : "Refresh dashboard data"}
         >
           <RefreshCw
-            className={`h-4 w-4 mr-2 ${refreshing ? 'animate-spin' : ''}`}
+            className={`h-4 w-4 mr-2 ${refreshing ? "animate-spin" : ""}`}
             aria-hidden="true"
           />
-          {refreshing ? 'Refreshing...' : 'Refresh Data'}
+          {refreshing ? "Refreshing..." : "Refresh Data"}
         </Button>
       </div>
 
@@ -243,7 +260,10 @@ export default function DashboardPage() {
               title="New This Month"
               value={newMembersThisMonth}
               icon={<Calendar className="h-5 w-5 text-brand" />}
-              description={`+${((newMembersThisMonth / (totalMembers || 1)) * 100).toFixed(1)}% of total`}
+              description={`+${(
+                (newMembersThisMonth / (totalMembers || 1)) *
+                100
+              ).toFixed(1)}% of total`}
               isLoading={membersLoading}
               aria-label="New This Month metric card"
             />
@@ -270,7 +290,9 @@ export default function DashboardPage() {
               <CardContent>
                 <div className="space-y-4">
                   <div role="article">
-                    <h3 className="text-white/70 text-sm mb-1">Member Retention Rate</h3>
+                    <h3 className="text-white/70 text-sm mb-1">
+                      Member Retention Rate
+                    </h3>
                     <div className="h-2 w-full bg-white/20 rounded-full overflow-hidden">
                       <div
                         className="h-full bg-brand rounded-full"
@@ -282,14 +304,20 @@ export default function DashboardPage() {
                         aria-label="Member retention rate percentage"
                       ></div>
                     </div>
-                    <p className="text-white/70 text-xs mt-1">85% active memberships</p>
+                    <p className="text-white/70 text-xs mt-1">
+                      85% active memberships
+                    </p>
                   </div>
                   <div role="article">
-                    <h3 className="text-white/70 text-sm mb-1">Most Popular Plan</h3>
+                    <h3 className="text-white/70 text-sm mb-1">
+                      Most Popular Plan
+                    </h3>
                     <p className="text-white">Annual Membership</p>
                   </div>
                   <div role="article">
-                    <h3 className="text-white/70 text-sm mb-1">Average Monthly Growth</h3>
+                    <h3 className="text-white/70 text-sm mb-1">
+                      Average Monthly Growth
+                    </h3>
                     <p className="text-white">12 new members</p>
                   </div>
                 </div>

@@ -3,37 +3,37 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
-    Pagination,
-    PaginationContent,
-    PaginationItem,
-    PaginationLink,
-    PaginationNext,
-    PaginationPrevious,
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
 } from "@/components/ui/pagination";
 import { Skeleton } from "@/components/ui/skeleton";
 import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
 } from "@/components/ui/table";
 import { useGetData } from "@/hooks/use-Fetch";
 import { PaginationParams } from "@/types/queryTypes";
 import {
-    ColumnFiltersState,
-    SortingState,
-    VisibilityState,
-    flexRender,
-    getCoreRowModel,
-    getFilteredRowModel,
-    getPaginationRowModel,
-    getSortedRowModel,
-    useReactTable
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
+  useReactTable,
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
-import {columns} from "./table/MembershipPlansTableComponent";
+import { columns } from "./table/MembershipPlansTableComponent";
 import { EditMembershipModal } from "./modal/EditMembershipModal";
 import { AddMembershipModal } from "./modal/AddMembershipModal";
 
@@ -74,10 +74,16 @@ export default function MembershipPlansListComponents() {
       setIsEditModalOpen(true);
     };
 
-    window.addEventListener('openEditMembershipPlanModal', handleOpenEditModal as EventListener);
+    window.addEventListener(
+      "openEditMembershipPlanModal",
+      handleOpenEditModal as EventListener
+    );
 
     return () => {
-      window.removeEventListener('openEditMembershipPlanModal', handleOpenEditModal as EventListener);
+      window.removeEventListener(
+        "openEditMembershipPlanModal",
+        handleOpenEditModal as EventListener
+      );
     };
   }, []);
 
@@ -147,12 +153,16 @@ export default function MembershipPlansListComponents() {
 
   if (isError) {
     return (
-      <div className="p-6 bg-dark-secondary rounded-xl border border-brand/30">
+      <div className="m-6 p-6 bg-dark-secondary rounded-xl border border-brand/30">
         <div className="text-center p-8">
-          <h2 className="text-xl font-bold text-white mb-2">Error Loading Membership Plans</h2>
-          <p className="text-white/70 mb-4">{(error as Error)?.message || "Failed to load membership plans"}</p>
-          <Button 
-            onClick={() => refetch()} 
+          <h2 className="text-xl font-bold text-white mb-2">
+            Error Loading Membership Plans
+          </h2>
+          <p className="text-white/70 mb-4">
+            {(error as Error)?.message || "Failed to load membership plans"}
+          </p>
+          <Button
+            onClick={() => refetch()}
             className="bg-brand hover:bg-brand/90 text-black"
           >
             Retry
@@ -163,11 +173,13 @@ export default function MembershipPlansListComponents() {
   }
 
   return (
-    <div className="p-6 bg-dark-secondary rounded-xl border border-brand/30">
+    <div className="m-6 p-6 bg-dark-secondary rounded-xl border border-brand/30">
       <div className="mb-8 flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold">Membership Plans Management</h1>
-          <p className="text-white/70">View and manage all gym membership plans</p>
+          <p className="text-white/70">
+            View and manage all gym membership plans
+          </p>
         </div>
         <Button
           variant="default"
@@ -190,7 +202,10 @@ export default function MembershipPlansListComponents() {
               className="bg-black/30 border border-white/20 focus:border-brand focus:ring-brand/30"
             />
           </div>
-          <Button type="submit" className="bg-brand hover:bg-brand/90 text-black">
+          <Button
+            type="submit"
+            className="bg-brand hover:bg-brand/90 text-black"
+          >
             Search
           </Button>
         </div>
@@ -202,7 +217,10 @@ export default function MembershipPlansListComponents() {
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id} className="hover:bg-transparent border-b border-white/20">
+                <TableRow
+                  key={headerGroup.id}
+                  className="hover:bg-transparent border-b border-white/20"
+                >
                   {headerGroup.headers.map((header) => {
                     return (
                       <TableHead key={header.id} className="text-white/70">
@@ -223,33 +241,55 @@ export default function MembershipPlansListComponents() {
                 // Loading skeleton
                 Array.from({ length: 5 }).map((_, index) => (
                   <TableRow key={index} className="border-b border-white/10">
-                    <TableCell><Skeleton className="h-4 w-16 bg-white/20" /></TableCell>
-                    <TableCell><Skeleton className="h-4 w-32 bg-white/20" /></TableCell>
-                    <TableCell><Skeleton className="h-4 w-40 bg-white/20" /></TableCell>
-                    <TableCell><Skeleton className="h-4 w-24 bg-white/20" /></TableCell>
-                    <TableCell><Skeleton className="h-4 w-28 bg-white/20" /></TableCell>
-                    <TableCell><Skeleton className="h-4 w-28 bg-white/20" /></TableCell>
-                    <TableCell><Skeleton className="h-4 w-8 bg-white/20" /></TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-16 bg-white/20" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-32 bg-white/20" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-40 bg-white/20" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-24 bg-white/20" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-28 bg-white/20" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-28 bg-white/20" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-8 bg-white/20" />
+                    </TableCell>
                   </TableRow>
                 ))
               ) : table.getRowModel().rows?.length ? (
                 table.getRowModel().rows.map((row) => (
-                  <TableRow 
-                    key={row.id} 
+                  <TableRow
+                    key={row.id}
                     className="border-b border-white/10 hover:bg-white/5"
                     data-state={row.getIsSelected() && "selected"}
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
                       </TableCell>
                     ))}
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={columns.length} className="h-24 text-center">
-                    {search ? `No plans found matching "${search}"` : 'No membership plans found'}
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    {search
+                      ? `No plans found matching "${search}"`
+                      : "No membership plans found"}
                   </TableCell>
                 </TableRow>
               )}
@@ -270,46 +310,55 @@ export default function MembershipPlansListComponents() {
                     e.preventDefault();
                     if (page > 1) handlePageChange(page - 1);
                   }}
-                  className={`${page <= 1 ? 'opacity-50 pointer-events-none' : ''} text-white hover:text-brand`}
+                  className={`${
+                    page <= 1 ? "opacity-50 pointer-events-none" : ""
+                  } text-white hover:text-brand`}
                 />
               </PaginationItem>
 
               {/* Page numbers */}
-              {Array.from({ 
-                length: Math.min(5, totalPages) 
-              }, (_, i) => {
-                let pageNum: number;
-                
-                if (totalPages <= 5) {
-                  // If total pages <= 5, show all pages
-                  pageNum = i + 1;
-                } else if (page <= 3) {
-                  // If current page is in first 3, show 1-5
-                  pageNum = i + 1;
-                } else if (page >= totalPages - 2) {
-                  // If current page is in last 3, show last 5
-                  pageNum = totalPages - 4 + i;
-                } else {
-                  // Otherwise, show 2 before and 2 after current page
-                  pageNum = page - 2 + i;
+              {Array.from(
+                {
+                  length: Math.min(5, totalPages),
+                },
+                (_, i) => {
+                  let pageNum: number;
+
+                  if (totalPages <= 5) {
+                    // If total pages <= 5, show all pages
+                    pageNum = i + 1;
+                  } else if (page <= 3) {
+                    // If current page is in first 3, show 1-5
+                    pageNum = i + 1;
+                  } else if (page >= totalPages - 2) {
+                    // If current page is in last 3, show last 5
+                    pageNum = totalPages - 4 + i;
+                  } else {
+                    // Otherwise, show 2 before and 2 after current page
+                    pageNum = page - 2 + i;
+                  }
+
+                  return (
+                    <PaginationItem key={pageNum}>
+                      <PaginationLink
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handlePageChange(pageNum);
+                        }}
+                        isActive={page === pageNum}
+                        className={`${
+                          page === pageNum
+                            ? "bg-brand text-black"
+                            : "text-white hover:bg-brand/20"
+                        }`}
+                      >
+                        {pageNum}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
                 }
-                
-                return (
-                  <PaginationItem key={pageNum}>
-                    <PaginationLink
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handlePageChange(pageNum);
-                      }}
-                      isActive={page === pageNum}
-                      className={`${page === pageNum ? 'bg-brand text-black' : 'text-white hover:bg-brand/20'}`}
-                    >
-                      {pageNum}
-                    </PaginationLink>
-                  </PaginationItem>
-                );
-              })}
+              )}
 
               <PaginationItem>
                 <PaginationNext
@@ -318,7 +367,9 @@ export default function MembershipPlansListComponents() {
                     e.preventDefault();
                     if (page < totalPages) handlePageChange(page + 1);
                   }}
-                  className={`${page >= totalPages ? 'opacity-50 pointer-events-none' : ''} text-white hover:text-brand`}
+                  className={`${
+                    page >= totalPages ? "opacity-50 pointer-events-none" : ""
+                  } text-white hover:text-brand`}
                 />
               </PaginationItem>
             </PaginationContent>
@@ -328,9 +379,8 @@ export default function MembershipPlansListComponents() {
 
       {/* Results Info */}
       <div className="mt-4 text-sm text-white/70">
-        Showing {totalPlans > 0 
-          ? ((page - 1) * limit + 1) 
-          : 0} - {Math.min(page * limit, totalPlans)} of {totalPlans} plans
+        Showing {totalPlans > 0 ? (page - 1) * limit + 1 : 0} -{" "}
+        {Math.min(page * limit, totalPlans)} of {totalPlans} plans
       </div>
 
       {/* Edit Membership Plan Modal */}
@@ -347,7 +397,7 @@ export default function MembershipPlansListComponents() {
       <AddMembershipModal
         isOpen={isAddModalOpen}
         onClose={() => setIsAddModalOpen(false)}
-        onAddSuccess={handleEditSuccess}  // Using same handler to refresh data
+        onAddSuccess={handleEditSuccess} // Using same handler to refresh data
       />
     </div>
   );

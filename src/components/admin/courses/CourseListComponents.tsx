@@ -31,7 +31,7 @@ import {
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  useReactTable
+  useReactTable,
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { columns } from "./table/CourseTableComponents";
@@ -75,21 +75,39 @@ export default function CourseListComponents() {
     };
 
     // Define custom properties on window with appropriate type assertion
-    (window as Window & typeof globalThis & {
-      handleOpenEditModal: (e: CustomEvent<string>) => void;
-      handleOpenDeleteModal: (e: CustomEvent<string>) => void;
-    }).handleOpenEditModal = handleOpenEditModal;
-    (window as Window & typeof globalThis & {
-      handleOpenEditModal: (e: CustomEvent<string>) => void;
-      handleOpenDeleteModal: (e: CustomEvent<string>) => void;
-    }).handleOpenDeleteModal = handleOpenDeleteModal;
+    (
+      window as Window &
+        typeof globalThis & {
+          handleOpenEditModal: (e: CustomEvent<string>) => void;
+          handleOpenDeleteModal: (e: CustomEvent<string>) => void;
+        }
+    ).handleOpenEditModal = handleOpenEditModal;
+    (
+      window as Window &
+        typeof globalThis & {
+          handleOpenEditModal: (e: CustomEvent<string>) => void;
+          handleOpenDeleteModal: (e: CustomEvent<string>) => void;
+        }
+    ).handleOpenDeleteModal = handleOpenDeleteModal;
 
-    window.addEventListener('openEditCourseModal', handleOpenEditModal as EventListener);
-    window.addEventListener('openDeleteCourseModal', handleOpenDeleteModal as EventListener);
+    window.addEventListener(
+      "openEditCourseModal",
+      handleOpenEditModal as EventListener
+    );
+    window.addEventListener(
+      "openDeleteCourseModal",
+      handleOpenDeleteModal as EventListener
+    );
 
     return () => {
-      window.removeEventListener('openEditCourseModal', handleOpenEditModal as EventListener);
-      window.removeEventListener('openDeleteCourseModal', handleOpenDeleteModal as EventListener);
+      window.removeEventListener(
+        "openEditCourseModal",
+        handleOpenEditModal as EventListener
+      );
+      window.removeEventListener(
+        "openDeleteCourseModal",
+        handleOpenDeleteModal as EventListener
+      );
     };
   }, []);
 
@@ -115,7 +133,6 @@ export default function CourseListComponents() {
   const tableData = coursesData?.data || [];
   const totalCourses = coursesData?.total_count || 0;
   const totalPages = Math.ceil(totalCourses / limit);
-
 
   const table = useReactTable({
     data: tableData,
@@ -169,10 +186,14 @@ export default function CourseListComponents() {
 
   if (isError) {
     return (
-      <div className="p-6 bg-dark-secondary rounded-xl border border-brand/30">
+      <div className="m-6 p-6 bg-dark-secondary rounded-xl border border-brand/30">
         <div className="text-center p-8">
-          <h2 className="text-xl font-bold text-white mb-2">Error Loading Courses</h2>
-          <p className="text-white/70 mb-4">{(error as Error)?.message || "Failed to load courses"}</p>
+          <h2 className="text-xl font-bold text-white mb-2">
+            Error Loading Courses
+          </h2>
+          <p className="text-white/70 mb-4">
+            {(error as Error)?.message || "Failed to load courses"}
+          </p>
           <Button
             onClick={() => refetch()}
             className="bg-brand hover:bg-brand/90 text-black"
@@ -185,7 +206,7 @@ export default function CourseListComponents() {
   }
 
   return (
-    <div className="p-6 bg-dark-secondary rounded-xl border border-brand/30">
+    <div className="m-6 p-6 bg-dark-secondary rounded-xl border border-brand/30">
       <div className="mb-8 flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold">Courses Management</h1>
@@ -212,7 +233,10 @@ export default function CourseListComponents() {
               className="bg-black/30 border border-white/20 focus:border-brand focus:ring-brand/30"
             />
           </div>
-          <Button type="submit" className="bg-brand hover:bg-brand/90 text-black">
+          <Button
+            type="submit"
+            className="bg-brand hover:bg-brand/90 text-black"
+          >
             Search
           </Button>
         </div>
@@ -224,7 +248,10 @@ export default function CourseListComponents() {
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id} className="hover:bg-transparent border-b border-white/20">
+                <TableRow
+                  key={headerGroup.id}
+                  className="hover:bg-transparent border-b border-white/20"
+                >
                   {headerGroup.headers.map((header) => {
                     return (
                       <TableHead key={header.id} className="text-white/70">
@@ -245,11 +272,21 @@ export default function CourseListComponents() {
                 // Loading skeleton
                 Array.from({ length: 5 }).map((_, index) => (
                   <TableRow key={index} className="border-b border-white/10">
-                    <TableCell><Skeleton className="h-4 w-16 bg-white/20" /></TableCell>
-                    <TableCell><Skeleton className="h-4 w-32 bg-white/20" /></TableCell>
-                    <TableCell><Skeleton className="h-4 w-40 bg-white/20" /></TableCell>
-                    <TableCell><Skeleton className="h-4 w-24 bg-white/20" /></TableCell>
-                    <TableCell><Skeleton className="h-4 w-8 bg-white/20" /></TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-16 bg-white/20" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-32 bg-white/20" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-40 bg-white/20" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-24 bg-white/20" />
+                    </TableCell>
+                    <TableCell>
+                      <Skeleton className="h-4 w-8 bg-white/20" />
+                    </TableCell>
                   </TableRow>
                 ))
               ) : table.getRowModel().rows?.length ? (
@@ -261,15 +298,23 @@ export default function CourseListComponents() {
                   >
                     {row.getVisibleCells().map((cell) => (
                       <TableCell key={cell.id}>
-                        {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                        {flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext()
+                        )}
                       </TableCell>
                     ))}
                   </TableRow>
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={columns.length} className="h-24 text-center">
-                    {search ? `No courses found matching "${search}"` : 'No courses found'}
+                  <TableCell
+                    colSpan={columns.length}
+                    className="h-24 text-center"
+                  >
+                    {search
+                      ? `No courses found matching "${search}"`
+                      : "No courses found"}
                   </TableCell>
                 </TableRow>
               )}
@@ -290,46 +335,55 @@ export default function CourseListComponents() {
                     e.preventDefault();
                     if (page > 1) handlePageChange(page - 1);
                   }}
-                  className={`${page <= 1 ? 'opacity-50 pointer-events-none' : ''} text-white hover:text-brand`}
+                  className={`${
+                    page <= 1 ? "opacity-50 pointer-events-none" : ""
+                  } text-white hover:text-brand`}
                 />
               </PaginationItem>
 
               {/* Page numbers */}
-              {Array.from({
-                length: Math.min(5, totalPages)
-              }, (_, i) => {
-                let pageNum: number;
+              {Array.from(
+                {
+                  length: Math.min(5, totalPages),
+                },
+                (_, i) => {
+                  let pageNum: number;
 
-                if (totalPages <= 5) {
-                  // If total pages <= 5, show all pages
-                  pageNum = i + 1;
-                } else if (page <= 3) {
-                  // If current page is in first 3, show 1-5
-                  pageNum = i + 1;
-                } else if (page >= totalPages - 2) {
-                  // If current page is in last 3, show last 5
-                  pageNum = totalPages - 4 + i;
-                } else {
-                  // Otherwise, show 2 before and 2 after current page
-                  pageNum = page - 2 + i;
+                  if (totalPages <= 5) {
+                    // If total pages <= 5, show all pages
+                    pageNum = i + 1;
+                  } else if (page <= 3) {
+                    // If current page is in first 3, show 1-5
+                    pageNum = i + 1;
+                  } else if (page >= totalPages - 2) {
+                    // If current page is in last 3, show last 5
+                    pageNum = totalPages - 4 + i;
+                  } else {
+                    // Otherwise, show 2 before and 2 after current page
+                    pageNum = page - 2 + i;
+                  }
+
+                  return (
+                    <PaginationItem key={pageNum}>
+                      <PaginationLink
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          handlePageChange(pageNum);
+                        }}
+                        isActive={page === pageNum}
+                        className={`${
+                          page === pageNum
+                            ? "bg-brand text-black"
+                            : "text-white hover:bg-brand/20"
+                        }`}
+                      >
+                        {pageNum}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
                 }
-
-                return (
-                  <PaginationItem key={pageNum}>
-                    <PaginationLink
-                      href="#"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        handlePageChange(pageNum);
-                      }}
-                      isActive={page === pageNum}
-                      className={`${page === pageNum ? 'bg-brand text-black' : 'text-white hover:bg-brand/20'}`}
-                    >
-                      {pageNum}
-                    </PaginationLink>
-                  </PaginationItem>
-                );
-              })}
+              )}
 
               <PaginationItem>
                 <PaginationNext
@@ -338,7 +392,9 @@ export default function CourseListComponents() {
                     e.preventDefault();
                     if (page < totalPages) handlePageChange(page + 1);
                   }}
-                  className={`${page >= totalPages ? 'opacity-50 pointer-events-none' : ''} text-white hover:text-brand`}
+                  className={`${
+                    page >= totalPages ? "opacity-50 pointer-events-none" : ""
+                  } text-white hover:text-brand`}
                 />
               </PaginationItem>
             </PaginationContent>
@@ -348,9 +404,8 @@ export default function CourseListComponents() {
 
       {/* Results Info */}
       <div className="mt-4 text-sm text-white/70">
-        Showing {totalCourses > 0
-          ? ((page - 1) * limit + 1)
-          : 0} - {Math.min(page * limit, totalCourses)} of {totalCourses} courses
+        Showing {totalCourses > 0 ? (page - 1) * limit + 1 : 0} -{" "}
+        {Math.min(page * limit, totalCourses)} of {totalCourses} courses
       </div>
 
       {/* Edit Course Modal */}
