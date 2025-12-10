@@ -84,6 +84,13 @@ Dibangun dengan fokus pada:
 ```
 src/
  ├─ app/
+ │   ├─ admin/
+ │   │  ├─ dashboard/
+ │   │  ├─ members/
+ │   │  ├─ memberships/
+ │   │  ├─ membership-plan/
+ │   │  ├─ payments/
+ │   │  └─ courses/
  │   ├─ dashboard/
  │   ├─ membership/
  │   ├─ checkin/
@@ -95,6 +102,55 @@ src/
  ├─ types/
  └─ utils/
 ```
+
+# 🌐 **API Endpoints**
+
+### Authentication
+- `POST /api/auth/sign-up` - Register a new admin user
+- `POST /api/auth/sign-in` - Authenticate an existing admin user
+- `POST /api/auth/sign-out` - Sign out the authenticated admin user
+
+### Members
+- `GET /api/admin/members/get` - Retrieve a list of all members
+- `POST /api/admin/members/post` - Create a new member
+- `GET /api/admin/members/get/[id]` - Get details for a specific member
+- `PUT /api/admin/members/put/[id]` - Update a specific member
+- `DELETE /api/admin/members/delete/[id]` - Delete a specific member
+
+### Memberships
+- `GET /api/admin/memberships/get` - Retrieve a list of all memberships
+- `POST /api/admin/memberships/post` - Create a new membership
+- `GET /api/admin/memberships/get/[id]` - Get details for a specific membership
+- `PUT /api/admin/memberships/put/[id]` - Update a specific membership
+- `DELETE /api/admin/memberships/delete/[id]` - Delete a specific membership
+
+### Membership Plans
+- `GET /api/admin/membership-plan/get` - Retrieve a list of all membership plans
+- `POST /api/admin/membership-plan/post` - Create a new membership plan
+- `GET /api/admin/membership-plan/get/[id]` - Get details for a specific membership plan
+- `PUT /api/admin/membership-plan/put/[id]` - Update a specific membership plan
+- `DELETE /api/admin/membership-plan/delete/[id]` - Delete a specific membership plan
+
+### Payments
+- `GET /api/admin/payments/get` - Retrieve a list of all payments
+- `POST /api/admin/payments/post` - Create a new payment
+- `GET /api/admin/payments/get/[id]` - Get details for a specific payment
+- `PUT /api/admin/payments/put/[id]` - Update a specific payment
+- `DELETE /api/admin/payments/delete/[id]` - Delete a specific payment
+
+### Courses
+- `GET /api/admin/courses/get` - Retrieve a list of all courses
+- `POST /api/admin/courses/post` - Create a new course
+- `GET /api/admin/courses/get/[id]` - Get details for a specific course
+- `PUT /api/admin/courses/put/[id]` - Update a specific course
+- `DELETE /api/admin/courses/delete/[id]` - Delete a specific course
+
+### Dashboard Analytics
+- `GET /api/admin/dashboard/analytics` - Retrieve dashboard analytics with date range filtering
+  - Query parameters:
+    - `dateFilterType`: "day", "week", "month", "custom", or null for all-time metrics (default: null for all-time)
+    - `startDate`: ISO date string (required for custom date range)
+    - `endDate`: ISO date string (required for custom date range)
 
 ---
 

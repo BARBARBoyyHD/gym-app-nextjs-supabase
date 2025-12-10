@@ -40,6 +40,14 @@ export default function Navbar() {
           </li>
           <li>
             <Link
+              href="/courses"
+              className={`nav-link ${path.startsWith("/courses") && "active"} `}
+            >
+              Courses
+            </Link>
+          </li>
+          <li>
+            <Link
               href="/coaches"
               className={`nav-link ${path.startsWith("/coaches") && "active"}`}
             >
@@ -125,6 +133,11 @@ export default function Navbar() {
             <li>
               <Link href="/classes" className="nav-link font-semibold">
                 Classes
+              </Link>
+            </li>
+            <li>
+              <Link href="/courses" className="nav-link font-semibold">
+                Courses
               </Link>
             </li>
             <li>
