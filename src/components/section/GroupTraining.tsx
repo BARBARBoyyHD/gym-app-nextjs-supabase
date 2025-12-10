@@ -3,8 +3,8 @@ export default function GroupTraining() {
   return (
     <section>
       <div className="max-w-6xl mx-auto px-4">
-        <div className="flex flex-wrap">
-          <div className="flex-1 flex items-center flex-wrap ">
+        <div className="flex flex-col md:flex-row flex-wrap">
+          <div className="flex-1 justify-center md:justify-start flex items-center flex-wrap ">
             <div>
               <h2 className="text-4xl md:text-5xl font-bold mb-3">
                 Group Training
@@ -34,7 +34,7 @@ export default function GroupTraining() {
             </div>
           </div>
           <div className="flex-1 flex justify-end">
-            <div className="relative bg-gray-800 w-[468px] h-[600px]">
+            <div className="relative bg-gray-800 w-full h-[450px] md:w-[468px] md:h-[600px]">
               <Image
                 src="/images/group-training.jpg"
                 alt="Group Training Image"

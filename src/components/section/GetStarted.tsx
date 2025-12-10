@@ -4,9 +4,9 @@ export default function GetStarted() {
   return (
     <section className="my-24">
       <div className="max-w-6xl mx-auto px-4">
-        <div className="flex flex-wrap">
+        <div className="flex flex-col md:flex-row flex-wrap space-y-5 md:space-y-0">
           <div className="flex-1 flex justify-start">
-            <div className="relative bg-gray-800 w-[468px] h-[600px]">
+            <div className="relative bg-gray-800 w-full h-[450px] md:w-[468px] md:h-[600px]">
               <Image
                 src="/images/started.jpg"
                 alt="Get Started Image"

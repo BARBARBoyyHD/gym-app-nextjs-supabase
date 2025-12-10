@@ -27,7 +27,7 @@ export default function Contact() {
             </p>
             <ButtonBrand icon={false} title="Get free consultation" />
           </div>
-          <div className="space-y-6 mx-auto ">
+          <div className="space-y-6 mx-0 md:mx-auto mt-12 md:mt-0 ">
             <div>
               <h5 className="font-bold text-2xl uppercase mb-2">Address</h5>
               <p className="text-white/70">
