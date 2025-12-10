@@ -13,7 +13,7 @@ export default function AboutPage() {
     <>
       <Navbar />
       <main>
-        <section className="max-w-6xl mx-auto px-4 mt-24">
+        <section className="max-w-6xl mx-auto px-4 mt-36 md:mt-24">
           <div className="grid grid-cols-1 md:grid-cols-5 gap-10 place-items-center ">
             <div className="order-2 md:order-1 md:col-span-3 text-center md:text-left">
               <h1 className="text-4xl md:text-5xl font-bold leading-tight mt-8 md:mt-0 mb-6">

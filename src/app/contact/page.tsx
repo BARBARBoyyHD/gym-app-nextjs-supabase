@@ -7,7 +7,7 @@ export default function ContactPage() {
     <>
       <Navbar />
       <main>
-        <section className="max-w-5xl mx-auto bg-background text-white px-4 mt-12 mb-24">
+        <section className="max-w-5xl mx-auto text-white px-4 mt-36 md:my-8">
           <div className="w-full max-w-5xl p-10 ">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <div>
