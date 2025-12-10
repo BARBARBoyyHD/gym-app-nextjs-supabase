@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
       // Fetch all courses and group them by category
       let query = supabase
         .from("courses")
-        .select("id, title, description, category, thumbnail_url, created_at, video_embed_url", {
+        .select("id, title, description, category, created_at", {
           count: "exact",
           head: false
         });
@@ -52,7 +52,7 @@ export async function GET(req: NextRequest) {
       }
 
       // Group courses by category
-      const groupedCourses: Record<string, any[]> = {};
+      const groupedCourses: Record<string, typeof data> = {};
       data.forEach(course => {
         if (!groupedCourses[course.category]) {
           groupedCourses[course.category] = [];
@@ -88,7 +88,7 @@ export async function GET(req: NextRequest) {
       // Build query
       let query = supabase
         .from("courses")
-        .select("id, title, description, category, thumbnail_url, created_at, video_embed_url", {
+        .select("id, title, description, category, created_at", {
           count: "exact",
           head: false
         })

@@ -1,7 +1,7 @@
 import { GET } from '@/app/api/courses/get/route';
 import { NextRequest } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
-import { errorResponse } from '@/utils/response';
+import { checkRateLimit } from '@/middleware/rate-limit-middleware';
 
 // Mock the Supabase client
 jest.mock('@/lib/supabase/server', () => ({
@@ -20,25 +20,26 @@ jest.mock('@/utils/response', () => ({
 }));
 
 describe('Courses API Route', () => {
-  let mockSupabaseClient: any;
+  let mockSupabaseClient: {
+    from: jest.Mock;
+  };
   let mockRequest: NextRequest;
 
   beforeEach(() => {
     jest.clearAllMocks();
-    
+
     // Create mock Supabase client
     mockSupabaseClient = {
       from: jest.fn(() => ({
         select: jest.fn(),
       })),
     };
-    
+
     (createClient as jest.Mock).mockResolvedValue(mockSupabaseClient);
-    
+
     // Mock rate limit check to pass by default
-    const { checkRateLimit } = require('@/middleware/rate-limit-middleware');
     (checkRateLimit as jest.Mock).mockResolvedValue(null);
-    
+
     // Create mock request object
     mockRequest = {
       url: 'http://localhost:3000/api/courses/get',
@@ -134,8 +135,8 @@ describe('Courses API Route', () => {
     };
 
     // Mock the final result after range and order
-    (mockRange as any).mockImplementation(() => mockQueryResult);
-    (mockOrder as any).mockImplementation(() => mockQueryResult);
+    (mockRange as jest.Mock).mockImplementation(() => mockQueryResult);
+    (mockOrder as jest.Mock).mockImplementation(() => mockQueryResult);
 
     (mockSupabaseClient.from as jest.Mock).mockReturnValue(mockFrom);
 
@@ -171,7 +172,8 @@ describe('Courses API Route', () => {
 
     (mockSupabaseClient.from as jest.Mock).mockReturnValue(mockFrom);
 
-    const { errorResponse } = require('@/utils/response');
+    // Import the error response function directly
+    const { errorResponse } = jest.requireMock('@/utils/response');
     (errorResponse as jest.Mock).mockReturnValue(new Response(
       JSON.stringify({ success: false, message: 'Database error' }),
       { status: 500 }
@@ -179,7 +181,7 @@ describe('Courses API Route', () => {
 
     const result = await GET(mockRequest);
 
-    expect(errorResponse).toHaveBeenCalledWith({
+    expect(mockErrorResponse.errorResponse).toHaveBeenCalledWith({
       success: false,
       status: 500,
       message: 'Database error',
@@ -193,11 +195,11 @@ describe('Courses API Route', () => {
       { status: 429 }
     );
 
-    const { checkRateLimit } = require('@/middleware/rate-limit-middleware');
+    const { checkRateLimit } = jest.requireMock('@/middleware/rate-limit-middleware');
     (checkRateLimit as jest.Mock).mockResolvedValue(mockRateLimitResult);
 
     const result = await GET(mockRequest);
-    
+
     expect(checkRateLimit).toHaveBeenCalled();
     expect(result).toBe(mockRateLimitResult);
   });
@@ -231,9 +233,9 @@ describe('Courses API Route', () => {
     });
 
     // Mock the final result after or, range and order
-    (mockOr as any).mockImplementation(() => mockQueryResult);
-    (mockRange as any).mockImplementation(() => mockQueryResult);
-    (mockOrder as any).mockImplementation(() => mockQueryResult);
+    (mockOr as jest.Mock).mockImplementation(() => mockQueryResult);
+    (mockRange as jest.Mock).mockImplementation(() => mockQueryResult);
+    (mockOrder as jest.Mock).mockImplementation(() => mockQueryResult);
 
     const mockFrom = {
       select: mockSelect,

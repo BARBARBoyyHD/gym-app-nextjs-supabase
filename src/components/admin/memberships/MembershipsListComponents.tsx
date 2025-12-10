@@ -20,7 +20,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useGetData } from "@/hooks/use-Fetch";
-import { Membership } from "@/types/membership";
+
 
 // Define the type for the membership as returned by the API with nested objects
 type MembershipWithRelations = Membership & {
@@ -41,7 +41,11 @@ import {
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import { AddMembershipModal } from "./modal/AddMembershipModal";
-import { columns } from "./table/MembershipsTableComponent";
+import { EditMembershipStatusModal } from "./modal/EditMembershipStatusModal";
+import { Membership } from "@/types/membership";
+import { createColumns } from "./table/MembershipsTableComponent";
+import { DeleteMembershipModal } from "./modal/DeleteMembershipModal";
+
 
 export default function MembershipsListComponents() {
   const [search, setSearch] = useState("");
@@ -52,6 +56,10 @@ export default function MembershipsListComponents() {
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditStatusModalOpen, setIsEditStatusModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [membershipToEdit, setMembershipToEdit] = useState<string | null>(null);
+  const [membershipToDelete, setMembershipToDelete] = useState<{id: string, name: string} | null>(null);
 
   // Create params object for the hook
   const queryParams: PaginationParams = {
@@ -72,6 +80,23 @@ export default function MembershipsListComponents() {
     queryKeyBase: "memberships",
     params: queryParams,
   });
+
+  // Handle edit success - refresh data
+  const handleEditSuccess = () => {
+    refetch(); // Refresh the memberships list after successful edit
+  };
+
+  // Create columns with the edit status and delete callbacks
+  const columns = createColumns(
+    (id: string) => {
+      setMembershipToEdit(id);
+      setIsEditStatusModalOpen(true);
+    },
+    (id: string, name: string) => {
+      setMembershipToDelete({id, name});
+      setIsDeleteModalOpen(true);
+    }
+  );
 
   // Refetch when search changes
   useEffect(() => {
@@ -116,11 +141,6 @@ export default function MembershipsListComponents() {
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
     refetch();
-  };
-
-  // Handle edit success - refresh data
-  const handleEditSuccess = () => {
-    refetch(); // Refresh the memberships list after successful edit
   };
 
   if (isError) {
@@ -351,7 +371,28 @@ export default function MembershipsListComponents() {
         memberships
       </div>
 
-      {/* Edit Membership Modal */}
+      {/* Edit Membership Status Modal */}
+      <EditMembershipStatusModal
+        isOpen={!!membershipToEdit && isEditStatusModalOpen}
+        onClose={() => {
+          setIsEditStatusModalOpen(false);
+          setMembershipToEdit(null);
+        }}
+        membershipId={membershipToEdit || ''}
+        onEditSuccess={handleEditSuccess} // Refresh data when edit is successful
+      />
+
+      {/* Delete Membership Modal */}
+      <DeleteMembershipModal
+        isOpen={!!membershipToDelete && isDeleteModalOpen}
+        onClose={() => {
+          setIsDeleteModalOpen(false);
+          setMembershipToDelete(null);
+        }}
+        membershipId={membershipToDelete?.id || ''}
+        membershipName={membershipToDelete?.name || ''}
+        onConfirm={handleEditSuccess} // Refresh data when deletion is successful
+      />
 
       {/* Add Membership Modal */}
       <AddMembershipModal

@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import React from "react";
+import { convertYouTubeUrl } from "@/utils/youtube";
 
 interface VideoEmbedProps {
   videoUrl: string;
@@ -8,40 +9,7 @@ interface VideoEmbedProps {
 }
 
 const VideoEmbed = ({ videoUrl, title, width = "100%", height = "400px" }: VideoEmbedProps) => {
-  const [embedUrl, setEmbedUrl] = useState<string>("");
-  
-  useEffect(() => {
-    if (!videoUrl) return;
-    
-    // Function to convert YouTube URL to embed URL
-    const getEmbedUrl = (url: string) => {
-      // Handle various YouTube URL formats
-      let embedUrl = url;
-      
-      // If it's already an embed URL, return as is
-      if (url.includes('youtube.com/embed')) {
-        return url;
-      }
-      
-      // Convert various YouTube URL formats to embed URL
-      if (url.includes('youtube.com/watch?v=')) {
-        const videoId = url.split('v=')[1]?.split('&')[0];
-        embedUrl = `https://www.youtube.com/embed/${videoId}`;
-      } else if (url.includes('youtu.be/')) {
-        const videoId = url.split('youtu.be/')[1]?.split('?')[0];
-        embedUrl = `https://www.youtube.com/embed/${videoId}`;
-      }
-      
-      // Add common YouTube embed parameters for better control
-      if (embedUrl.includes('youtube.com/embed/')) {
-        embedUrl += '?rel=0&modestbranding=1&autoplay=0';
-      }
-      
-      return embedUrl;
-    };
-    
-    setEmbedUrl(getEmbedUrl(videoUrl));
-  }, [videoUrl]);
+  const embedUrl = convertYouTubeUrl(videoUrl);
 
   if (!embedUrl) {
     return (

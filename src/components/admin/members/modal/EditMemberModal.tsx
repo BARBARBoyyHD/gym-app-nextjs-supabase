@@ -46,7 +46,7 @@ export function EditMemberModal({
   const {
     mutate: updateMember,
     reset: resetUpdate
-  } = useUpdateData<Members>('/api/admin/members', 'members', { page: 1, limit: 10 });
+  } = useUpdateData<Members>('/api/admin/members/put', 'members', { page: 1, limit: 10 });
 
   // Fetch the member data when modal opens or memberId changes
   const {

@@ -19,7 +19,7 @@ export interface DashboardAnalyticsData {
 export async function dashboardAnalyticsHandler(
   client: SupabaseClient,
   params: DashboardAnalyticsParams = {}
-): Promise<any> {
+): Promise<ReturnType<typeof successResponse> | ReturnType<typeof errorResponse>> {
   try {
     // Process date parameters
     let startDate: Date | null = null;

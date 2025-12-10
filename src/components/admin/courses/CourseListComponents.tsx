@@ -150,6 +150,7 @@ export default function CourseListComponents() {
       columnFilters,
       columnVisibility,
       rowSelection,
+
     },
     pageCount: totalPages,
     manualPagination: true, // Since we're managing pagination manually
@@ -413,7 +414,7 @@ export default function CourseListComponents() {
         <EditCourseModal
           isOpen={isEditModalOpen}
           onClose={() => setIsEditModalOpen(false)}
-          courseId={editingCourseId}
+          course_id={editingCourseId}
           onEditSuccess={handleEditSuccess}
         />
       )}

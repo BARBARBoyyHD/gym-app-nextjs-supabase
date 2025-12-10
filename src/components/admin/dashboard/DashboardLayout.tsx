@@ -15,15 +15,6 @@ import {
 import { MetricCard } from "@/components/admin/dashboard/MetricCard";
 import { RecentActivity } from "@/components/admin/dashboard/RecentActivity";
 
-// Define types for dashboard metrics
-interface DashboardMetrics {
-  totalMembers: number;
-  activeMemberships: number;
-  monthlyRevenue: number;
-  newMembersThisMonth: number;
-  expiredMemberships: number;
-  totalCourses: number;
-}
 
 // Define date filter type
 type DateFilterType = "day" | "week" | "month" | "custom";

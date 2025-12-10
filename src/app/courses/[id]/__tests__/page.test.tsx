@@ -10,15 +10,27 @@ jest.mock('next/navigation', () => ({
 }));
 
 // Mock the components used in the page
-jest.mock('@/components/Navbar', () => () => <div data-testid="navbar">Navbar</div>);
-jest.mock('@/components/Footer', () => () => <div data-testid="footer">Footer</div>);
-jest.mock('@/components/courses/VideoEmbed', () => ({ 
+jest.mock('@/components/Navbar', () => {
+  const MockNavbar = () => <div data-testid="navbar">Navbar</div>;
+  MockNavbar.displayName = 'MockNavbar';
+  return MockNavbar;
+});
+jest.mock('@/components/Footer', () => {
+  const MockFooter = () => <div data-testid="footer">Footer</div>;
+  MockFooter.displayName = 'MockFooter';
+  return MockFooter;
+});
+jest.mock('@/components/courses/VideoEmbed', () => ({
   __esModule: true,
-  default: ({ title, videoUrl }: { title: string; videoUrl: string }) => (
-    <div data-testid="video-embed" data-title={title}>
-      Mock VideoEmbed: {title} - {videoUrl}
-    </div>
-  ),
+  default: ({ title, videoUrl }: { title: string; videoUrl: string }) => {
+    const MockVideoEmbed = () => (
+      <div data-testid="video-embed" data-title={title}>
+        Mock VideoEmbed: {title} - {videoUrl}
+      </div>
+    );
+    MockVideoEmbed.displayName = 'MockVideoEmbed';
+    return MockVideoEmbed;
+  },
 }));
 
 // Mock the fetch API

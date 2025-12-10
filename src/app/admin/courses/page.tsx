@@ -1,4 +1,3 @@
-"use client";
 
 import CourseListComponents from "@/components/admin/courses/CourseListComponents";
 
