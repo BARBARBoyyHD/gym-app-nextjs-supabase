@@ -1,18 +1,29 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import CoursesPage from '@/app/courses/page';
 import '@testing-library/jest-dom';
-import { SessionContextProvider } from 'use-supabase';
 
 // Mock the components used in the page
-jest.mock('@/components/Navbar', () => () => <div data-testid="navbar">Navbar</div>);
-jest.mock('@/components/Footer', () => () => <div data-testid="footer">Footer</div>);
-jest.mock('@/components/courses/CourseCategorySection', () => ({ 
+jest.mock('@/components/Navbar', () => {
+  const MockNavbar = () => <div data-testid="navbar">Navbar</div>;
+  MockNavbar.displayName = 'MockNavbar';
+  return MockNavbar;
+});
+jest.mock('@/components/Footer', () => {
+  const MockFooter = () => <div data-testid="footer">Footer</div>;
+  MockFooter.displayName = 'MockFooter';
+  return MockFooter;
+});
+jest.mock('@/components/courses/CourseCategorySection', () => ({
   __esModule: true,
-  default: ({ category, courses }: { category: string; courses: any[] }) => (
-    <div data-testid="course-category-section" data-category={category}>
-      {`Course Section: ${category} (${courses.length} courses)`}
-    </div>
-  ),
+  default: ({ category, courses }: { category: string; courses: readonly []; }) => {
+    const MockCourseCategorySection = () => (
+      <div data-testid="course-category-section" data-category={category}>
+        {`Course Section: ${category} (${courses.length} courses)`}
+      </div>
+    );
+    MockCourseCategorySection.displayName = 'MockCourseCategorySection';
+    return MockCourseCategorySection;
+  },
 }));
 
 // Mock the fetch API

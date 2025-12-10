@@ -89,18 +89,19 @@ export function AppSidebar() {
                 const isActive = pathname === item.url;
                 return (
                   <SidebarMenuItem key={item.title}>
-                    <Link href={item.url}>
-                      <SidebarMenuButton
-                        className={`${
-                          isActive
-                            ? "bg-brand text-brand font-semibold text-black "
-                            : "bg-brand-hover font-semibold text-white"
-                        } transition-colors duration-200`}
-                      >
+                    <SidebarMenuButton
+                      asChild
+                      className={`${
+                        isActive
+                          ? "bg-brand text-brand font-semibold text-black "
+                          : "bg-brand-hover font-semibold text-white"
+                      } transition-colors duration-200 w-full text-left`}
+                    >
+                      <Link href={item.url}>
                         <item.icon className="size-5" />
                         <span>{item.title}</span>
-                      </SidebarMenuButton>
-                    </Link>
+                      </Link>
+                    </SidebarMenuButton>
                   </SidebarMenuItem>
                 );
               })}
@@ -112,22 +113,21 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <Link href="/admin/profile">
-                  <SidebarMenuButton className="bg-brand-hover text-white">
-                    {" "}
+                <SidebarMenuButton asChild className="bg-brand-hover text-white w-full text-left">
+                  <Link href="/admin/profile">
                     <FaUserCircle className="size-5" />
                     <span>Profile</span>
-                  </SidebarMenuButton>
-                </Link>
+                  </Link>
+                </SidebarMenuButton>
               </SidebarMenuItem>
               <SidebarMenuItem>
-                <button onClick={() => logout()} className="w-full text-left">
-                  <SidebarMenuButton className="bg-brand-hover text-white">
-                    {" "}
-                    <FaSignOutAlt className="size-5" />
-                    <span>Logout</span>
-                  </SidebarMenuButton>
-                </button>
+                <SidebarMenuButton
+                  onClick={() => logout()}
+                  className="bg-brand-hover text-white w-full text-left"
+                >
+                  <FaSignOutAlt className="size-5" />
+                  <span>Logout</span>
+                </SidebarMenuButton>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>

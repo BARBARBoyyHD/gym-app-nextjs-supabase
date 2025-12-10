@@ -1,16 +1,17 @@
 import { render, screen } from '@testing-library/react';
 import CourseCategorySection from '@/components/courses/CourseCategorySection';
-import CourseCard from '@/components/courses/CourseCard';
 import '@testing-library/jest-dom';
 
 // Mock the CourseCard component to avoid testing its implementation details
 jest.mock('@/components/courses/CourseCard', () => ({
   __esModule: true,
-  default: ({ course }: { course: any }) => (
-    <div data-testid="course-card" data-title={course.title}>
-      Mock CourseCard: {course.title}
-    </div>
-  ),
+  default: ({ course }: { course: { title: string } }) => {
+    return (
+      <div data-testid="course-card" data-title={course.title}>
+        Mock CourseCard: {course.title}
+      </div>
+    );
+  },
 }));
 
 describe('CourseCategorySection', () => {

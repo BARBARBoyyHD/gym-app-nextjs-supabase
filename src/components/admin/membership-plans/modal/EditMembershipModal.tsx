@@ -61,28 +61,34 @@ export function EditMembershipModal({
     isLoading: isPlanLoading,
     isError: isPlanError,
     refetch,
+    isFetching
   } = useGetSingleData<MembershipPlanRow>(
     membershipPlanId.toString(), // Convert to string for the API call
     "/api/admin/membership-plan/get",
-    "membership-plan"
+    "membership-plans",
+    { enabled: isOpen && !!membershipPlanId } // Only enable when modal is open and we have an ID
   );
 
   // Populate form with membership plan data when it's loaded
   useEffect(() => {
-    if (membershipPlan && initialLoadRef.current) {
-      initialLoadRef.current = false;
+    if (membershipPlan && !isFetching) { // Only update when not fetching new data
       setFormData({
         name: membershipPlan.name,
         description: membershipPlan.description || "",
         price: membershipPlan.price,
         duration_day: membershipPlan.duration_day,  // Map API response field to form field
       });
+      initialLoadRef.current = false;
     }
-  }, [membershipPlan]);
+  }, [membershipPlan, isFetching]);
 
   // Refresh data when modal opens and we have a membershipPlanId
   useEffect(() => {
     if (isOpen && membershipPlanId) {
+      if (!initialLoadRef.current) {
+        // Reset the ref so we can properly populate the form on next load
+        initialLoadRef.current = true;
+      }
       refetch();
     }
   }, [isOpen, membershipPlanId, refetch]);
@@ -143,14 +149,14 @@ export function EditMembershipModal({
           setIsSubmitting(false);
         }
       });
-    } catch (error) {
-      toast.error("An unexpected error occurred");
+    } catch (error: unknown) {
+      toast.error("An unexpected error occurred: " + (error instanceof Error ? error.message : "Unknown error"));
       setIsSubmitting(false);
     }
   };
 
   // Show loading state while fetching membership plan data
-  if (isPlanLoading && isOpen) {
+  if ((isPlanLoading || isFetching) && isOpen) {
     return (
       <Dialog open={isOpen} onOpenChange={onClose}>
         <DialogContent className="sm:max-w-[425px] bg-dark-secondary border-brand/30">

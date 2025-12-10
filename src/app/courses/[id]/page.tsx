@@ -5,52 +5,39 @@ import { useParams } from "next/navigation";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import VideoEmbed from "@/components/courses/VideoEmbed";
+import { useGetSingleData } from "@/hooks/use-Fetch";
 
 interface Course {
   id: string;
   title: string;
   description: string;
   category: string;
-  thumbnail_url?: string;
   created_at: string;
-  video_embed_url: string;
+  video_embed_url?: string;
 }
+
 
 const CourseDetailPage = () => {
   const { id } = useParams();
-  const [course, setCourse] = useState<Course | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchCourse = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch(`/api/courses/get/${id}`);
-        
-        if (!response.ok) {
-          throw new Error("Failed to fetch course");
-        }
-        
-        const data = await response.json();
-        if (data.success) {
-          setCourse(data.data);
-        } else {
-          throw new Error(data.message || "Failed to fetch course");
-        }
-      } catch (err) {
-        setError(err instanceof Error ? err.message : "An unknown error occurred");
-      } finally {
-        setLoading(false);
-      }
-    };
+  // Ensure id is a string before using it
+  const courseId = typeof id === 'string' ? id : '';
 
-    if (id) {
-      fetchCourse();
-    }
-  }, [id]);
+  const {
+    data: course,
+    isLoading,
+    isError,
+    error
+  } = useGetSingleData<Course>(
+    courseId,
+    "/api/admin/courses/get",
+    `courses`,
+    { enabled: !!id }
+  );
 
-  if (loading) {
+  
+
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-background-dark text-white">
         <Navbar />
@@ -66,7 +53,7 @@ const CourseDetailPage = () => {
     );
   }
 
-  if (error || !course) {
+  if (isError || !course) {
     return (
       <div className="min-h-screen bg-background-dark text-white">
         <Navbar />
@@ -74,8 +61,8 @@ const CourseDetailPage = () => {
           <div className="container mx-auto px-4 max-w-4xl">
             <div className="bg-gray-800 rounded-lg p-8 text-center">
               <h2 className="text-xl font-bold text-red-500 mb-4">Error Loading Course</h2>
-              <p className="text-white/70 mb-6">{error || "Course not found"}</p>
-              <button 
+              <p className="text-white/70 mb-6">{error?.message || "Course not found"}</p>
+              <button
                 onClick={() => window.location.href = "/courses"}
                 className="bg-brand hover:bg-brand-hover text-black font-bold py-2 px-6 rounded transition duration-300"
               >
@@ -98,9 +85,9 @@ const CourseDetailPage = () => {
             {/* Video Embed Section */}
             <div className="mb-8">
               {course.video_embed_url ? (
-                <VideoEmbed 
-                  videoUrl={course.video_embed_url} 
-                  title={course.title} 
+                <VideoEmbed
+                  videoUrl={course.video_embed_url}
+                  title={course.title}
                   height="500px"
                 />
               ) : (
@@ -109,7 +96,7 @@ const CourseDetailPage = () => {
                 </div>
               )}
             </div>
-            
+
             {/* Course Information */}
             <div className="p-8">
               <div className="flex flex-wrap items-center justify-between mb-6">
@@ -118,9 +105,9 @@ const CourseDetailPage = () => {
                   {course.category}
                 </span>
               </div>
-              
+
               <p className="text-white/70 text-lg mb-6">{course.description}</p>
-              
+
               <div className="flex items-center text-sm text-gray-400">
                 <span>Added: {new Date(course.created_at).toLocaleDateString()}</span>
               </div>

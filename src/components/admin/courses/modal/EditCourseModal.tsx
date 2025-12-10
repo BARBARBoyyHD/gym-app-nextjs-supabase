@@ -25,7 +25,8 @@ const EditCourseModal = ({ isOpen, onClose, course_id, onEditSuccess }: EditCour
   const { data: course, isError } = useGetSingleData<Course>(
     course_id,
     "/api/admin/courses/get",
-    `course-${course_id}`
+    `courses`,
+    { enabled: isOpen }
   );
 
   const { mutate: updateCourse, isPending } = useUpdateData<Course>(
@@ -85,7 +86,7 @@ const EditCourseModal = ({ isOpen, onClose, course_id, onEditSuccess }: EditCour
         id: course_id,
         updates: {
           ...values,
-          video_embed_url: values.video_embed_url || null, // Convert empty string to null
+          video_embed_url: values.video_embed_url || undefined, // Convert empty string to null
         }
       },
       {

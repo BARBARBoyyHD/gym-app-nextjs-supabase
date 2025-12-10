@@ -18,9 +18,6 @@ export const courseSchema = z.object({
   video_embed_url: z
     .string()
     .url("Video URL must be a valid URL")
-    .optional()
-    .or(z.literal(""))
-    .or(z.null()),
 });
 
 // Validation schema for updating a course (all fields are optional)
@@ -43,9 +40,6 @@ export const updateCourseSchema = z.object({
   video_embed_url: z
     .string()
     .url("Video URL must be a valid URL")
-    .optional()
-    .or(z.literal(""))
-    .or(z.null()),
 });
 
 export type CourseSchema = z.infer<typeof courseSchema>;

@@ -25,7 +25,7 @@ export async function GET(
     // Fetch the specific course by ID
     const { data, error } = await supabase
       .from("courses")
-      .select("id, title, description, category, thumbnail_url, created_at, video_embed_url")
+      .select("id, title, description, category, created_at")
       .eq("id", courseId)
       .single();
 

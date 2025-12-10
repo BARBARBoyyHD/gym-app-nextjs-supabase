@@ -91,8 +91,13 @@ export function useGetSingleData<T>(
           "Content-Type": "application/json",
         },
       });
-      const data = await response.json();
 
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.message || `Failed to fetch data: ${response.status}`);
+      }
+
+      const data = await response.json();
       return data.data;
     },
     ...option,
@@ -215,7 +220,9 @@ export function useDeleteData(
           "bg-green-500 text-white transition-all duration-300 ease-in-out",
       });
       queryClient.invalidateQueries({ queryKey: [queryKey] });
+      // Remove queries with both the single ID and the combined query key pattern
       queryClient.removeQueries({ queryKey: [id] });
+      queryClient.removeQueries({ queryKey: [queryKey, id] });
     },
     onError: (error) => {
       toast.error("❌ Failed to delete data", { description: error.message });

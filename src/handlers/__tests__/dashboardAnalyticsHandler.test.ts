@@ -10,7 +10,7 @@ const mockSupabaseClient = {
 
 // Mock date for consistent testing
 const mockDate = new Date('2023-05-15T10:00:00.000Z');
-global.Date = jest.fn(() => mockDate) as any;
+global.Date = jest.fn(() => mockDate);
 
 describe('dashboardAnalyticsHandler', () => {
   beforeEach(() => {
