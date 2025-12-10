@@ -1,0 +1,16 @@
+## 1. Implementation
+- [ ] 1.1 Create Dashboard page component in appropriate location
+- [ ] 1.2 Set up basic layout structure with header, stats grid, and main content area
+- [ ] 1.3 Create reusable MetricCard component
+- [ ] 1.4 Implement member count metric display
+- [ ] 1.5 Implement active membership count metric
+- [ ] 1.6 Implement payment/revenue metrics
+- [ ] 1.7 Integrate with existing useGetData hook for member data
+- [ ] 1.8 Fetch membership data from appropriate endpoints
+- [ ] 1.9 Fetch payment data for revenue metrics
+- [ ] 1.10 Implement error handling and loading states
+- [ ] 1.11 Create RecentActivity component to show latest entries
+- [ ] 1.12 Add loading skeletons for better UX
+- [ ] 1.13 Ensure responsive layout using tailwindcss Flexbox
+- [ ] 1.14 Ensure accessibility compliance
+- [ ] 1.15 Write unit tests for dashboard components

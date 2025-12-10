@@ -104,7 +104,6 @@ export default function MembershipPlansListComponents() {
   const totalPlans = plansData?.total_count || 0;
   const totalPages = Math.ceil(totalPlans / limit);
 
-  // Initialize the table
   const table = useReactTable({
     data: tableData,
     columns,

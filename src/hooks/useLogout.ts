@@ -55,9 +55,10 @@ export const useLogout = () => {
       // Redirect to login page
       router.push("/auth/login");
       router.refresh(); // Refresh to ensure state is updated
-    } catch (error: any) {
+    } catch (error) {
       console.error("Logout error:", error);
-      toast.error(error.message || "An error occurred during logout");
+      const errorMessage = error instanceof Error ? error.message : "An error occurred during logout";
+      toast.error(errorMessage);
     }
   };
 

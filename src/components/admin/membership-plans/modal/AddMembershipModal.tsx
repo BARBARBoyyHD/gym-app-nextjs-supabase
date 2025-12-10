@@ -99,6 +99,9 @@ export function AddMembershipModal({
         }
       });
     } catch (error) {
+      if(error instanceof z.ZodError) {
+        throw error;
+      }
       toast.error("An unexpected error occurred");
       setIsSubmitting(false);
     }

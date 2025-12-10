@@ -116,7 +116,7 @@ export default function CourseListComponents() {
   const totalCourses = coursesData?.total_count || 0;
   const totalPages = Math.ceil(totalCourses / limit);
 
-  // Initialize the table
+
   const table = useReactTable({
     data: tableData,
     columns,

@@ -2,8 +2,6 @@
 
 /* eslint-disable react-hooks/set-state-in-effect */
 import { useState, useEffect, useRef } from "react";
-import { updateMembershipPlanSchema } from "@/lib/validation/membershipPlansValidate";
-import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -26,8 +24,6 @@ interface MembershipPlanRow {
   duration_day: number;
   created_at: string;
 }
-
-type MembershipPlanInput = z.infer<typeof updateMembershipPlanSchema>;
 
 interface EditMembershipModalProps {
   isOpen: boolean;

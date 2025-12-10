@@ -57,7 +57,7 @@ export async function requireAuth(request: NextRequest): Promise<NextResponse | 
 
     // Return null if user is authenticated
     return null;
-  } catch (error) {
+  } catch {
     // Return an error response if there's an exception
     return NextResponse.json(
       { success: false, message: "Authentication error" },
