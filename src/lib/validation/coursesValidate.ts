@@ -10,7 +10,7 @@ export const courseSchema = z.object({
     .string()
     .min(1, "Description is required")
     .max(1000, "Description must be less than 1000 characters"),
- 
+
   category: z
     .string()
     .min(1, "Category is required")
