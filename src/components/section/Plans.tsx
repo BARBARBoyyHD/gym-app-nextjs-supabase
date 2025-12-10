@@ -11,52 +11,101 @@ export default function Plans() {
           Choose a pricing plan which suits your fitness goals.
         </p>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 space-y-6 mt-12 gap-8">
-          <div className="bg-dark-secondary border-brand h-[425px] p-8">
-            <h3 className="text-white/70 uppercase text-2xl font-bold">Pro</h3>
-            <h5 className="uppercase text-3xl font-bold my-4 ">
-              <span className="text-brand">$200</span>
-            </h5>
-            <span className="text-sm text-white/70">Pro Plans</span>
-            <ul className="list-disc my-6 space-y-2">
-              <li className="ml-4 marker-brand">Course access</li>
-              <li className="ml-4 marker-brand">Any fitness program</li>
-              <li className="ml-4 marker-brand">Personal training sessions</li>
-              <li className="ml-4 marker-brand">Full services</li>
-            </ul>
-            <ButtonBrand icon={false} title="Select plan" />
+          {/* Bronze */}
+          <div className="bg-dark-secondary border-brand h-[500px] p-8 flex flex-col justify-between">
+            <div>
+              <h3 className="text-white/70 uppercase text-2xl font-bold">
+                Bronze
+              </h3>
+              <h5 className="uppercase text-3xl font-bold my-4">
+                <span className="text-brand">$80</span>/Month
+              </h5>
+              <span className="text-sm text-white/70">
+                Basic membership access
+              </span>
+              <ul className="list-disc my-6 space-y-2">
+                <li className="ml-4 marker-brand">Full gym access</li>
+                <li className="ml-4 marker-brand">Modern equipment access</li>
+                <li className="ml-4 marker-brand">Free locker included</li>
+                <li className="ml-4 marker-brand">No personal trainer</li>
+              </ul>
+            </div>
+            <div>
+              <ButtonBrand
+                className="w-full justify-center"
+                icon={false}
+                title="Select plan"
+              />
+            </div>
           </div>
-          <div className="bg-dark-secondary border-brand h-[425px] p-8">
-            <h3 className="text-white/70 uppercase text-2xl font-bold">
-              10 Classes
-            </h3>
-            <h5 className="uppercase text-3xl font-bold my-4">
-              <span className="text-brand">$100</span>/Month
-            </h5>
-            <span className="text-sm text-white/70">10 group classes</span>
-            <ul className="list-disc my-6 space-y-2">
-              <li className="ml-4 marker-brand">Any fitness program</li>
-              <li className="ml-4 marker-brand">Personal training sessions</li>
-              <li className="ml-4 marker-brand">$15 per each extra training</li>
-              <li className="ml-4 marker-brand">No individual sessions</li>
-            </ul>
-            <ButtonBrand icon={false} title="Select plan" />
+          {/* Silver */}
+          <div className="bg-dark-secondary border-brand h-[500px] p-8 flex flex-col justify-between">
+            <div>
+              <h3 className="text-white/70 uppercase text-2xl font-bold">
+                Silver
+              </h3>
+              <h5 className="uppercase text-3xl font-bold my-4">
+                <span className="text-brand">$150</span>/Month
+              </h5>
+              <span className="text-sm text-white/70">
+                Membership + Trainer + 3 selected course classes
+              </span>
+              <ul className="list-disc my-6 space-y-2">
+                <li className="ml-4 marker-brand">Full gym access</li>
+                <li className="ml-4 marker-brand">Modern equipment access</li>
+                <li className="ml-4 marker-brand">3 course classes</li>
+                <li className="ml-4 marker-brand">
+                  Personal trainer (8 session)
+                </li>
+                <li className="ml-4 marker-brand">Free locker included</li>
+              </ul>
+            </div>
+            <div>
+              <ButtonBrand
+                className="w-full justify-center"
+                icon={false}
+                title="Select plan"
+              />
+            </div>
           </div>
-          <div className="bg-dark-secondary border-brand h-[425px] p-8">
-            <h3 className="text-white/70 uppercase text-2xl font-bold">
-              Open Training
-            </h3>
-            <h5 className="uppercase text-3xl font-bold my-4 ">
-              <span className="text-brand">$12</span>/Visit
-            </h5>
-            <span className="text-sm text-white/70">Open gym</span>
-            <ul className="list-disc my-6 space-y-2">
-              <li className="ml-4 marker-brand">Full acces to the gym</li>
-              <li className="ml-4 marker-brand">Open from 8am to 9pm</li>
-              <li className="ml-4 marker-brand">50+ gym machines</li>
-              <li className="ml-4 marker-brand">Modern machines</li>
-            </ul>
-            <ButtonBrand icon={false} title="Select plan" />
+
+          {/* Gold */}
+          <div className="bg-dark-secondary border-brand h-[500px] p-8 flex flex-col justify-between">
+            <div>
+              <h3 className="text-white/70 uppercase text-2xl font-bold">
+                Gold
+              </h3>
+              <h5 className="uppercase text-3xl font-bold my-4">
+                <span className="text-brand">$220</span>/Month
+              </h5>
+              <span className="text-sm text-white/70">
+                Member + Trainer + All course classes + 1 Class
+              </span>
+              <ul className="list-disc my-6 space-y-2">
+                <li className="ml-4 marker-brand">Full gym access</li>
+                <li className="ml-4 marker-brand">Modern equipment access</li>
+
+                <li className="ml-4 marker-brand">All course classes</li>
+                <li className="ml-4 marker-brand">1 bonus class</li>
+                <li className="ml-4 marker-brand">
+                  Personal trainer (12 session)
+                </li>
+                <li className="ml-4 marker-brand">Free locker included</li>
+              </ul>
+            </div>
+            <div>
+              <ButtonBrand
+                className="w-full justify-center"
+                icon={false}
+                title="Select plan"
+              />
+            </div>
           </div>
+        </div>
+        <div className="text-center mt-12 md:mt-0">
+          <a href="/pricing" className="inline-block text-center">
+            <ButtonBrand title="See more" />
+          </a>
         </div>
       </div>
     </section>

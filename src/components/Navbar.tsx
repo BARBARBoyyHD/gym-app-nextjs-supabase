@@ -12,7 +12,7 @@ export default function Navbar() {
   const path = usePathname();
 
   return (
-    <header className="bg-darktext-white">
+    <header className="bg-dark text-white">
       <nav className="max-w-6xl mx-auto px-4 pt-8 pb-4 flex items-center justify-between">
         <div className="text-xl font-bold color-brand">
           <Link href="/">
@@ -143,7 +143,7 @@ export default function Navbar() {
               </Link>
             </li>
           </ul>
-          <ul className="flex flex-col gap-2 px-4 pb-6 text-sm">
+          <ul className="flex gap-2 px-4 pb-6 text-sm">
             <li>
               <a
                 href="#"

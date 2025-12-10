@@ -11,10 +11,10 @@ export default function ContactPage() {
           <div className="w-full max-w-5xl p-10 ">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
               <div>
-                <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                <h1 className="text-center md:text-left text-4xl md:text-5xl font-bold mb-4">
                   Contact <span className="text-brand">Us</span>
                 </h1>
-                <p className="text-white/70 leading-relaxed mb-8">
+                <p className="text-center md:text-left text-white/70 leading-relaxed mb-8">
                   Feel free to reach out through this form or contact us
                   directly. We&apos;re here to help you with anything you need.
                 </p>
@@ -44,8 +44,8 @@ export default function ContactPage() {
               {/* RIGHT SIDE — CONTACT FORM */}
               <form className="space-y-6">
                 {/* NAME */}
-                <div className="flex gap-4">
-                  <div className="w-1/2">
+                <div className="flex flex-col md:flex-row gap-4">
+                  <div className="w-full md:w-1/2">
                     <label className="text-sm text-white/70 mb-1 block">
                       First Name
                     </label>
@@ -56,7 +56,7 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  <div className="w-1/2">
+                  <div className="w-full md:w-1/2">
                     <label className="text-sm text-white/70 mb-1 block">
                       Last Name
                     </label>

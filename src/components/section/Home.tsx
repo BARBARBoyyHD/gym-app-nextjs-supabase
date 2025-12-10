@@ -17,13 +17,13 @@ export default function Home() {
           </div>
         </div>
         <div className="flex flex-col justify-center text-left space-y-4 order-2 md:order-1">
-          <h1 className="text-4xl md:text-7xl font-bold leading-tight">
+          <h1 className="text-center md:text-left text-4xl md:text-7xl font-bold leading-tight">
             GET FIT AND FEEL <span className="text-brand">GREAT!</span>
           </h1>
-          <p className="text-lg text-white/70 max-w-md leading-7">
+          <p className="text-center md:text-left text-lg text-white/70 max-w-md leading-7">
             Our professional instructors will help you stay active and healthy
           </p>
-          <ButtonBrand title="Join Now" />
+          <ButtonBrand className="mx-auto md:mx-0" title="Join Now" />
         </div>
       </div>
     </section>

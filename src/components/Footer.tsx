@@ -51,7 +51,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          <div className="mx-auto">
+          <div className="mx-0 md:mx-auto">
             <h3 className="text-lg font-semibold text-white mb-4">
               Navigation
             </h3>
@@ -99,7 +99,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="mx-auto">
+          <div className="mx-0 md:mx-auto">
             <h3 className="text-lg font-semibold text-white mb-4">
               Information
             </h3>
@@ -131,7 +131,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="ml-auto">
+          <div className="ml-0 md:ml-auto">
             <h3 className="text-lg font-semibold text-white mb-4">Contact</h3>
             <ul className="space-y-2 text-sm">
               <li className="text-white/70">Email: info@liftup.com</li>
@@ -139,7 +139,7 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div className="ml-auto">
+          <div className="ml-0 md:ml-auto">
             <h3 className="text-lg font-semibold text-white mb-4">Location</h3>
             <p className="text-sm text-white/70">
               Jl. Fitness Raya No. 20
