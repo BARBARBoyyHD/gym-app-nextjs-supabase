@@ -83,8 +83,7 @@ export default function MembershipsListComponents() {
   const tableData: MembershipWithRelations[] = membershipsData?.data || [];
   const totalMemberships = membershipsData?.total_count || 0;
   const totalPages = Math.ceil(totalMemberships / limit);
-
-  // Initialize the table
+  
   const table = useReactTable<MembershipWithRelations>({
     data: tableData,
     columns,

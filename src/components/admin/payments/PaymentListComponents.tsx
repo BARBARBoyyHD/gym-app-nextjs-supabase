@@ -110,7 +110,6 @@ export default function PaymentListComponents() {
   const totalPayments = paymentsData?.total_count || 0;
   const totalPages = Math.ceil(totalPayments / limit);
 
-  // Initialize the table
   const table = useReactTable({
     data: tableData,
     columns,

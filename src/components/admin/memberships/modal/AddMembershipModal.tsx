@@ -83,8 +83,6 @@ export function AddMembershipModal({
   const {
     mutate: createMembership,
     isPending: isCreatePending,
-    isError: isCreateError,
-    error: createError,
     reset: resetCreate
   } = usePostData<MembershipInput>('/api/admin/memberships/post', 'memberships');
 

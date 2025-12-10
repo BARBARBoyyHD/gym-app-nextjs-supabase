@@ -126,7 +126,6 @@ export default function MembersListComponents() {
   const totalMembers = membersData?.total_count || 0;
   const totalPages = Math.ceil(totalMembers / limit);
 
-  // Initialize the table
   const table = useReactTable({
     data: tableData,
     columns,
@@ -145,7 +144,7 @@ export default function MembersListComponents() {
       rowSelection,
     },
     pageCount: totalPages,
-    manualPagination: true, // Since we're managing pagination manually
+    manualPagination: true, // Since we'managing pagination manually
     onPaginationChange: () => {}, // We'll handle pagination separately
   });
 
