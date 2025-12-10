@@ -152,7 +152,7 @@ export default function PaymentListComponents() {
 
   if (isError) {
     return (
-      <div className="p-6 bg-dark-secondary rounded-xl border border-brand/30">
+      <div className="m-6 p-6 bg-dark-secondary rounded-xl border border-brand/30">
         <div className="text-center p-8">
           <h2 className="text-xl font-bold text-white mb-2">
             Error Loading Payments
@@ -172,7 +172,7 @@ export default function PaymentListComponents() {
   }
 
   return (
-    <div className="p-6 bg-dark-secondary rounded-xl border border-brand/30">
+    <div className="m-6 p-6 bg-dark-secondary rounded-xl border border-brand/30">
       <div className="mb-8 flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold">Payments Management</h1>
