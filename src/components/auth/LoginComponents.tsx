@@ -41,7 +41,7 @@ export default function LoginComponents() {
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-background text-white px-4">
-      <div className="w-full max-w-md bg-dark-secondary p-8 rounded-2xl shadow-xl border border-brand/30">
+      <div className="w-full max-w-md bg-dark-secondary p-8 rounded-2xl shadow-xl border">
         <h1 className="text-3xl font-bold text-center mb-10">
           <Link href="/">
             Lift<span className="text-brand">Up</span>
