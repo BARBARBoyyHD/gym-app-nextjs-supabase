@@ -161,12 +161,12 @@ export default function AboutPage() {
                 <p className="text-lg text-white/70 mb-4 leading-relaxed">
                   Our mission is to help you succeed. Whether your goal is to be
                   extremely fit while balancing family life and work, or to
-                  climb the Mount Everest, FitB is the catalyst to get you
+                  climb the Mount Everest, LiftUp is the catalyst to get you
                   there.
                 </p>
                 <p className="text-lg text-white/70 mb-4 leading-relaxed">
                   We believe in hard work, community, and progress. Come try a
-                  free session and see why FitB is the place to help you reach
+                  free session and see why LiftUp is the place to help you reach
                   your fitness goals!
                 </p>
               </div>
