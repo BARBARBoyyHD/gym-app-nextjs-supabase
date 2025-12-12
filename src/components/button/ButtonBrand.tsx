@@ -8,13 +8,16 @@ type ButtonBrandProps = {
   title: string;
   link?: string;
   children?: React.ReactNode;
-} & (AnchorHTMLAttributes<HTMLAnchorElement> | ButtonHTMLAttributes<HTMLButtonElement>);
+} & (
+  | AnchorHTMLAttributes<HTMLAnchorElement>
+  | ButtonHTMLAttributes<HTMLButtonElement>
+);
 
 export default function ButtonBrand({
   className = " ",
   icon = true,
   title,
-  link,
+  link = " ",
   children,
   ...props
 }: ButtonBrandProps) {
@@ -23,7 +26,7 @@ export default function ButtonBrand({
       <Link
         href={link}
         className={`bg-brand bg-brand-hover text-black font-bold px-6 py-3 w-fit cursor-pointer mt-2 flex items-center duration-75 ${className} inline-block`}
-        {...props as AnchorHTMLAttributes<HTMLAnchorElement>}
+        {...(props as AnchorHTMLAttributes<HTMLAnchorElement>)}
       >
         {icon && <FaChevronRight className="inline-block" />}
         <span>{title}</span>
@@ -35,7 +38,7 @@ export default function ButtonBrand({
   return (
     <button
       className={`bg-brand bg-brand-hover text-black font-bold px-6 py-3 w-fit cursor-pointer mt-2 flex items-center duration-75 ${className}`}
-      {...props as ButtonHTMLAttributes<HTMLButtonElement>}
+      {...(props as ButtonHTMLAttributes<HTMLButtonElement>)}
     >
       {icon && <FaChevronRight className="inline-block" />}
       <span>{title}</span>

@@ -63,9 +63,7 @@ export default function Coaches() {
           </div>
         </div>
         <div className="text-center">
-          <a href="/coaches" className="inline-block text-center">
-            <ButtonBrand title="See more" />
-          </a>
+          <ButtonBrand title="See more" link="/coaches" />
         </div>
       </div>
     </section>

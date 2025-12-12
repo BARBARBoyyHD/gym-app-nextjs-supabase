@@ -101,9 +101,7 @@ export default function Classes() {
           })}
         </div>
         <div className="text-center">
-          <a href="/classes" className="inline-block text-center">
-            <ButtonBrand title="See more" />
-          </a>
+          <ButtonBrand title="See more" link="/classes" />
         </div>
       </div>
     </section>

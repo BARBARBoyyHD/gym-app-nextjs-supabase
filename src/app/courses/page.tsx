@@ -32,11 +32,11 @@ const CoursesPage = () => {
       try {
         setLoading(true);
         const response = await fetch("/api/courses/get?groupByCategory=true");
-        
+
         if (!response.ok) {
           throw new Error("Failed to fetch courses");
         }
-        
+
         const data = await response.json();
         if (data.success) {
           setGroupedCourses(data.data);
@@ -47,7 +47,9 @@ const CoursesPage = () => {
           throw new Error(data.message || "Failed to fetch courses");
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "An unknown error occurred");
+        setError(
+          err instanceof Error ? err.message : "An unknown error occurred"
+        );
       } finally {
         setLoading(false);
       }
@@ -57,9 +59,10 @@ const CoursesPage = () => {
   }, []);
 
   // Filter courses based on selected category
-  const filteredCourses = selectedCategory === "all" 
-    ? groupedCourses 
-    : { [selectedCategory]: groupedCourses[selectedCategory] || [] };
+  const filteredCourses =
+    selectedCategory === "all"
+      ? groupedCourses
+      : { [selectedCategory]: groupedCourses[selectedCategory] || [] };
 
   if (loading) {
     return (
@@ -67,7 +70,9 @@ const CoursesPage = () => {
         <Navbar />
         <main className="py-12">
           <div className="container mx-auto px-4 max-w-6xl">
-            <h1 className="text-3xl md:text-4xl font-bold text-center mb-12">Courses</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              Courses
+            </h1>
             <div className="flex justify-center">
               <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand"></div>
             </div>
@@ -84,9 +89,13 @@ const CoursesPage = () => {
         <Navbar />
         <main className="py-12">
           <div className="container mx-auto px-4 max-w-6xl">
-            <h1 className="text-3xl md:text-4xl font-bold text-center mb-12">Courses</h1>
+            <h1 className="text-3xl md:text-4xl font-bold text-center mb-12">
+              Courses
+            </h1>
             <div className="bg-[#1a1a1a] rounded-lg p-8 text-center">
-              <h2 className="text-xl font-bold text-red-500 mb-4">Error Loading Courses</h2>
+              <h2 className="text-xl font-bold text-red-500 mb-4">
+                Error Loading Courses
+              </h2>
               <p className="text-white/70 mb-6">{error}</p>
               <button
                 onClick={() => window.location.reload()}
@@ -107,8 +116,12 @@ const CoursesPage = () => {
       <Navbar />
       <main className="py-12">
         <div className="container mx-auto px-4 max-w-6xl">
-          <h1 className="text-3xl md:text-4xl font-bold text-center mb-4">Our Courses</h1>
-          <p className="text-center text-white/70 mb-12">Explore our collection of fitness and wellness courses</p>
+          <h1 className="text-3xl md:text-4xl font-bold text-center mb-4">
+            Our Courses
+          </h1>
+          <p className="text-center text-white/70 mb-12">
+            Explore our collection of fitness and wellness courses
+          </p>
 
           {/* Category Filter */}
           <div className="flex flex-wrap justify-center gap-2 mb-12">

@@ -11,7 +11,7 @@ export default function CallToActionBlock({
   title,
   description,
   link,
-  buttonTitle = "Check membership",
+  buttonTitle = "Join Now",
 }: CallToActionBlockProps) {
   return (
     <div className="max-w-6xl mx-auto px-4 my-24 text-center bg-brand py-16">
