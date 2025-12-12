@@ -1,9 +1,43 @@
+"use client";
+
+import { useState } from "react";
 import Link from "next/link";
 
-export default function CourseEmailCheckPage() {
+export default function CourseEmailCheck() {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<
+    "idle" | "valid" | "invalid" | "loading"
+  >("idle");
+  const [expiryDate, setExpiryDate] = useState("");
+
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    setStatus("loading");
+
+    try {
+      const res = await fetch("/api/verify-member", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const data = await res.json();
+
+      if (data.active) {
+        setExpiryDate(data.expires);
+        setStatus("valid");
+      } else {
+        setStatus("invalid");
+      }
+    } catch (err) {
+      console.error(err);
+      setStatus("invalid");
+    }
+  };
+
   return (
     <section className="py-20">
-      <div className="max-w-lg mx-auto bg-dark-secondary p-10 rounded-2xl shadow-lg border border-brand">
+      <div className="max-w-lg mx-auto bg-dark-secondary p-10 rounded-2xl shadow-lg border">
         <h2 className="text-3xl font-bold text-center mb-4">
           Verify <span className="text-brand">Membership</span>
         </h2>
@@ -12,7 +46,7 @@ export default function CourseEmailCheckPage() {
         </p>
 
         {/* FORM */}
-        <form className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div>
             <label className="block text-white/70 mb-2 font-semibold">
               Email Address
@@ -21,21 +55,27 @@ export default function CourseEmailCheckPage() {
               type="email"
               required
               placeholder="yourmail@example.com"
-              className="w-full p-4 bg-gray-900 border border-gray-700 rounded-xl text-white focus:outline-none focus:border-brand"
+              className="w-full bg-black/30 border border-white/20 focus:border-brand focus:ring-1 focus:ring-brand/30 outline-none px-4 py-3 rounded-lg"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
           <button
             type="submit"
-            className="w-full bg-brand text-white font-bold py-4 rounded-xl hover:bg-brand/90 transition"
-          ></button>
+            className="w-full bg-brand text-dark cursor-pointer font-bold py-4 rounded-xl bg-brand-hover transition"
+            disabled={status === "loading"}
+          >
+            {status === "loading" ? "Checking..." : "Check Membership"}
+          </button>
         </form>
 
+        {/* STATUS MESSAGE */}
         <div className="mt-8">
           {status === "valid" && (
             <div className="p-4 bg-green-700/30 border border-green-600 rounded-xl text-green-400 text-center">
               <p className="font-semibold">Your membership is active until:</p>
-              <p className="text-xl font-bold mt-1"> (Expire date)</p>
+              <p className="text-xl font-bold mt-1">{expiryDate}</p>
 
               <Link
                 href="/courses/all"

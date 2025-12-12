@@ -1,13 +1,19 @@
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ButtonBrand from "@/components/button/ButtonBrand";
-
+import CallToAction from "@/components/CallToAction";
 export default function PricingPage() {
   return (
     <>
       <Navbar />
       <main>
         <section className="max-w-6xl mx-auto px-4 mt-36 md:my-12">
+          <CallToAction
+            title="Check Your Membership"
+            description="Verify your membership status to access all course content, exclusive training programs, and member-only benefits."
+            buttonTitle="Check membership"
+            link="/check-membership"
+          />
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-center">
             Pricing <span className="text-brand">Plans</span>
           </h2>
@@ -107,7 +113,6 @@ export default function PricingPage() {
               </div>
             </div>
           </div>
-
           {/* Classes Package Title */}
           <div className="text-center mt-20">
             <h2 className="text-4xl uppercase font-bold">Classes Package</h2>
@@ -116,7 +121,6 @@ export default function PricingPage() {
               performance.
             </p>
           </div>
-
           {/* Classes Packages */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 space-y-6 mt-12 gap-8">
             {/* Bronze Class */}
