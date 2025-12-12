@@ -15,7 +15,10 @@ interface CourseCategorySectionProps {
   courses: Course[];
 }
 
-const CourseCategorySection = ({ category, courses }: CourseCategorySectionProps) => {
+const CourseCategorySection = ({
+  category,
+  courses,
+}: CourseCategorySectionProps) => {
   return (
     <section className="mb-16">
       <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center">
