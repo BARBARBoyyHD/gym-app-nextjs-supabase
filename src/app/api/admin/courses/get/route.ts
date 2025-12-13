@@ -16,7 +16,6 @@ export async function GET(req: NextRequest) {
     return rateLimitResult;
   }
 
-
   try {
     const supabase = await createClient();
     const { searchParams } = new URL(req.url); // Extract URL search parameters

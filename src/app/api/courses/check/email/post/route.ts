@@ -11,6 +11,24 @@ interface CourseAccessRequestBody {
   courseCategory?: string; // Optional: if checking access based on course category
 }
 
+// Define the interfaces for the Supabase response objects
+interface MembershipPlan {
+  id: number;
+  name: string;
+}
+
+interface Membership {
+  id: string;
+  member_id: string;
+  status: string;
+  plan_id: MembershipPlan;
+}
+
+interface Member {
+  id: string;
+  email: string;
+}
+
 // POST /api/courses/check/email/post
 export async function POST(request: NextRequest) {
   // Apply rate limiting for POST requests
@@ -41,7 +59,7 @@ export async function POST(request: NextRequest) {
       .eq("email", validatedData.email)
       .single();
 
-    if (findEmailError) {
+    if (findEmailError || !findEmails) {
       return errorResponse({
         success: false,
         status: 404,
@@ -50,13 +68,13 @@ export async function POST(request: NextRequest) {
     }
 
     // Check the user's membership
-    const { data: findMemberhips, error: findMembershipError } = await supabase
+    const { data: findMemberships, error: findMembershipError } = await supabase
       .from("memberships")
-      .select("id,member_id,status,plan_id:membership_plans(id,name)")
-      .eq("member_id", findEmails?.id)
+      .select("id,member_id,status,plan_id:membership_plans(id,name)") // Reference membership_plans table with specific fields
+      .eq("member_id", findEmails.id)
       .single();
 
-    if (findMembershipError) {
+    if (findMembershipError || !findMemberships) {
       return errorResponse({
         success: false,
         status: 404,
@@ -64,8 +82,16 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    // Type assertion to handle the foreign key relationship properly
+    const planIdData = Array.isArray(findMemberships.plan_id)
+      ? findMemberships.plan_id[0]
+      : findMemberships.plan_id as MembershipPlan;
+
+    // Ensure planIdData is properly typed as MembershipPlan
+    const membershipPlan: MembershipPlan = planIdData as MembershipPlan;
+
     // Check if the membership is active
-    if (findMemberhips?.status !== 'active') {
+    if (findMemberships.status !== 'active') {
       return errorResponse({
         success: false,
         status: 403,
@@ -74,7 +100,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Check if the plan name contains "Bronze" - Bronze plan members don't have access to specific courses
-    if (findMemberhips?.plan_id.name && findMemberhips.plan_id.name.toLowerCase().includes("bronze")) {
+    if (membershipPlan.name && membershipPlan.name.toLowerCase().includes("bronze")) {
       return errorResponse({
         success: false,
         status: 403,
@@ -89,16 +115,16 @@ export async function POST(request: NextRequest) {
       status: 200,
       message: "Email has access to the course",
       data: {
-        email: findEmails?.email,
-        id: findEmails?.id,
+        email: findEmails.email,
+        id: findEmails.id,
         activeMembership: {
-          id: findMemberhips?.id,
-          member_id: findMemberhips?.member_id,
-          status: findMemberhips?.status,
-          plan_id: findMemberhips?.plan_id
+          id: findMemberships.id,
+          member_id: findMemberships.member_id,
+          status: findMemberships.status,
+          plan_id: membershipPlan
         },
         // Return all memberships for potential future use
-        allMemberships: [findMemberhips]
+        allMemberships: [findMemberships]
       }
     });
   } catch (error) {
