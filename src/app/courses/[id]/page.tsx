@@ -29,7 +29,7 @@ const CourseDetailPage = () => {
     error
   } = useGetSingleData<Course>(
     courseId,
-    "/api/admin/courses/get",
+    "/api/courses/get",
     `courses`,
     { enabled: !!id }
   );
