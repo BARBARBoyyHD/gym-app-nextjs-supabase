@@ -51,7 +51,7 @@ export function AddPaymentModal({
 }: AddPaymentModalProps) {
   // Fetch members and membership plans for dropdown
   const { data: membersData, isLoading: membersLoading } = useGetData<
-    Members[]
+    Members
   >({
     endpoint: "/api/admin/members/get",
     queryKeyBase: "members",
@@ -65,7 +65,6 @@ export function AddPaymentModal({
   });
 
   // Fetch membership details if membershipId is provided
-
   const { data: membershipData, isLoading: membershipLoading } = useGetSingleData<Membership>(
     membershipId || '',
     '/api/admin/memberships/get',
@@ -73,13 +72,12 @@ export function AddPaymentModal({
     { enabled: !!membershipId }
   );
 
-
   // Define the form
   const form = useForm<z.infer<typeof createPaymentSchema>>({
     resolver: zodResolver(createPaymentSchema),
     defaultValues: {
       member_id: member_id || "",
-      membership_id: membershipId || "", // Use the membershipId prop directly
+      membership_id: membershipId || "",
       amount: 0,
       method: "cash",
     },
@@ -164,7 +162,7 @@ export function AddPaymentModal({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent className="bg-dark-secondary border border-white/20">
-                        {membersData?.data?.[0]?.map((member: Members) => (
+                        {membersData?.data.map((member: Members) => (
                           <SelectItem
                             key={member.id}
                             value={member.id}

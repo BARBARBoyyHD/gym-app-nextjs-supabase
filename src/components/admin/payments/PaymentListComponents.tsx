@@ -34,8 +34,6 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
-import { AddPaymentModal } from "./modal/AddPaymentModal";
-import { EditPaymentModal } from "./modal/EditPaymentModal";
 import { columns } from "./table/PaymentTableComponents";
 
 export default function PaymentListComponents() {
@@ -46,9 +44,6 @@ export default function PaymentListComponents() {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editingPaymentId, setEditingPaymentId] = useState<string | null>(null);
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
   // Create params object for the hook
   const queryParams: PaginationParams = {
@@ -56,35 +51,6 @@ export default function PaymentListComponents() {
     page,
     limit,
   };
-
-  // Listen for the custom event to open the edit modal
-  useEffect(() => {
-    const handleOpenEditModal = (e: CustomEvent<string>) => {
-      const paymentId = e.detail;
-      setEditingPaymentId(paymentId);
-      setIsEditModalOpen(true);
-    };
-
-    // Define custom properties on window with appropriate type assertion
-    (
-      window as Window &
-        typeof globalThis & {
-          handleOpenEditModal: (e: CustomEvent<string>) => void;
-        }
-    ).handleOpenEditModal = handleOpenEditModal;
-
-    window.addEventListener(
-      "openEditPaymentModal",
-      handleOpenEditModal as EventListener
-    );
-
-    return () => {
-      window.removeEventListener(
-        "openEditPaymentModal",
-        handleOpenEditModal as EventListener
-      );
-    };
-  }, []);
 
   // Fetch payments data from API using the useGetData hook
   const {
@@ -145,11 +111,6 @@ export default function PaymentListComponents() {
     refetch();
   };
 
-  // Handle edit success - refresh data
-  const handleEditSuccess = () => {
-    refetch(); // Refresh the payments list after successful edit
-  };
-
   if (isError) {
     return (
       <div className="m-6 p-6 bg-dark-secondary rounded-xl border border-brand/30">
@@ -178,13 +139,6 @@ export default function PaymentListComponents() {
           <h1 className="text-2xl font-bold">Payments Management</h1>
           <p className="text-white/70">View and manage all member payments</p>
         </div>
-        <Button
-          variant="default"
-          className="bg-brand hover:bg-brand/90 text-black"
-          onClick={() => setIsAddModalOpen(true)}
-        >
-          Add Payment
-        </Button>
       </div>
 
       {/* Search Bar */}
@@ -379,23 +333,6 @@ export default function PaymentListComponents() {
         Showing {totalPayments > 0 ? (page - 1) * limit + 1 : 0} -{" "}
         {Math.min(page * limit, totalPayments)} of {totalPayments} payments
       </div>
-
-      {/* Edit Payment Modal */}
-      {editingPaymentId && (
-        <EditPaymentModal
-          isOpen={isEditModalOpen}
-          onClose={() => setIsEditModalOpen(false)}
-          paymentId={editingPaymentId}
-          onEditSuccess={handleEditSuccess}
-        />
-      )}
-
-      {/* Add Payment Modal */}
-      <AddPaymentModal
-        isOpen={isAddModalOpen}
-        onClose={() => setIsAddModalOpen(false)}
-        onAddSuccess={handleEditSuccess} // Using same handler to refresh data
-      />
     </div>
   );
 }
