@@ -12,7 +12,7 @@ export default function CheckMembershipComponents() {
   >("idle");
   const [expiryDate, setExpiryDate] = useState("");
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setStatus("loading");
 

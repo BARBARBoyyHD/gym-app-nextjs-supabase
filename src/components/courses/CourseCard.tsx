@@ -1,8 +1,6 @@
-import { useState } from "react";
-import Image from "next/image";
-import Link from "next/link";
 import VideoEmbed from "@/components/courses/VideoEmbed";
 import { convertYouTubeUrl } from "@/utils/youtube";
+import Link from "next/link";
 
 interface Course {
   id: string;
@@ -18,8 +16,6 @@ interface CourseCardProps {
 }
 
 const CourseCard = ({ course }: CourseCardProps) => {
-  const [imageError, setImageError] = useState(false);
-
   return (
     <Link
       href={`/courses/${course.id}`}
@@ -27,7 +23,7 @@ const CourseCard = ({ course }: CourseCardProps) => {
     >
       <div className="bg-[#1a1a1a] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
         <div className="relative w-full h-48">
-          {course.video_embed_url && !imageError ? (
+          {course.video_embed_url ? (
             <div className="relative w-full h-full">
               <VideoEmbed
                 videoUrl={course.video_embed_url}
@@ -48,14 +44,6 @@ const CourseCard = ({ course }: CourseCardProps) => {
                   </div>
                 </div>
               )}
-            </div>
-          ) : course.video_embed_url ? (
-            <div className="w-full h-full">
-              <VideoEmbed
-                videoUrl={convertYouTubeUrl(course.video_embed_url)}
-                title={course.title}
-                height="100%"
-              />
             </div>
           ) : (
             <div className="bg-gray-700 w-full h-48 flex items-center justify-center">

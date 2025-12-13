@@ -1,7 +1,6 @@
 "use client";
 
 import { useAccess } from "@/contexts/AccessContext";
-import { useEffect } from "react";
 
 interface MembershipPlan {
   id: number;

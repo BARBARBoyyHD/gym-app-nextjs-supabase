@@ -148,17 +148,6 @@ export const columns: ColumnDef<PaymentWithDetails>[] = [
               Copy Payment ID
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={() =>
-                window.dispatchEvent(
-                  new CustomEvent("openEditPaymentModal", {
-                    detail: payment.id,
-                  })
-                )
-              }
-            >
-              Edit Payment
-            </DropdownMenuItem>
             <DropdownMenuItem>View Details</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
