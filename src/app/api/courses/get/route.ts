@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
       // Fetch all courses and group them by category
       let query = supabase
         .from("courses")
-        .select("id, title, description, category, created_at", {
+        .select("id, title, description, category, created_at, video_embed_url", {
           count: "exact",
           head: false
         });
@@ -88,7 +88,7 @@ export async function GET(req: NextRequest) {
       // Build query
       let query = supabase
         .from("courses")
-        .select("id, title, description, category, created_at", {
+        .select("id, title, description, category, created_at, video_embed_url", {
           count: "exact",
           head: false
         })
