@@ -1,26 +1,179 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+/* ========================================
+   Base Styles
+======================================== */
+@layer base {
+  /* ========================================
+   Root Variables
+======================================== */
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --font-poppins: var(--font-poppins);
+
+    /* Brand Colors */
+    --brand: #d6fb00;
+    --brand-hover: #c2ea00;
+    --brand-dark: #a8d400;
+    --dark: #0f0f0f;
+
+    /* Background */
+    --background-dark: #0f0f0f;
+    --background-dark-secondary: #1b1b1b;
+    --sidebar: hsl(0 0% 98%);
+    --sidebar-foreground: hsl(240 5.3% 26.1%);
+    --sidebar-primary: hsl(240 5.9% 10%);
+    --sidebar-primary-foreground: hsl(0 0% 98%);
+    --sidebar-accent: hsl(240 4.8% 95.9%);
+    --sidebar-accent-foreground: hsl(240 5.9% 10%);
+    --sidebar-border: hsl(220 13% 91%);
+    --sidebar-ring: hsl(217.2 91.2% 59.8%);
+    .dark {
+      --sidebar: hsl(240 5.9% 10%);
+      --sidebar-foreground: hsl(240 4.8% 95.9%);
+      --sidebar-primary: hsl(224.3 76.3% 48%);
+      --sidebar-primary-foreground: hsl(0 0% 100%);
+      --sidebar-accent: hsl(240 3.7% 15.9%);
+      --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+      --sidebar-border: hsl(240 3.7% 15.9%);
+      --sidebar-ring: hsl(217.2 91.2% 59.8%);
+    }
+  }
+  body {
+    @apply text-white;
+    background-color: var(--background-dark);
+    font-family: var(--font-poppins), sans-serif;
+  }
+  p,
+  li {
+    @apply tracking-wider;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* ========================================
+   Utilities (Semantic Custom Utilities)
+======================================== */
+@layer utilities {
+  /* Brand Colors */
+  .text-brand {
+    color: var(--brand);
+  }
+  .text-brand-hover:hover {
+    color: var(--brand-hover);
+  }
+  .text-dark {
+    color: var(--dark);
+  }
+  .text-dark-hover:hover {
+    color: var(--dark);
+  }
+  .bg-brand {
+    background-color: var(--brand);
+  }
+  .bg-brand-hover:hover {
+    background-color: var(--brand-hover);
+  }
+  .bg-brand-dark:active {
+    background-color: var(--brand-dark);
+  }
+
+  .border-brand {
+    border-color: var(--brand);
+  }
+  .bg-dark {
+    background-color: var(--background-dark);
+  }
+  .bg-dark-navbar {
+    background-color: var(--background-dark);
+  }
+  .bg-dark-hover:hover {
+    background-color: white;
+  }
+  .bg-dark-secondary {
+    background-color: var(--background-dark-secondary);
+  }
+  .bg-dark-secondary.border-brand {
+    border-width: 1px;
+    border-color: var(--dark);
+    transition: all 0.15s ease-in-out;
+  }
+  .bg-dark-secondary.border-brand:hover {
+    border-width: 1px;
+    border-color: var(--brand);
+  }
+
+  /* Navbar Hover Underline Animation */
+  .nav-link {
+    @apply relative text-white/75 transition-colors font-medium;
+  }
+  .nav-link:hover {
+    @apply text-white;
+  }
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0%;
+    height: 2px;
+    background-color: var(--brand);
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover::after {
+    width: 100%;
+  }
+  .nav-link.active {
+    @apply text-white;
+  }
+  .nav-link.active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 100%;
+    height: 2px;
+    background-color: var(--brand);
+    transition: width 0.3s ease;
+  }
+
+  /* Marker (List Bullet) Brand Color */
+  .marker-brand::marker {
+    color: var(--brand);
+  }
+  /* Swiper Navigation (Next & Prev) – Brand Color */
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: var(--brand) !important;
+    font-weight: bold;
+  }
+
+  /* Hover effect optional */
+  .swiper-button-next:hover,
+  .swiper-button-prev:hover {
+    color: var(--brand-hover) !important;
+  }
+}
+
+.dark {
+  --sidebar: hsl(240 5.9% 10%);
+  --sidebar-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-primary: hsl(224.3 76.3% 48%);
+  --sidebar-primary-foreground: hsl(0 0% 100%);
+  --sidebar-accent: hsl(240 3.7% 15.9%);
+  --sidebar-accent-foreground: hsl(240 4.8% 95.9%);
+  --sidebar-border: hsl(240 3.7% 15.9%);
+  --sidebar-ring: hsl(217.2 91.2% 59.8%);
+}
+
+@theme inline {
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
 }

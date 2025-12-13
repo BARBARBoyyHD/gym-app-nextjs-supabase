@@ -1,0 +1,122 @@
+"use client";
+
+import { useParams } from "next/navigation";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import VideoEmbed from "@/components/courses/VideoEmbed";
+import { useGetSingleData } from "@/hooks/use-Fetch";
+
+interface Course {
+  id: string;
+  title: string;
+  description: string;
+  category: string;
+  created_at: string;
+  video_embed_url?: string;
+}
+
+
+const CourseDetailPage = () => {
+  const { id } = useParams();
+
+  // Ensure id is a string before using it
+  const courseId = typeof id === 'string' ? id : '';
+
+  const {
+    data: course,
+    isLoading,
+    isError,
+    error
+  } = useGetSingleData<Course>(
+    courseId,
+    "/api/admin/courses/get",
+    `courses`,
+    { enabled: !!id }
+  );
+
+  
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background-dark text-white">
+        <Navbar />
+        <main className="py-12">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <div className="flex justify-center">
+              <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand"></div>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (isError || !course) {
+    return (
+      <div className="min-h-screen bg-background-dark text-white">
+        <Navbar />
+        <main className="py-12">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <div className="bg-gray-800 rounded-lg p-8 text-center">
+              <h2 className="text-xl font-bold text-red-500 mb-4">Error Loading Course</h2>
+              <p className="text-white/70 mb-6">{error?.message || "Course not found"}</p>
+              <button
+                onClick={() => window.location.href = "/courses"}
+                className="bg-brand hover:bg-brand-hover text-black font-bold py-2 px-6 rounded transition duration-300"
+              >
+                Back to Courses
+              </button>
+            </div>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-background-dark text-white">
+      <Navbar />
+      <main className="py-12">
+        <div className="container mx-auto px-4 max-w-4xl">
+          <div className="bg-[#1a1a1a] rounded-lg overflow-hidden shadow-lg">
+            {/* Video Embed Section */}
+            <div className="mb-8">
+              {course.video_embed_url ? (
+                <VideoEmbed
+                  videoUrl={course.video_embed_url}
+                  title={course.title}
+                  height="500px"
+                />
+              ) : (
+                <div className="bg-gray-800 aspect-video flex items-center justify-center">
+                  <span className="text-gray-400">No video available</span>
+                </div>
+              )}
+            </div>
+
+            {/* Course Information */}
+            <div className="p-8">
+              <div className="flex flex-wrap items-center justify-between mb-6">
+                <h1 className="text-3xl font-bold text-white">{course.title}</h1>
+                <span className="bg-brand text-black text-sm font-bold px-3 py-1 rounded">
+                  {course.category}
+                </span>
+              </div>
+
+              <p className="text-white/70 text-lg mb-6">{course.description}</p>
+
+              <div className="flex items-center text-sm text-gray-400">
+                <span>Added: {new Date(course.created_at).toLocaleDateString()}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
+export default CourseDetailPage;

@@ -13,7 +13,6 @@ Proyek ini dirancang untuk menunjukkan kemampuan **full-stack engineering**, **c
 Aplikasi ini bertujuan untuk membantu pemilik gym mengelola:
 
 * Membership pelanggan
-* Check-in gym menggunakan QR Code
 * Workout program
 * Progress tracking (berat badan, BMI, dan progress latihan)
 * Dashboard analitik untuk admin
@@ -29,7 +28,7 @@ Dibangun dengan fokus pada:
 
 # 🎯 **Key Features**
 
-### 👤 **User & Authentication**
+### 👤 **Admin User & Authentication**
 
 * Login & Register via Supabase Auth
 * Role-based access: **admin** & **member**
@@ -41,12 +40,6 @@ Dibangun dengan fokus pada:
 * Riwayat transaksi
 * Membership status (active / expired)
 
-### 📌 **QR Check-in System**
-
-* Generate QR Code (dynamic & temporary)
-* Member scan pada pintu masuk
-* Admin melihat log check-in harian
-
 ### 🏋️ **Workout Program**
 
 * Daftar program latihan (beginner → advanced)
@@ -54,10 +47,10 @@ Dibangun dengan fokus pada:
 
 ### 📊 **Admin Dashboard**
 
-* Daily check-in stats
 * Income analytics
 * Active vs expired members
 * Membership growth chart
+* Member workout progress
 
 ---
 
@@ -81,7 +74,6 @@ Dibangun dengan fokus pada:
 ### **Tools**
 
 * Chart.js / Recharts
-* QR Code Generator (qrcode)
 * TypeScript
 * Vercel (deployment)
 
@@ -92,6 +84,13 @@ Dibangun dengan fokus pada:
 ```
 src/
  ├─ app/
+ │   ├─ admin/
+ │   │  ├─ dashboard/
+ │   │  ├─ members/
+ │   │  ├─ memberships/
+ │   │  ├─ membership-plan/
+ │   │  ├─ payments/
+ │   │  └─ courses/
  │   ├─ dashboard/
  │   ├─ membership/
  │   ├─ checkin/
@@ -104,11 +103,60 @@ src/
  └─ utils/
 ```
 
+# 🌐 **API Endpoints**
+
+### Authentication
+- `POST /api/auth/sign-up` - Register a new admin user
+- `POST /api/auth/sign-in` - Authenticate an existing admin user
+- `POST /api/auth/sign-out` - Sign out the authenticated admin user
+
+### Members
+- `GET /api/admin/members/get` - Retrieve a list of all members
+- `POST /api/admin/members/post` - Create a new member
+- `GET /api/admin/members/get/[id]` - Get details for a specific member
+- `PUT /api/admin/members/put/[id]` - Update a specific member
+- `DELETE /api/admin/members/delete/[id]` - Delete a specific member
+
+### Memberships
+- `GET /api/admin/memberships/get` - Retrieve a list of all memberships
+- `POST /api/admin/memberships/post` - Create a new membership
+- `GET /api/admin/memberships/get/[id]` - Get details for a specific membership
+- `PUT /api/admin/memberships/put/[id]` - Update a specific membership
+- `DELETE /api/admin/memberships/delete/[id]` - Delete a specific membership
+
+### Membership Plans
+- `GET /api/admin/membership-plan/get` - Retrieve a list of all membership plans
+- `POST /api/admin/membership-plan/post` - Create a new membership plan
+- `GET /api/admin/membership-plan/get/[id]` - Get details for a specific membership plan
+- `PUT /api/admin/membership-plan/put/[id]` - Update a specific membership plan
+- `DELETE /api/admin/membership-plan/delete/[id]` - Delete a specific membership plan
+
+### Payments
+- `GET /api/admin/payments/get` - Retrieve a list of all payments
+- `POST /api/admin/payments/post` - Create a new payment
+- `GET /api/admin/payments/get/[id]` - Get details for a specific payment
+- `PUT /api/admin/payments/put/[id]` - Update a specific payment
+- `DELETE /api/admin/payments/delete/[id]` - Delete a specific payment
+
+### Courses
+- `GET /api/admin/courses/get` - Retrieve a list of all courses
+- `POST /api/admin/courses/post` - Create a new course
+- `GET /api/admin/courses/get/[id]` - Get details for a specific course
+- `PUT /api/admin/courses/put/[id]` - Update a specific course
+- `DELETE /api/admin/courses/delete/[id]` - Delete a specific course
+
+### Dashboard Analytics
+- `GET /api/admin/dashboard/analytics` - Retrieve dashboard analytics with date range filtering
+  - Query parameters:
+    - `dateFilterType`: "day", "week", "month", "custom", or null for all-time metrics (default: null for all-time)
+    - `startDate`: ISO date string (required for custom date range)
+    - `endDate`: ISO date string (required for custom date range)
+
 ---
 
 # 🧩 **Database Schema (ERD)**
 
-### **users**
+### **members**
 
 ```sql
 id (uuid)
@@ -133,7 +181,7 @@ created_at
 
 ```sql
 id (uuid)
-user_id (fk)
+member_id (fk)
 plan_id (fk)
 start_date
 end_date
@@ -146,7 +194,7 @@ created_at
 
 ```sql
 id (uuid)
-user_id
+member_id
 check_in_time
 device
 check_in_method
@@ -166,18 +214,18 @@ created_at
 
 ```sql
 id
-user_id
+member_id
 program_id
 date
 progress_note
 completed
 ```
 
-### **user_metrics**
+### **member_metrics**
 
 ```sql
 id
-user_id
+member_id
 weight
 height
 bmi
@@ -197,13 +245,8 @@ Proyek ini menggunakan:
 * Policies di Supabase dijaga ketat untuk tabel:
 
   * `memberships`
-  * `check_in_logs`
-  * `user_metrics`
+  * `member_metrics`
 
-### ✔ Edge Function for QR Verification
-
-* QR hanya valid beberapa menit
-* Mengurangi risiko sharing QR antar pengguna
 
 ---
 
@@ -282,10 +325,8 @@ Vercel + Next.js + Supabase otomatis siap production.
 
 ### Phase 2 (Gym Operations)
 
-* QR Check-in
-* Check-in analytics
 
-### Phase 3 (User Features)
+### Phase 3 (Member Features)
 
 * Workout program
 * Progress tracking
@@ -303,6 +344,48 @@ Tambahkan nanti setelah UI selesai.
 
 Proyek ini dibuat untuk demonstrasi skill.
 Terbuka untuk kontribusi, PR, dan masukan.
+
+---
+
+# 🎨 **Color Guidelines**
+
+## Primary Colors
+
+- **Brand Color**: `#d6fb00` - Used for primary buttons, highlights, and brand elements
+- **Brand Hover**: `#c2ea00` - Hover state for brand-colored elements
+- **Brand Dark**: `#a8d400` - Darker shade for active states and depth
+
+## Background Colors
+
+- **Dark Background**: `#0f0f0f` - Primary page background (abu tua/dark gray)
+- **Secondary Background**: To be defined based on UI needs
+
+## Text Colors
+
+- **Primary Text**: `#ffffff` - Main content text on dark backgrounds
+- **Secondary Text**: `rgba(255, 255, 255, 0.75)` - Secondary text like navigation links
+- **Hover Text**: `#ffffff` - Text color on hover states
+
+## Accent Colors
+
+- **Social Hover**: `#22c55e` (green-500) - Used for social media links on hover
+- **Border Color**: `#d6fb00` - Brand-colored borders for important elements
+
+## Usage Guidelines
+
+### Buttons & Interactive Elements
+- Primary buttons: `--brand` background color
+- Button hover: `--brand-hover` background color
+- Button active: `--brand-dark` background color
+
+### Navigation
+- Unselected navigation links: Secondary text color (`rgba(255, 255, 255, 0.75)`)
+- Selected/hovered navigation links: White text with brand-colored underline effect
+- Navigation underline: `#d6fb00` color with transition effect
+
+### General Styling
+- All transitions use 0.2s ease for background-color and color properties
+- Brand color (`#d6fb00`) is used consistently for highlighting important elements
 
 ---
 

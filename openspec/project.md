@@ -3,11 +3,11 @@
 ---
 
 ## Purpose
-Gym Membership Management App is a modern full-stack application for managing gym memberships, QR check-in systems, workout programs, and user progress tracking. The platform allows gym administrators to manage members, create membership packages, monitor check-ins, and track user progress. Members can purchase memberships, check in using QR codes, and track their fitness progress.
+Gym Membership Management App is a modern full-stack application for managing gym memberships, workout programs, and member progress tracking. The platform allows gym administrators to manage members, create membership packages, and track member progress. Members can purchase memberships and track their fitness progress.
 
 **Engineering Goals:**
 - Build a production-ready full-stack application with Next.js 16 and Supabase
-- Implement secure authentication and role-based access control
+- Implement secure authentication
 - Design scalable database architecture with RLS (Row Level Security)
 - Create clean, modern UI with responsive design
 
@@ -33,15 +33,14 @@ Gym Membership Management App is a modern full-stack application for managing gy
 
 **Backend / Data**
 - Supabase (PostgreSQL database)
-- Supabase Auth (authentication & user management)
+- Supabase Auth (authentication & admin user management)
 - Supabase RLS (Row Level Security)
 - Supabase Storage (optional: for images/documents)
-- Supabase Edge Functions (QR code validation)
+- Supabase Edge Functions (for custom business logic)
 
 **UI Libraries & Tools**
 - Geist Font (Google Fonts)
 - Chart.js / Recharts (analytics dashboards)
-- QR Code Generator (for check-in system)
 
 **Development & Build Tools**
 - ESLint (Next.js recommended config + TypeScript)
@@ -81,7 +80,6 @@ src/
  │   ├─ api/            # API routes
  │   ├─ dashboard/      # Admin dashboard pages
  │   ├─ membership/     # Membership-related pages
- │   ├─ checkin/        # QR check-in pages
  │   ├─ layout.tsx      # Root layout
  │   └─ page.tsx        # Homepage
  ├─ components/         # Reusable React components
@@ -106,6 +104,7 @@ src/
 ✔ **Component Composition**: Build reusable UI components with clear interfaces
 
 **High-level architecture:**
+```
 
 ┌─ Frontend ──────────────────┐    ┌─ Backend ──────────────────┐
 │                              │    │                             │
@@ -120,7 +119,109 @@ src/
          ▼                                      ▼
 ┌─ Deployment ──────────────────┐    ┌─ Analytics ───────────────┐
 │                              │    │                             │
-│  Vercel (Frontend)           │    │  Check-in analytics        │
+│  Vercel (Frontend)           │    │  Membership analytics      │
 │  Supabase Hosting (Backend)  │    │  Membership analytics      │
 │                              │    │  Revenue & growth metrics  │
 └──────────────────────────────┘    └─────────────────────────────┘
+```
+## Endpoints
+
+### Authentication
+
+* **POST /auth/sign-up**
+    * Register a new admin user account.
+* **POST /auth/sign-in**
+    * Authenticate an existing admin user.
+* **POST /auth/sign-out**
+    * Sign out the authenticated admin user. **Requires JWT**.
+
+### Members
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/members/list` | Retrieve a list of all members. **Admin access required**. |
+| POST | `/api/members/create` | Create a new member. **Admin access required**. |
+| GET | `/api/members/get` | Get details for a specific member by ID. **Requires JWT**. |
+| PUT | `/api/members/update` | Update a specific member. **Requires JWT**. |
+| DELETE | `/api/members/delete` | Delete a specific member. **Requires JWT**. |
+
+### Memberships
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/admin/memberships/get` | Retrieve a list of all memberships. **Admin access required**. **Requires JWT**. |
+| POST | `/api/admin/memberships/post` | Create a new membership for a member. **Admin access required**. **Requires JWT**. |
+| GET | `/api/admin/memberships/get/[id]` | Get details for a specific membership by ID. **Admin access required**. **Requires JWT**. |
+| PUT | `/api/admin/memberships/put/[id]` | Update a specific membership by ID. **Admin access required**. **Requires JWT**. |
+| DELETE | `/api/admin/memberships/delete/[id]` | Delete a specific membership by ID. **Admin access required**. **Requires JWT**. |
+
+### Membership Plans
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/membership-plans/list` | Retrieve a list of all membership plans. |
+| POST | `/api/membership-plans/create` | Create a new membership plan. **Admin access required**. **Requires JWT**. |
+| GET | `/api/membership-plans/get` | Get details for a specific membership plan by ID. |
+| PUT | `/api/membership-plans/update` | Update a specific membership plan by ID. **Admin access required**. **Requires JWT**. |
+| DELETE | `/api/membership-plans/delete` | Delete a specific membership plan by ID. **Admin access required**. **Requires JWT**. |
+
+
+### Member Metrics
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/member-metrics/list` | Retrieve a list of member metrics. **Requires JWT**. |
+| POST | `/api/member-metrics/create` | Record new member metrics. **Requires JWT**. |
+| GET | `/api/member-metrics/get` | Get details for a specific member metric by ID. **Requires JWT**. |
+
+### Workout Programs
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/workout-programs/list` | Retrieve a list of all workout programs. |
+| POST | `/api/workout-programs/create` | Create a new workout program. **Admin access required**. **Requires JWT**. |
+| GET | `/api/workout-programs/get` | Get details for a specific workout program by ID. |
+
+### Workout Progress
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/workout-progress/list` | Retrieve a list of workout progress records. **Requires JWT**. |
+| POST | `/api/workout-progress/create` | Record new workout progress. **Requires JWT**. |
+
+### Payments
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/api/admin/payments/get` | Retrieve a list of all payments. **Admin access required**. **Requires JWT**. |
+| POST | `/api/admin/payments/post` | Create a new payment. **Admin access required**. **Requires JWT**. |
+| GET | `/api/admin/payments/get/[id]` | Get details for a specific payment by ID. **Admin access required**. **Requires JWT**. |
+| PUT | `/api/admin/payments/put/[id]` | Update a specific payment by ID. **Admin access required**. **Requires JWT**. |
+| DELETE | `/api/admin/payments/delete/[id]` | Delete a specific payment by ID. **Admin access required**. **Requires JWT**. |
+
+---
+
+## Status Codes
+
+| Status Code | Description | Purpose |
+| :--- | :--- | :--- |
+| **200** | Success | For GET, PUT, PATCH requests. |
+| **201** | Success (Created) | For POST requests (resource created). |
+| **400** | Bad Request | Invalid input provided. |
+| **401** | Unauthorized | Authentication (JWT) is required. |
+| **403** | Forbidden | Insufficient permissions (e.g., non-admin attempting admin action). |
+| **404** | Not Found | Resource doesn't exist. |
+| **500** | Internal Server Error | Server-side error. |
+
+---
+
+## Error Responses
+
+All error responses follow the same structure:
+
+```json
+{
+  "success": false,
+  "error": "Error message explaining what went wrong"
+}
+```
