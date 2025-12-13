@@ -80,17 +80,20 @@ const CourseDetailPage = () => {
       <Navbar />
       <main className="py-12">
         <div className="container mx-auto px-4 max-w-4xl">
-          <div className="bg-[#1a1a1a] rounded-lg overflow-hidden shadow-lg">
+          <div className="bg-[#1a1a1a] rounded-lg overflow-hidden shadow-lg relative">
             {/* Video Embed Section */}
-            <div className="mb-8">
+            <div className="mb-8 relative w-full" style={{ paddingTop: "56.25%" /* 16:9 Aspect Ratio */ }}>
               {course.video_embed_url ? (
-                <VideoEmbed
-                  videoUrl={course.video_embed_url}
-                  title={course.title}
-                  height="500px"
-                />
+                <div className="absolute inset-0">
+                  <VideoEmbed
+                    videoUrl={course.video_embed_url}
+                    title={course.title}
+                    width="100%"
+                    height="100%"
+                  />
+                </div>
               ) : (
-                <div className="bg-gray-800 aspect-video flex items-center justify-center">
+                <div className="absolute inset-0 bg-gray-800 flex items-center justify-center">
                   <span className="text-gray-400">No video available</span>
                 </div>
               )}
