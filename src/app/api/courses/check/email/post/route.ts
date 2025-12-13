@@ -77,18 +77,18 @@ export async function POST(request: NextRequest) {
       id: string;
       member_id: string;
       status: 'active' | 'expired' | 'cancelled' | 'pending';
-      plan_id: {
+      plan_id: Array<{
         id: number;
         name: string;
-      } | null;
+      }> | null;
     };
 
     const activeMembership = findMembershipsArray.find((membership: Membership) => membership.status === 'active') || findMembershipsArray[0];
     const findMemberships = activeMembership;
 
     // Check if plan name contains "Bronze" (case-insensitive)
-    // Note: From the query, plan_id should be an object with id and name due to RLS
-    if (!findMemberships.plan_id || !findMemberships.plan_id.name) {
+    // Note: From the query, plan_id is an array of objects with id and name due to RLS
+    if (!findMemberships.plan_id || findMemberships.plan_id.length === 0 || !findMemberships.plan_id[0]?.name) {
       return errorResponse({
         success: false,
         status: 404,
@@ -96,7 +96,7 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const planName = findMemberships.plan_id.name;
+    const planName = findMemberships.plan_id[0].name;
     const lowerCasePlanName = planName.toLowerCase();
     const hasBronzePlan = lowerCasePlanName.includes("bronze");
 
