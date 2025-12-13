@@ -8,4 +8,9 @@ export interface Course extends BaseEntity {
   video_embed_url: string;
 }
 
-export type CourseInput = BaseInput<Course>;
+export type CourseInput = Omit<BaseInput<Course>, 'created_at'> & {
+  title: string;
+  description: string;
+  category: string;
+  video_embed_url: string;
+};

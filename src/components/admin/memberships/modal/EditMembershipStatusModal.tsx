@@ -93,7 +93,7 @@ export function EditMembershipStatusModal({
     try {
       // Prepare the data to match API expectations
       const updatesPayload: Partial<Membership> = {};
-      if (formData.status !== undefined) updatesPayload.status = formData.status;
+      if (formData.status !== "") updatesPayload.status = formData.status as "active" | "expired" | "cancelled" | "pending";
 
       // Call the update mutation with the membership ID and updates
       updateMembership({

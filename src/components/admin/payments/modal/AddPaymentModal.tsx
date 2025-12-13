@@ -26,6 +26,7 @@ import {
 import { useGetData, useGetSingleData, usePostData } from "@/hooks/use-Fetch";
 import { createPaymentSchema } from "@/lib/validation/paymentValidate";
 import { Members } from "@/types/member";
+import { Membership } from "@/types/membership";
 import { MembershipPlan } from "@/types/membership_plan";
 import { PaymentInput } from "@/types/payment";
 import { zodResolver } from "@hookform/resolvers/zod";
