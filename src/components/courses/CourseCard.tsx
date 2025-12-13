@@ -22,13 +22,14 @@ const CourseCard = ({ course }: CourseCardProps) => {
       className="block transform transition-transform duration-300 hover:scale-[1.02]"
     >
       <div className="bg-[#1a1a1a] rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300">
-        <div className="relative w-full h-48">
+        <div className="relative w-full" style={{ paddingTop: "56.25%" /* 16:9 Aspect Ratio */ }}>
           {course.video_embed_url ? (
-            <div className="relative w-full h-full">
+            <div className="absolute inset-0">
               <VideoEmbed
                 videoUrl={course.video_embed_url}
                 title={course.title}
-                height="500px"
+                width="100%"
+                height="100%"
               />
               {/* Play button overlay if there's a video to play */}
               {course.video_embed_url && (
@@ -46,8 +47,8 @@ const CourseCard = ({ course }: CourseCardProps) => {
               )}
             </div>
           ) : (
-            <div className="bg-gray-700 w-full h-48 flex items-center justify-center">
-              <span className="text-gray-400">No Image or Video</span>
+            <div className="absolute inset-0 bg-gray-700 flex items-center justify-center">
+              <span className="text-gray-400">No Video Available</span>
             </div>
           )}
         </div>

@@ -40,11 +40,6 @@ export function AppSidebar() {
       icon: FaUserFriends,
     },
     {
-      title: "Create Member",
-      url: "/admin/members/create",
-      icon: FaUserCircle,
-    },
-    {
       title: "Membership Plans",
       url: "/admin/membership-plans",
       icon: FaCreditCard,

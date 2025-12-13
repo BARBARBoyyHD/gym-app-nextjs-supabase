@@ -1,4 +1,3 @@
-import React from "react";
 import { convertYouTubeUrl } from "@/utils/youtube";
 
 interface VideoEmbedProps {
