@@ -8,8 +8,8 @@ import { createClient } from "@/lib/supabase/server";
 export async function POST(request: NextRequest) {
   // Apply rate limiting for POST requests
   const rateLimitResult = await checkRateLimit(request, {
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // Limit each IP to 100 requests per window
+    windowMs: 1 * 60 * 1000, // 15 minutes
+    max: 1000, // Limit each IP to 100 requests per window
     message: "Too many requests to check course access, please try again later.",
   });
 
@@ -25,22 +25,22 @@ export async function POST(request: NextRequest) {
       email,
     };
 
-    const {data: findEmail, error: findEmailError} = await supabase
+    const {data: findEmails, error: findEmailError} = await supabase
     .from("members")
     .select("id,email")
     .eq("email", validatedData.email)
-    .single();
+    .limit(1); // Use limit(1) instead of single() to avoid coercion error
 
     if (findEmailError) {
       return errorResponse({
         success: false,
         status: 500,
-        message: "Error checking email access",
+        message: "Error checking membership access",
         error: findEmailError.message,
       });
     }
 
-    if (!findEmail) {
+    if (!findEmails || findEmails.length === 0) {
       return errorResponse({
         success: false,
         status: 404,
@@ -48,22 +48,23 @@ export async function POST(request: NextRequest) {
       });
     }
 
-    const {data: findMemberships, error: findMembershipsError} = await supabase
+    const findEmail = findEmails[0];
+
+    const {data: findMembershipsArray, error: findMembershipsError} = await supabase
     .from("memberships")
     .select("id,member_id,status,plan_id:membership_plans(id, name)")
-    .eq("member_id", findEmail.id)
-    .single();
+    .eq("member_id", findEmail.id);
 
     if (findMembershipsError) {
       return errorResponse({
         success: false,
         status: 500,
-        message: "Error checking membership",
+        message: "Error checking membership access",
         error: findMembershipsError.message,
       });
     }
 
-    if (!findMemberships) {
+    if (!findMembershipsArray || findMembershipsArray.length === 0) {
       return errorResponse({
         success: false,
         status: 404,
@@ -71,9 +72,33 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    // Find the active membership, or just use the first one if no active is found
+    type Membership = {
+      id: string;
+      member_id: string;
+      status: 'active' | 'expired' | 'cancelled' | 'pending';
+      plan_id: {
+        id: number;
+        name: string;
+      } | null;
+    };
+
+    const activeMembership = findMembershipsArray.find((membership: Membership) => membership.status === 'active') || findMembershipsArray[0];
+    const findMemberships = activeMembership;
+
     // Check if plan name contains "Bronze" (case-insensitive)
-    const planName = findMemberships.plan_id.name.toLowerCase();
-    const hasBronzePlan = planName.includes("bronze");
+    // Note: From the query, plan_id should be an object with id and name due to RLS
+    if (!findMemberships.plan_id || !findMemberships.plan_id.name) {
+      return errorResponse({
+        success: false,
+        status: 404,
+        message: "Membership plan not found or invalid",
+      });
+    }
+
+    const planName = findMemberships.plan_id.name;
+    const lowerCasePlanName = planName.toLowerCase();
+    const hasBronzePlan = lowerCasePlanName.includes("bronze");
 
     if (hasBronzePlan) {
       return errorResponse({
@@ -90,20 +115,21 @@ export async function POST(request: NextRequest) {
       data: {
         id: findEmail.id,
         email: findEmail.email,
-        memberships: {
+        activeMembership: {
           id: findMemberships.id,
           member_id: findMemberships.member_id,
           status: findMemberships.status,
           plan_id: findMemberships.plan_id
-        }
+        },
+        allMemberships: findMembershipsArray
       },
     });
   } catch (error) {
-    console.error("Error checking course access:", error);
+    console.error("Error checking membership access:", error);
     return errorResponse({
       success: false,
       status: 500,
-      message: "Error checking course access",
+      message: "Error checking membership access",
       error: error instanceof Error ? error.message : "Unknown error",
     });
   }

@@ -1,9 +1,13 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CourseCategorySection from "@/components/courses/CourseCategorySection";
+import CourseAccessForm from "@/components/courses/CourseAccessForm";
+import CourseAccessDenied from "@/components/courses/CourseAccessDenied";
+import { AccessProvider, useAccess } from "@/contexts/AccessContext";
+import { useCourseAccessCheck } from "@/hooks/useCourseAccessCheck";
 
 interface Course {
   id: string;
@@ -19,50 +23,100 @@ interface GroupedCourses {
   [category: string]: Course[];
 }
 
-const CoursesPage = () => {
+// Wrapper component to provide context
+const CoursesPageContent = () => {
+  const { checkAccess, resetAccess } = useCourseAccessCheck();
+  const { state } = useAccess();
   const [groupedCourses, setGroupedCourses] = useState<GroupedCourses>({});
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [categories, setCategories] = useState<string[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
 
-  // Fetch courses data from the API
+  // Fetch courses data from the API once access is granted
   useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch("/api/courses/get?groupByCategory=true");
+    if (state.status === "granted") {
+      const fetchCourses = async () => {
+        try {
+          setLoading(true);
+          const response = await fetch("/api/courses/get?groupByCategory=true");
 
-        if (!response.ok) {
-          throw new Error("Failed to fetch courses");
+          if (!response.ok) {
+            throw new Error("Failed to fetch courses");
+          }
+
+          const data = await response.json();
+          if (data.success) {
+            setGroupedCourses(data.data);
+            // Extract categories from the grouped data
+            const allCategories = Object.keys(data.data);
+            setCategories(allCategories);
+          } else {
+            throw new Error(data.message || "Failed to fetch courses");
+          }
+        } catch (err) {
+          console.error(err);
+        } finally {
+          setLoading(false);
         }
+      };
 
-        const data = await response.json();
-        if (data.success) {
-          setGroupedCourses(data.data);
-          // Extract categories from the grouped data
-          const allCategories = Object.keys(data.data);
-          setCategories(allCategories);
-        } else {
-          throw new Error(data.message || "Failed to fetch courses");
-        }
-      } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "An unknown error occurred"
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchCourses();
-  }, []);
+      fetchCourses();
+    }
+  }, [state.status]);
 
   // Filter courses based on selected category
   const filteredCourses =
     selectedCategory === "all"
       ? groupedCourses
       : { [selectedCategory]: groupedCourses[selectedCategory] || [] };
+
+  // Handle back to access check from error state
+  const handleBackToAccessCheck = () => {
+    resetAccess();
+  };
+
+  if (state.status === "unverified") {
+    return (
+      <div className="min-h-screen bg-background-dark text-white">
+        <Navbar />
+        <main className="py-12">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <h1 className="text-3xl md:text-4xl font-bold text-center mb-4">
+              Access to Courses
+            </h1>
+            <p className="text-center text-white/70 mb-12">
+              Please enter your email to check if you have access to our courses
+            </p>
+
+            <CourseAccessForm
+              onCheckAccess={checkAccess}
+              loading={state.loading}
+              error={state.error}
+            />
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (state.status === "denied") {
+    return (
+      <div className="min-h-screen bg-background-dark text-white">
+        <Navbar />
+        <main className="py-12">
+          <div className="container mx-auto px-4 max-w-6xl">
+            <h1 className="text-3xl md:text-4xl font-bold text-center mb-4">
+              Access Denied
+            </h1>
+
+            <CourseAccessDenied />
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   if (loading) {
     return (
@@ -83,7 +137,7 @@ const CoursesPage = () => {
     );
   }
 
-  if (error) {
+  if (state.error) {
     return (
       <div className="min-h-screen bg-background-dark text-white">
         <Navbar />
@@ -96,12 +150,12 @@ const CoursesPage = () => {
               <h2 className="text-xl font-bold text-red-500 mb-4">
                 Error Loading Courses
               </h2>
-              <p className="text-white/70 mb-6">{error}</p>
+              <p className="text-white/70 mb-6">{state.error}</p>
               <button
-                onClick={() => window.location.reload()}
+                onClick={handleBackToAccessCheck}
                 className="bg-brand hover:bg-brand-hover text-black font-bold py-2 px-6 rounded transition duration-300"
               >
-                Retry
+                Back to Access Check
               </button>
             </div>
           </div>
@@ -135,7 +189,7 @@ const CoursesPage = () => {
             >
               All Courses
             </button>
-            {categories.slice(0,3).map((category) => (
+            {categories.map((category) => (
               <button
                 key={category}
                 className={`px-4 py-2 rounded-full transition duration-300 ${
@@ -168,6 +222,14 @@ const CoursesPage = () => {
       </main>
       <Footer />
     </div>
+  );
+};
+
+const CoursesPage = () => {
+  return (
+    <AccessProvider>
+      <CoursesPageContent />
+    </AccessProvider>
   );
 };
 

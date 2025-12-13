@@ -1,17 +1,23 @@
 import ButtonDark from "./button/ButtonDark";
 
+type CallToActionBlockProps = {
+  title: string;
+  description?: string;
+  link?: string;
+  buttonTitle?: string;
+};
+
 export default function CallToActionBlock({
   title,
   description,
-}: {
-  title: string;
-  description?: string;
-}) {
+  link,
+  buttonTitle = "Join Now",
+}: CallToActionBlockProps) {
   return (
     <div className="max-w-6xl mx-auto px-4 my-24 text-center bg-brand py-16">
       <h3 className="text-4xl font-bold text-dark">{title}</h3>
       <p className="text-dark my-6">{description}</p>
-      <ButtonDark title="Join now!" />
+      <ButtonDark title={buttonTitle} link={link || ""} />
     </div>
   );
 }
