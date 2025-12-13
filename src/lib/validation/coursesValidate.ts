@@ -15,9 +15,7 @@ export const courseSchema = z.object({
     .string()
     .min(1, "Category is required")
     .max(100, "Category must be less than 100 characters"),
-  video_embed_url: z
-    .string()
-    .url("Video URL must be a valid URL")
+  video_embed_url: z.string().url("Video URL must be a valid URL"),
 });
 
 // Validation schema for updating a course (all fields are optional)
@@ -37,10 +35,15 @@ export const updateCourseSchema = z.object({
     .min(1, "Category must be at least 1 character")
     .max(100, "Category must be less than 100 characters")
     .optional(),
-  video_embed_url: z
-    .string()
-    .url("Video URL must be a valid URL")
+  video_embed_url: z.string().url("Video URL must be a valid URL"),
+});
+
+export const checkEmailAccessCourseSchema = z.object({
+  email: z.string().email("Invalid email format"),
 });
 
 export type CourseSchema = z.infer<typeof courseSchema>;
 export type UpdateCourseSchema = z.infer<typeof updateCourseSchema>;
+export type CheckEmailAccessCourseSchema = z.infer<
+  typeof checkEmailAccessCourseSchema
+>;

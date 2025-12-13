@@ -27,14 +27,14 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
 
     // If a specific email is provided, check if it already exists
     if (email) {
-      const { data: existingMember, error: fetchError } = await supabase
+      const { data: existingMembers, error: fetchError } = await supabase
         .from('members')
         .select('id, full_name, email, phone')
         .eq('email', email)
-        .single(); // Use .single() to expect exactly one result
+        .limit(1); // Use limit(1) instead of .single() to avoid coercion error
 
-      if (fetchError && fetchError.code !== 'PGRST116') { // PGRST116 is the code for "Row not found"
-        // If there was an error other than "not found", return error
+      if (fetchError) {
+        // If there was an error, return error
         return errorResponse({
           success: false,
           status: 500,
@@ -42,7 +42,7 @@ export async function GET(request: NextRequest, { params }: { params: Promise<{ 
         });
       }
 
-      if (existingMember) {
+      if (existingMembers && existingMembers.length > 0) {
         // Email already exists
         return errorResponse({
           success: false,
