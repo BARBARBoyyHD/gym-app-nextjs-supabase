@@ -5,7 +5,7 @@ import { checkRateLimit } from "@/middleware/rate-limit-middleware";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   // Apply rate limiting for GET requests
   const rateLimitResult = await checkRateLimit(req, {
@@ -20,7 +20,7 @@ export async function GET(
 
   try {
     const supabase = await createClient();
-    const courseId = params.id;
+    const { id: courseId } = await params;  // Await the params promise to get the id
 
     // Fetch the specific course by ID
     const { data, error } = await supabase

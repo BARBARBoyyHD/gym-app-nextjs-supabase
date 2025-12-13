@@ -91,7 +91,7 @@ const CoursesPageContent = () => {
             <CourseAccessForm
               onCheckAccess={checkAccess}
               loading={state.loading}
-              error={state.error}
+              error={state.error || undefined}
             />
           </div>
         </main>
@@ -150,7 +150,7 @@ const CoursesPageContent = () => {
               <h2 className="text-xl font-bold text-red-500 mb-4">
                 Error Loading Courses
               </h2>
-              <p className="text-white/70 mb-6">{state.error}</p>
+              <p className="text-white/70 mb-6">{state.error || undefined}</p>
               <button
                 onClick={handleBackToAccessCheck}
                 className="bg-brand hover:bg-brand-hover text-black font-bold py-2 px-6 rounded transition duration-300"

@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { usePostData } from "@/hooks/use-Fetch";
 import { courseSchema } from "@/lib/validation/coursesValidate";
-import { Course } from "@/types/course";
+import { Course, CourseInput } from "@/types/course";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
@@ -33,7 +33,7 @@ const AddCourseModal = ({ isOpen, onClose, onAddSuccess }: AddCourseModalProps) 
     },
   });
 
-  const { mutate: addCourse } = usePostData<Course>(
+  const { mutate: addCourse } = usePostData<CourseInput>(
     "/api/admin/courses/post",
     "courses"
   );
